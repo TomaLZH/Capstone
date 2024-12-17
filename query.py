@@ -1,19 +1,13 @@
 # query.py
 from Initialize import get_resources
 import numpy as np
+from Chat import Chat
 
 # Load models and resources
 bi_encoder, cross_encoder, collection, openai_client, assistant, thread = get_resources()
 
-query_history = []
-query_counter = 1
 
-def update_history(input):
-    global query_counter
-    query_history.append(input)
-    query_counter += 1
-
-def handle_query(query):
+def handle_query(query, chat:Chat):
     global query_counter
 
     # Prepare system message
@@ -21,7 +15,7 @@ def handle_query(query):
     You are an assistant analyzing the conversation. If the user query is clear and unambiguous, return the query as-is.
     If the query is ambiguous, generate a focused query. Do not replace 'ref' with 'reference'.
     """
-    user_message = f"Conversation so far:\n{query_history}\n\nUser Query: {query}"
+    user_message = f"Conversation so far:\n{Chat.get_history}\n\nUser Query: {query}"
 
     # Call OpenAI GPT
     completion = openai_client.chat.completions.create(
@@ -30,7 +24,7 @@ def handle_query(query):
                   {"role": "user", "content": user_message}]
     )
     processed_query = completion.choices[0].message.content
-    update_history(f"Query {query_counter}: {query}")
+    chat.add_message(f"Query {chat.get_query_count()}: {query}")
 
     # Embed query and search
     query_embedding = bi_encoder.encode(processed_query).astype(np.float32)
@@ -63,7 +57,9 @@ def handle_query(query):
         messages = openai_client.beta.threads.messages.list(thread_id=thread.id)
         response = messages.data[0].content[0].text.value
 
-        update_history(f"Response {query_counter}: {response}")
+        # Update history
+        chat.add_message(f"Response {query_counter}: {response} \n")
+        
         return response
     else:
         return "No relevant results found."
