@@ -1,0 +1,2 @@
+Local_bi_encoder/** filter=lfs diff=lfs merge=lfs -text
+Local_cross_encoder/** filter=lfs diff=lfs merge=lfs -text
