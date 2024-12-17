@@ -2,9 +2,8 @@ class Chat:
     def __init__(self, openai_client):
         self.query_counter = 0
         self.chat_history = []
-        # Create the thread directly in the __init__ method
         thread = openai_client.beta.threads.create()
-        self.thread_id = thread.id  # Store only the thread ID
+        self.thread_id = thread.id
 
     def add_message(self, message):
         """Add a message to the chat history and increment the query counter."""
@@ -12,7 +11,7 @@ class Chat:
         self.query_counter += 1
 
     def get_history(self):
-        """Return the chat history."""
+        """Return the chat history in a consistent format."""
         return self.chat_history
 
     def get_query_count(self):

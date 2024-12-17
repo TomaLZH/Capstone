@@ -20,7 +20,7 @@ def handle_query(query, chat: Chat):
                   {"role": "user", "content": user_message}]
     )
     processed_query = completion.choices[0].message.content
-    chat.add_message(f"Query {chat.get_query_count()}: {query}")
+    chat.add_message({"role": "user", "content": query})
 
     # Embed query and search
     query_embedding = bi_encoder.encode(processed_query).astype(np.float32)
@@ -54,7 +54,7 @@ def handle_query(query, chat: Chat):
         response = messages.data[0].content[0].text.value
 
         # Update history
-        chat.add_message(f"Response {chat.get_query_count()}: {response}\n")
+        chat.add_message({"role": "assistant", "content": response})
         
         return response
     else:
