@@ -26,19 +26,21 @@ for message in st.session_state.chats[chat_id].get_history():
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# React to user input
+# In the main app
 if prompt := st.chat_input("How can I assist you today?"):
-    # Display the user message
+    # Display the user message as a dictionary
+    user_message = {"role": "user", "content": prompt}
     st.chat_message("user").markdown(prompt)
-    st.session_state.chats[chat_id].add_message({"role": "user", "content": prompt})
+    st.session_state.chats[chat_id].add_message(user_message)  # Add the message correctly
 
     # Call the query handler
     with st.spinner("Thinking..."):
-        response = handle_query(prompt, st.session_state.chats[chat_id])  # Pass the chat instance
+        response = handle_query(prompt, st.session_state.chats[chat_id])
 
-    # Display the assistant's response
+    # Display the assistant's response as a dictionary
+    assistant_message = {"role": "assistant", "content": response}
     st.chat_message("assistant").markdown(response)
-    st.session_state.chats[chat_id].add_message({"role": "assistant", "content": response})
+    st.session_state.chats[chat_id].add_message(assistant_message)  # Add the assistant's response correctly
 
 # Button to create a new chat instance
 if st.sidebar.button("New Chat"):
