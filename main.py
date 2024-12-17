@@ -25,6 +25,7 @@ for message in st.session_state.chats[chat_id].get_history():
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
+
 # React to user input
 if prompt := st.chat_input("How can I assist you today?"):
     # Display the user message
