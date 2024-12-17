@@ -1,14 +1,14 @@
 openai
-astrapy --upgrade
+astrapy
 torch
 pdfplumber
 streamlit
-xformers --pre --upgrade
-transformers --upgrade
+xformers
+transformers
 tiktoken
 pandas
 langchain
 sentence-transformers
 faiss-cpu
-langchain-community --upgrade
-langchain-huggingface --upgrade
+langchain-community
+langchain-huggingface
