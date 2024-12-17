@@ -1,0 +1,14 @@
+openai
+astrapy --upgrade
+torch
+pdfplumber
+streamlit
+xformers --pre --upgrade
+transformers --upgrade
+tiktoken
+pandas
+langchain
+sentence-transformers
+faiss-cpu
+langchain-community --upgrade
+langchain-huggingface --upgrade
