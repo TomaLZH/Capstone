@@ -19,11 +19,10 @@ if "chats" not in st.session_state:
 # Sidebar for selecting chat instances
 chat_id = st.sidebar.selectbox("Select Chat Instance", options=list(st.session_state.chats.keys()))
 
-# Display the selected chat's history
+# When displaying the message history
 for message in st.session_state.chats[chat_id].get_history():
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
-
 
 # React to user input
 if prompt := st.chat_input("How can I assist you today?"):
@@ -37,7 +36,7 @@ if prompt := st.chat_input("How can I assist you today?"):
 
     # Display the assistant's response
     st.chat_message("assistant").markdown(response)
-    st.session_state.chats[chat_id].add_message({"role": "assistant", "content": response})
+    st.session_state.chats[chat_id].add_message({"role": "user", "content": prompt})
 
 # Button to create a new chat instance
 if st.sidebar.button("New Chat"):
