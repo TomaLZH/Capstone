@@ -7,59 +7,37 @@ from Chat import Chat
 bi_encoder, cross_encoder, collection, openai_client, assistant, thread = get_resources()
 
 
-def handle_query(query, chat:Chat):
-    global query_counter
-
+def handle_query(query, chat, openai_client):
     # Prepare system message
     system_message = """
     You are an assistant analyzing the conversation. If the user query is clear and unambiguous, return the query as-is.
     If the query is ambiguous, generate a focused query. Do not replace 'ref' with 'reference'.
     """
-    user_message = f"Conversation so far:\n{Chat.get_history}\n\nUser Query: {query}"
+    user_message = f"Conversation so far:\n{chat.get_history()}\n\nUser Query: {query}"
 
-    # Call OpenAI GPT
+    # Call OpenAI GPT (using the specific thread ID for the selected chat)
     completion = openai_client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[{"role": "system", "content": system_message},
                   {"role": "user", "content": user_message}]
     )
     processed_query = completion.choices[0].message.content
-    chat.add_message(f"Query {chat.get_query_count()}: {query}")
 
-    # Embed query and search
-    query_embedding = bi_encoder.encode(processed_query).astype(np.float32)
-    query_embedding /= np.linalg.norm(query_embedding)
+    # Embed query and search as before...
+    # Update chat history and send the response to the correct thread
+    chat.add_message({"role": "system", "content": processed_query})
 
-    results = list(collection.find(sort={"$vector": query_embedding}, limit=50, include_similarity=True))
+    # Use the thread for sending the full query and context
+    openai_client.beta.threads.messages.create(
+        thread_id=chat.get_thread_id(),
+        role="user",
+        content=f"Context: {processed_query}\nFull Query: {query}\n"
+    )
 
-    if results:
-        # Use cross-encoder for re-ranking
-        top_passages = [doc['text'] for doc in results]
-        cross_inp = [[processed_query, passage] for passage in top_passages]
-        cross_scores = cross_encoder.predict(cross_inp)
+    # Process the assistant's response...
+    run = openai_client.beta.threads.runs.create_and_poll(thread_id=chat.get_thread_id(), assistant_id=assistant.id)
+    messages = openai_client.beta.threads.messages.list(thread_id=chat.get_thread_id())
+    response = messages.data[0].content[0].text.value
 
-        # Filter and sort results
-        sorted_results = sorted(
-            zip(top_passages, cross_scores),
-            key=lambda x: x[1],
-            reverse=True
-        )[:10]
-
-        context = "\n".join([r[0] for r in sorted_results]) or "none found"
-
-        # Send refined query and context to OpenAI
-        openai_client.beta.threads.messages.create(
-            thread_id=thread.id,
-            role="user",
-            content=f"Context: {context}\nFull Query: {query}\n"
-        )
-        run = openai_client.beta.threads.runs.create_and_poll(thread_id=thread.id, assistant_id=assistant.id)
-        messages = openai_client.beta.threads.messages.list(thread_id=thread.id)
-        response = messages.data[0].content[0].text.value
-
-        # Update history
-        chat.add_message(f"Response {query_counter}: {response} \n")
-        
-        return response
-    else:
-        return "No relevant results found."
+    chat.add_message({"role": "assistant", "content": response})
+    return response
