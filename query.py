@@ -4,7 +4,7 @@ import numpy as np
 from Chat import Chat
 
 # Load models and resources
-bi_encoder, cross_encoder, collection, openai_client, assistant, thread = get_resources()
+bi_encoder, cross_encoder, collection, openai_client, assistant = get_resources()
 
 
 def handle_query(query, chat:Chat):
