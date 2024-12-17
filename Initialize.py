@@ -25,8 +25,7 @@ print(f"Connected to Astra DB: {db.list_collection_names()}")
 # OpenAI Initialization
 openai_client = OpenAI(api_key=OPENAI_API_KEY)
 assistant = openai_client.beta.assistants.retrieve("asst_H8RXmor1XBDG0F1917fixtHE")
-thread = openai_client.beta.threads.create()
 
 # Exported Initialization
 def get_resources():
-    return bi_encoder, cross_encoder, collection, openai_client, assistant, thread
+    return bi_encoder, cross_encoder, collection, openai_client, assistant
