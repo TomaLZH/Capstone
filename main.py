@@ -11,6 +11,10 @@ st.title("Advanced Chatbot")
 
 # Initialize chat instances in session state if not already initialized
 if "chats" not in st.session_state:
+    openai_client = OpenAI(api_key=OPENAI_API_KEY)
+    assistant = openai_client.beta.assistants.retrieve("asst_H8RXmor1XBDG0F1917fixtHE")
+    assistant_id = assistant.id
+
     st.session_state.chats = {"chat_1": Chat()}
 
 # Sidebar for selecting chat instances
