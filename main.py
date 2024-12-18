@@ -50,12 +50,6 @@ chat_instance = st.session_state.chats[st.session_state.selected_chat_id]
 st.subheader("Company Configuration and IT Skill Level")
 st.title(f"SKILL: {st.session_state.it_skill_level[st.session_state.selected_chat_id]}")
 
-# Dropdown for Company Configuration
-company_config = st.selectbox(
-    "Select your company's configuration:",
-    ["Small Business", "Medium Business", "Large Business", "Enterprise"],
-    help="Choose the company configuration that best describes your organization."
-)
 
 # Dropdown for IT Skill Level
 it_skill_level = st.selectbox(
