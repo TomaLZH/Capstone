@@ -9,12 +9,12 @@ openai_client = OpenAI(api_key=OPENAI_API_KEY)
 
 # App title
 st.title("Chatbot")
+
 # Function to update the skill level when the dropdown changes
 def update_skill_level():
     # Store the updated skill level in session state
     st.session_state.it_skill_level = it_skill_level
     chat_instance.set_skill_level(it_skill_level)
-
 
 # Initialize session state for chat instances
 if "chats" not in st.session_state:
@@ -35,15 +35,12 @@ if st.sidebar.button("New Chat"):
     st.session_state.chats[new_chat_id] = Chat(openai_client)
     st.session_state.selected_chat_id = new_chat_id  # Automatically switch to the new chat
 
-
 # Display message history for the selected chat
 chat_instance = st.session_state.chats[st.session_state.selected_chat_id]
-
 
 # Introduction Section: Ask the user to select their company configuration and IT skill level
 st.subheader("Company Configuration and IT Skill Level")
 st.title("SKILL:" + chat_instance.get_skill_level())
-
 
 # Dropdown for Company Configuration
 company_config = st.selectbox(
@@ -52,13 +49,12 @@ company_config = st.selectbox(
     help="Choose the company configuration that best describes your organization."
 )
 
-
 # Dropdown for IT Skill Level
 it_skill_level = st.selectbox(
     "Select your IT skill level:",
     ["Beginner", "Intermediate", "Advanced", "Expert"],
     help="Choose the IT skill level that best represents your team's expertise.",
-    on_change = update_skill_level()
+    on_change=update_skill_level  # Corrected: Pass the function reference, not a call
 )
 
 st.subheader(f"{st.session_state.selected_chat_id}")
