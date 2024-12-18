@@ -12,14 +12,16 @@ st.title("Chatbot")
 
 # Function to update the skill level when the dropdown changes
 def update_skill_level():
-    # Store the updated skill level in session state
-    st.session_state.it_skill_level = it_skill_level
-    chat_instance.set_skill_level(it_skill_level)
+    # Directly update the skill level in chat instance when the session state is updated
+    chat_instance.set_skill_level(st.session_state.it_skill_level)
 
-# Initialize session state for chat instances
+# Initialize session state for chat instances and skill level
 if "chats" not in st.session_state:
     st.session_state.chats = {"chat_1": Chat(openai_client)}
     st.session_state.selected_chat_id = "chat_1"  # Default selected chat
+
+if "it_skill_level" not in st.session_state:
+    st.session_state.it_skill_level = "Beginner"  # Default value for IT skill level
 
 # Sidebar for creating and displaying chats
 st.sidebar.header("Chat Instances")
@@ -40,7 +42,7 @@ chat_instance = st.session_state.chats[st.session_state.selected_chat_id]
 
 # Introduction Section: Ask the user to select their company configuration and IT skill level
 st.subheader("Company Configuration and IT Skill Level")
-st.title("SKILL:" + chat_instance.get_skill_level())
+st.title(f"SKILL: {st.session_state.it_skill_level}")
 
 # Dropdown for Company Configuration
 company_config = st.selectbox(
@@ -54,9 +56,12 @@ it_skill_level = st.selectbox(
     "Select your IT skill level:",
     ["Beginner", "Intermediate", "Advanced", "Expert"],
     help="Choose the IT skill level that best represents your team's expertise.",
-    on_change=update_skill_level  # Corrected: Pass the function reference, not a call
+    key="it_skill_level",  # Using session_state as the key for the dropdown
+    on_change=update_skill_level  # Directly update the class instance
 )
 
+# After the selection, we update the class immediately after session state is modified
+# Display current chat messages
 st.subheader(f"{st.session_state.selected_chat_id}")
 for message in chat_instance.get_history():
     with st.chat_message(message["role"]):
