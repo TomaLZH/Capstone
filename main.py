@@ -28,6 +28,9 @@ if st.sidebar.button("New Chat"):
     st.session_state.chats[new_chat_id] = Chat(openai_client)
     st.session_state.selected_chat_id = new_chat_id  # Update the selected chat
 
+    # Force the app to re-render
+    st.experimental_rerun()
+
 # Update selected chat_id in session state
 st.session_state.selected_chat_id = chat_id
 
