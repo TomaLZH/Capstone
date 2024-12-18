@@ -8,7 +8,7 @@ class Chat:
     def add_message(self, message):
         """Add a message to the chat history and increment the query counter."""
         if isinstance(message, str):  # If the message is just a string, convert it to a dictionary
-            self.chat_history.append({"role": "user", "content": message})
+            self.chat_history.append(message)
         else:
             self.chat_history.append(message)
         self.query_counter += 1
