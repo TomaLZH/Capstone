@@ -20,7 +20,6 @@ def handle_query(query, chat: Chat):
                   {"role": "user", "content": user_message}]
     )
     processed_query = completion.choices[0].message.content
-    chat.add_message({"role": "user", "content": query})
 
     # Embed query and search
     query_embedding = bi_encoder.encode(processed_query).astype(np.float32)
@@ -52,9 +51,6 @@ def handle_query(query, chat: Chat):
         run = openai_client.beta.threads.runs.create_and_poll(thread_id=chat.get_thread_id(), assistant_id=assistant.id)
         messages = openai_client.beta.threads.messages.list(thread_id=chat.get_thread_id())
         response = messages.data[0].content[0].text.value
-
-        # Update history
-        chat.add_message({"role": "assistant", "content": response})
         
         return response
     else:
