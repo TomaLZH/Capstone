@@ -5,7 +5,7 @@ from openai import OpenAI
 from Initialize import get_resources
 
 
-openai_client = get_resources()
+bi_encoder, cross_encoder, collection, openai_client, assistant = get_resources()
 
 # App title
 st.title("Cyber Trust Mark Assistant")
