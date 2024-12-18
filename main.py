@@ -12,20 +12,16 @@ st.title("Cyber Trust Mark Assistant")
 
 # Function to update the skill level when the dropdown changes
 def update_skill_level():
-    # Get the selected chat instance
-    chat_instance_id = st.session_state.selected_chat_id
-    # Update the skill level for the selected chat instance
-    chat_instance = st.session_state.chats[chat_instance_id]
-    chat_instance.set_skill_level(st.session_state.it_skill_level[chat_instance_id])
+    # Directly update the skill level in chat instance when the session state is updated
+    chat_instance.set_skill_level(st.session_state.it_skill_level)
 
 # Initialize session state for chat instances and skill level
 if "chats" not in st.session_state:
     st.session_state.chats = {"chat_1": Chat(openai_client)}
     st.session_state.selected_chat_id = "chat_1"  # Default selected chat
 
-# Initialize IT skill level for each chat instance
 if "it_skill_level" not in st.session_state:
-    st.session_state.it_skill_level = {"chat_1": "Beginner"}  # Default value for IT skill level for the first chat
+    st.session_state.it_skill_level = "Beginner"  # Default value for IT skill level
 
 # Sidebar for creating and displaying chats
 st.sidebar.header("Chat Instances")
@@ -39,8 +35,6 @@ for chat_id in st.session_state.chats.keys():
 if st.sidebar.button("New Chat"):
     new_chat_id = f"Chat_{len(st.session_state.chats) + 1}"
     st.session_state.chats[new_chat_id] = Chat(openai_client)
-    # Set default IT skill level for the new chat
-    st.session_state.it_skill_level[new_chat_id] = "Beginner"
     st.session_state.selected_chat_id = new_chat_id  # Automatically switch to the new chat
 
 # Display message history for the selected chat
@@ -48,15 +42,21 @@ chat_instance = st.session_state.chats[st.session_state.selected_chat_id]
 
 # Introduction Section: Ask the user to select their company configuration and IT skill level
 st.subheader("Company Configuration and IT Skill Level")
-st.title(f"SKILL: {st.session_state.it_skill_level[st.session_state.selected_chat_id]}")
+st.title(f"SKILL: {st.session_state.chat[chat_id].get_skill_level()}")
 
+# Dropdown for Company Configuration
+company_config = st.selectbox(
+    "Select your company's configuration:",
+    ["Small Business", "Medium Business", "Large Business", "Enterprise"],
+    help="Choose the company configuration that best describes your organization."
+)
 
 # Dropdown for IT Skill Level
 it_skill_level = st.selectbox(
     "Select your IT skill level:",
     ["Beginner", "Intermediate", "Advanced", "Expert"],
     help="Choose the IT skill level that best represents your team's expertise.",
-    key=f"it_skill_level_{st.session_state.selected_chat_id}",  # Unique key per chat
+    key="it_skill_level",  # Using session_state as the key for the dropdown
     on_change=update_skill_level  # Directly update the class instance
 )
 
