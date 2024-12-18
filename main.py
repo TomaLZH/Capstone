@@ -2,10 +2,10 @@ import streamlit as st
 from query import handle_query  # Import the query handler function
 from Chat import Chat  # Import the Chat class (make sure it's defined in chat.py)
 from openai import OpenAI
+from Initialize import get_resources
 
-# OpenAI Initialization
-OPENAI_API_KEY = st.secrets["openai"]["API_KEY"]
-openai_client = OpenAI(api_key=OPENAI_API_KEY)
+
+openai_client = get_resources()
 
 # App title
 st.title("Cyber Trust Mark Assistant")
