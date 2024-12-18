@@ -30,6 +30,7 @@ st.sidebar.header("Chat Instances")
 for chat_id in st.session_state.chats.keys():
     if st.sidebar.button(f"{chat_id}"):
         st.session_state.selected_chat_id = chat_id  # Update the selected chat
+        
 
 # Button to create a new chat instance
 if st.sidebar.button("New Chat"):
@@ -42,7 +43,7 @@ chat_instance = st.session_state.chats[st.session_state.selected_chat_id]
 
 # Introduction Section: Ask the user to select their company configuration and IT skill level
 st.subheader("Company Configuration and IT Skill Level")
-st.title(f"SKILL: {st.session_state.chats[chat_id].get_skill_level()}")
+st.title(f"SKILL: {chat_instance.get_skill_level()}")
 
 # Dropdown for Company Configuration
 company_config = st.selectbox(
