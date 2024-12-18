@@ -15,25 +15,23 @@ if "chats" not in st.session_state:
     st.session_state.chats = {"chat_1": Chat(openai_client)}
     st.session_state.selected_chat_id = "chat_1"  # Default selected chat
 
-# Sidebar for selecting or creating a new chat instance
-chat_id = st.sidebar.selectbox(
-    "Select Chat Instance",
-    options=list(st.session_state.chats.keys()),
-    index=list(st.session_state.chats.keys()).index(st.session_state.selected_chat_id)
-)
+# Sidebar for creating and displaying chats
+st.sidebar.header("Chat Instances")
 
+# Display all chats as buttons in the sidebar
+for chat_id in st.session_state.chats.keys():
+    if st.sidebar.button(f"Select {chat_id}"):
+        st.session_state.selected_chat_id = chat_id  # Update the selected chat
+
+# Button to create a new chat instance
 if st.sidebar.button("New Chat"):
-    # Create a new empty chat instance
     new_chat_id = f"chat_{len(st.session_state.chats) + 1}"
     st.session_state.chats[new_chat_id] = Chat(openai_client)
-    st.session_state.selected_chat_id = new_chat_id  # Update the selected chat
-
-
-# Update selected chat_id in session state
-st.session_state.selected_chat_id = chat_id
+    st.session_state.selected_chat_id = new_chat_id  # Automatically switch to the new chat
 
 # Display message history for the selected chat
 chat_instance = st.session_state.chats[st.session_state.selected_chat_id]
+st.subheader(f"Chat: {st.session_state.selected_chat_id}")
 for message in chat_instance.get_history():
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
