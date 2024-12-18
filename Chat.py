@@ -1,16 +1,14 @@
 class Chat:
-    def __init__(self, openai_client):
+    def __init__(self, openai_client, skill_level=None):
         self.query_counter = 0
         self.chat_history = [{"role": "assistant", "content": "Welcome! I'm here to assist you in understanding and meeting the requirements of Singapore's Cyber Trust Mark. Whether you have questions about compliance, cybersecurity best practices, or specific guidelines, I'll provide clear and focused guidance to help your SME achieve certification. How can I assist you today?"}]
         thread = openai_client.beta.threads.create()
         self.thread_id = thread.id
+        self.skill_level = skill_level
 
     def add_message(self, message):
         """Add a message to the chat history and increment the query counter."""
-        if isinstance(message, str):  # If the message is just a string, convert it to a dictionary
-            self.chat_history.append(message)
-        else:
-            self.chat_history.append(message)
+        self.chat_history.append(message)
         self.query_counter += 1
 
     def get_history(self):
@@ -24,3 +22,11 @@ class Chat:
     def get_thread_id(self):
         """Return the thread ID."""
         return self.thread_id
+
+    def get_skill_level(self):
+        """Return the skill level of the user."""
+        return self.skill_level
+    
+    def set_skill_level(self, skill_level):
+        """Set the skill level of the user."""
+        self.skill_level = skill_level
