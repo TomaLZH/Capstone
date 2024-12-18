@@ -2,6 +2,7 @@ from Initialize import get_resources
 import numpy as np
 import logging
 from Chat import Chat
+import streamlit as st
 
 
 
@@ -45,7 +46,7 @@ def handle_query(query, chat: Chat):
         )[:10]
 
         context = "\n".join([r[0] for r in sorted_results]) or "none found"
-
+        st.write(f"Context: {context}")
         # Send refined query and context to OpenAI
         openai_client.beta.threads.messages.create(
             thread_id=chat.get_thread_id(),  # Correct method call to get thread ID
