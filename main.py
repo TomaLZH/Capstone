@@ -8,7 +8,7 @@ OPENAI_API_KEY = st.secrets["openai"]["API_KEY"]
 openai_client = OpenAI(api_key=OPENAI_API_KEY)
 
 # App title
-st.title("Chatbot")
+st.title("Cyber Trust Mark Assistant")
 
 # Function to update the skill level when the dropdown changes
 def update_skill_level():
