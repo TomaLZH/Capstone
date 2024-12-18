@@ -20,7 +20,7 @@ def handle_query(query, chat: Chat):
                   {"role": "user", "content": user_message}]
     )
     processed_query = completion.choices[0].message.content
-
+    print(processed_query)
     # Embed query and search
     query_embedding = bi_encoder.encode(processed_query).astype(np.float32)
     query_embedding /= np.linalg.norm(query_embedding)
