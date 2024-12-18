@@ -55,7 +55,7 @@ def handle_query(query, chat: Chat):
         run = openai_client.beta.threads.runs.create_and_poll(
             thread_id=chat.get_thread_id(), 
             assistant_id=assistant.id,
-            instructions=f"IT skill level of the user: {chat.get_skill_level()}"
+            # instructions=f"IT skill level of the user: {chat.get_skill_level()}"
         )
         messages = openai_client.beta.threads.messages.list(thread_id=chat.get_thread_id())
         response = messages.data[0].content[0].text.value
