@@ -1,7 +1,7 @@
 class Chat:
     def __init__(self, openai_client):
         self.query_counter = 0
-        self.chat_history = []
+        self.chat_history = [{"role": "assistant", "content": "Welcome! I'm here to assist you in understanding and meeting the requirements of Singapore's Cyber Trust Mark. Whether you have questions about compliance, cybersecurity best practices, or specific guidelines, I'll provide clear and focused guidance to help your SME achieve certification. How can I assist you today?"}]
         thread = openai_client.beta.threads.create()
         self.thread_id = thread.id
 
