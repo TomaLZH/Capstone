@@ -45,7 +45,7 @@ def handle_query(query, chat: Chat):
             reverse=True
         )[:10]
 
-        context = "\n".join([r[0] for r in sorted_results]) or "none found"
+        context = "\n\n\n".join([r[0] for r in sorted_results]) or "none found"
         st.write(f"Context: {context}")
         # Send refined query and context to OpenAI
         openai_client.beta.threads.messages.create(
