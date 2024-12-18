@@ -20,18 +20,18 @@ st.sidebar.header("Chat Instances")
 
 # Display all chats as buttons in the sidebar
 for chat_id in st.session_state.chats.keys():
-    if st.sidebar.button(f"Select {chat_id}"):
+    if st.sidebar.button(f"{chat_id}"):
         st.session_state.selected_chat_id = chat_id  # Update the selected chat
 
 # Button to create a new chat instance
 if st.sidebar.button("New Chat"):
-    new_chat_id = f"chat_{len(st.session_state.chats) + 1}"
+    new_chat_id = f"Chat_{len(st.session_state.chats) + 1}"
     st.session_state.chats[new_chat_id] = Chat(openai_client)
     st.session_state.selected_chat_id = new_chat_id  # Automatically switch to the new chat
 
 # Display message history for the selected chat
 chat_instance = st.session_state.chats[st.session_state.selected_chat_id]
-st.subheader(f"Chat: {st.session_state.selected_chat_id}")
+st.subheader(f"{st.session_state.selected_chat_id}")
 for message in chat_instance.get_history():
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
