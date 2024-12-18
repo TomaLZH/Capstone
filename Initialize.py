@@ -13,8 +13,8 @@ ASTRA_DB_URL = st.secrets["astradb"]["DB_URL"]
 
 
 # Models Initialization
-bi_encoder = SentenceTransformer("sentence-transformers/multi-qa-mpnet-base-cos-v1")
-cross_encoder = CrossEncoder("sentence-transformers/ms-marco-MiniLM-L6-v2")
+bi_encoder = SentenceTransformer("sentence-transformers/all-mpnet-base-v2")
+cross_encoder = CrossEncoder("sentence-transformers/ms-marco-MiniLM-L-6-v2")
 
 
 client = DataAPIClient(ASTRA_API_KEY)
