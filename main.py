@@ -29,8 +29,29 @@ if st.sidebar.button("New Chat"):
     st.session_state.chats[new_chat_id] = Chat(openai_client)
     st.session_state.selected_chat_id = new_chat_id  # Automatically switch to the new chat
 
+
 # Display message history for the selected chat
 chat_instance = st.session_state.chats[st.session_state.selected_chat_id]
+
+
+# Introduction Section: Ask the user to select their company configuration and IT skill level
+st.subheader("Company Configuration and IT Skill Level")
+
+# Dropdown for Company Configuration
+company_config = st.selectbox(
+    "Select your company's configuration:",
+    ["Small Business", "Medium Business", "Large Business", "Enterprise"],
+    help="Choose the company configuration that best describes your organization."
+)
+
+# Dropdown for IT Skill Level
+it_skill_level = st.selectbox(
+    "Select your IT skill level:",
+    ["Beginner", "Intermediate", "Advanced", "Expert"],
+    help="Choose the IT skill level that best represents your team's expertise."
+)
+
+
 st.subheader(f"{st.session_state.selected_chat_id}")
 for message in chat_instance.get_history():
     with st.chat_message(message["role"]):
