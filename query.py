@@ -2,14 +2,11 @@ from Initialize import get_resources
 import numpy as np
 import logging
 from Chat import Chat
-from sentence_transformers import SentenceTransformer
-from sentence_transformers.cross_encoder import CrossEncoder
 
 
-bi_encoder = SentenceTransformer("sentence-transformers/multi-qa-mpnet-base-cos-v1")
-cross_encoder = CrossEncoder("sentence-transformers/ms-marco-MiniLM-L6-v2")
+
 # Load models and resources
-collection, openai_client, assistant = get_resources()
+bi_encoder, cross_encoder, collection, openai_client, assistant = get_resources()
 
 def handle_query(query, chat: Chat):
     # Prepare system message
