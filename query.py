@@ -1,5 +1,6 @@
 from Initialize import get_resources
 import numpy as np
+import logging
 from Chat import Chat
 
 # Load models and resources
@@ -21,6 +22,7 @@ def handle_query(query, chat: Chat):
     )
     processed_query = completion.choices[0].message.content
     print(processed_query)
+    logging.info(f"Processed query: {processed_query}")
     # Embed query and search
     query_embedding = bi_encoder.encode(processed_query).astype(np.float32)
     query_embedding /= np.linalg.norm(query_embedding)
