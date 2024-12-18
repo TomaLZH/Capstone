@@ -155,8 +155,8 @@ from sentence_transformers import SentenceTransformer
 from sentence_transformers.cross_encoder import CrossEncoder
 
 # Initialize your models
-# bi_encoder = SentenceTransformer("sentence-transformers/multi-qa-mpnet-base-cos-v1")
-bi_encoder = SentenceTransformer("sentence-transformers/all-mpnet-base-v2")
+bi_encoder = SentenceTransformer("sentence-transformers/multi-qa-mpnet-base-cos-v1")
+# bi_encoder = SentenceTransformer("sentence-transformers/all-mpnet-base-v2")
 cross_encoder = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")  # Use a cross-encoder model
 
 
