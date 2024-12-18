@@ -6,7 +6,7 @@ from openai import OpenAI
 # OpenAI Initialization
 OPENAI_API_KEY = st.secrets["openai"]["API_KEY"]
 openai_client = OpenAI(api_key=OPENAI_API_KEY)
-it_skill_level=None
+it_skill_level= "Beginner"
 
 # App title
 st.title("Chatbot")
