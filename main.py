@@ -56,7 +56,7 @@ st.write("Selected IT Skill Level:", st.session_state.it_skill_level)
 # Dropdown for Company Configuration
 environment = st.selectbox(
     "Select your company's environment:",
-    ["On-premises", "Cloud-based", "Hybrid"],
+    ["None Selected","On-premises", "Cloud-based", "Hybrid"],
     help="Choose the environment that best describes your organization.",
     key="environment",  # Using session_state as the key for the dropdown
     on_change=update_environment  # Directly update the class instance
