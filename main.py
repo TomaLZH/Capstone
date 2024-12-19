@@ -28,6 +28,9 @@ if "chats" not in st.session_state:
 if "it_skill_level" not in st.session_state:
     st.session_state.it_skill_level = "Beginner"  # Default value for IT skill level
 
+if "environment" not in st.session_state:
+    st.session_state.environment = "None Selected"  # Default value for Company Configuration
+
 # Sidebar for creating and displaying chats
 st.sidebar.header("Chat Instances")
 
