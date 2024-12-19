@@ -48,8 +48,6 @@ def handle_query(query, chat: Chat):
         
         context = "\n\n\n".join([r[0] for r in sorted_results]) or "none found"
         # Send refined query and context to OpenAI
-        st.write(context)
-        return
         openai_client.beta.threads.messages.create(
             thread_id=chat.get_thread_id(),  # Correct method call to get thread ID
             role="user",
