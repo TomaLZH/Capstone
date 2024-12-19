@@ -1,10 +1,11 @@
 class Chat:
-    def __init__(self, openai_client, skill_level= "Beginner"):
+    def __init__(self, openai_client, skill_level= "Beginner", environment = "None Selected"):
         self.query_counter = 0
         self.chat_history = [] 
         thread = openai_client.beta.threads.create()
         self.thread_id = thread.id
         self.skill_level = skill_level
+        self.environment = environment
 
     def add_message(self, message):
         """Add a message to the chat history and increment the query counter."""
@@ -30,3 +31,11 @@ class Chat:
     def set_skill_level(self, skill_level):
         """Set the skill level of the user."""
         self.skill_level = skill_level
+        
+    def get_environment(self):
+        """Return the environment of the user."""
+        return self.environment
+
+    def set_environment(self, environment):
+        """Set the environment of the user."""
+        self.environment = environment
