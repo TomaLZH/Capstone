@@ -13,8 +13,9 @@ def handle_query(query, chat: Chat):
     # Prepare system message
     system_message = """
     You are an assistant analyzing the conversation. If the user query is clear and unambiguous, return the query as-is.
-    If the query is ambiguous, generate a focused query. Do not replace 'ref' with 'reference'.
+    If the query is ambiguous, generate a focused query. If no context can be determined, return the query as-is. Do not replace 'ref' with 'reference'.
     """
+
     user_message = f"Conversation so far:\n{chat.get_history()}\n\nUser Query: {query}"
 
     # Call OpenAI GPT
