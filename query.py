@@ -45,13 +45,15 @@ def handle_query(query, chat: Chat):
             key=lambda x: x[1],
             reverse=True
         )[:10]
-
+        st.write("Skill Level: ", chat.get_skill_level())
+        st.write("Environment: ", chat.get_environment())
+        
         context = "\n\n\n".join([r[0] for r in sorted_results]) or "none found"
         # Send refined query and context to OpenAI
         openai_client.beta.threads.messages.create(
             thread_id=chat.get_thread_id(),  # Correct method call to get thread ID
             role="user",
-            content=f"My skill level is: {chat.get_skill_level}.\n My Environment is: {chat.get_environment}.\n\n Context: {context}\n\nFull Query: {query}\n",
+            content=f"Context: {context}\n\nFull Query: {query}\n",
         )
         run = openai_client.beta.threads.runs.create_and_poll(
             thread_id=chat.get_thread_id(), 
