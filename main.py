@@ -18,7 +18,7 @@ def update_skill_level():
 # Function to update the skill level when the dropdown changes
 def update_environment():
     # Directly update the skill level in chat instance when the session state is updated
-    chat_instance.set_environment(st.session_state.company_environment)
+    chat_instance.set_environment(st.session_state.environment)
 
 # Initialize session state for chat instances and skill level
 if "chats" not in st.session_state:
@@ -48,14 +48,14 @@ chat_instance = st.session_state.chats[st.session_state.selected_chat_id]
 
 # Introduction Section: Ask the user to select their company configuration and IT skill level
 st.subheader("Company Configuration and IT Skill Level")
-st.write("Selected Company Environment:", st.session_state.company_environment)
+st.write("Selected Company Environment:", st.session_state.environment)
 st.write("Selected IT Skill Level:", st.session_state.it_skill_level)
 # Dropdown for Company Configuration
-company_environment = st.selectbox(
+environment = st.selectbox(
     "Select your company's environment:",
     ["On-premises", "Cloud-based", "Hybrid"],
     help="Choose the environment that best describes your organization.",
-    key="company_environment",  # Using session_state as the key for the dropdown
+    key="environment",  # Using session_state as the key for the dropdown
     on_change=update_environment  # Directly update the class instance
 )
 
