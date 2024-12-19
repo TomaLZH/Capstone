@@ -51,8 +51,8 @@ chat_instance = st.session_state.chats[st.session_state.selected_chat_id]
 
 # Introduction Section: Ask the user to select their company configuration and IT skill level
 st.subheader("Company Configuration and IT Skill Level")
-st.write("Selected Company Environment:", chat_instance.environment)
-st.write("Selected IT Skill Level:", chat_instance.it_skill_level)
+st.write("Selected Company Environment:", chat_instance.get_environment())
+st.write("Selected IT Skill Level:", chat_instance.get_skill_level())
 
 # Dropdown for Company Configuration
 environment = st.selectbox(
