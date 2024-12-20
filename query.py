@@ -52,7 +52,7 @@ def handle_query(query, chat: Chat):
         openai_client.beta.threads.messages.create(
             thread_id=chat.get_thread_id(),  # Correct method call to get thread ID
             role="user",
-            content=f"User's skill level: {chat.get_skill_level()}.\n User's IT Infrastructure Environment: {chat.get_environment()}.\n\n Context: {context}\n\nFull Query: {query}\n",
+            content=f"User's skill level: {chat.get_skill_level()}.\n User's IT Infrastructure Environment: {chat.get_environment()}.\n\n Context: {context}\n\nUser Query: {query}\n",
         )
         run = openai_client.beta.threads.runs.create_and_poll(
             thread_id=chat.get_thread_id(), 
