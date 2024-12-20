@@ -44,7 +44,7 @@ def handle_query(query, chat: Chat):
             zip(top_passages, cross_scores),
             key=lambda x: x[1],
             reverse=True
-        )[:10]
+        )[:15]
         
         context = "\n\n\n".join([r[0] for r in sorted_results]) or "none found"
         # Send refined query and context to OpenAI
