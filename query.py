@@ -55,7 +55,7 @@ def handle_query(query, chat: Chat):
 
         # Construct the context from the top-ranked passages
         context = "\n\n\n".join([r[0] for r in sorted_results]) or "none found"
-    
+        return context
         # Send the refined query and context to OpenAI for further processing
         openai_client.beta.threads.messages.create(
             thread_id=chat.get_thread_id(),  # Retrieve the thread ID from the chat instance
