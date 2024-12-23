@@ -25,7 +25,7 @@ cross_encoder = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
 # Initialize Astra database client for managing collections
 client = DataAPIClient(ASTRA_API_KEY)
 db = client.get_database_by_api_endpoint(ASTRA_DB_URL)
-collection = db.get_collection("mpnetall")
+collection = db.get_collection("Capstone")
 
 # Log the connected database collections
 print(f"Connected to Astra DB: {db.list_collection_names()}")
