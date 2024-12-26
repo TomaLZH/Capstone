@@ -45,13 +45,16 @@ def handle_query(query, chat: Chat):
 
         # Predict relevance scores for each pair using the cross-encoder
         cross_scores = cross_encoder.predict(cross_inp)
-
+        
+        # Filter results to only include those with a score > 0
+        filtered_results = [
+            (passage, score) for passage, score in zip(top_passages, cross_scores) if score > 0
+        ]
+        
         # Sort the results by their relevance scores in descending order and select the top 15
-        sorted_results = sorted(
-            zip(top_passages, cross_scores),
-            key=lambda x: x[1],
-            reverse=True
-        )[:15]
+        sorted_results = sorted(filtered_results, key=lambda x: x[1], reverse=True)[:15]
+
+        
 
         # Construct the context from the top-ranked passages
         context = "\n\n\n".join([f"Passage: {r[0]}\nRelevance Score: {r[1]:.2f}" for r in sorted_results]) or "none found"
