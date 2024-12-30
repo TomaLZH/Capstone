@@ -27,8 +27,9 @@ This project addresses these gaps by leveraging a chatbot to provide real-time, 
 5. **Tailored Guidance**: Provides customized recommendations based on the SME’s specific industry and size.
 
 ### Technology Stack
-- **Frontend**: Streamlit for user interface.
+- **Frontend**: Streamlit for user interface and deployment.
 - **Backend**: Python for chatbot logic and integrations.
+- **Database**: AstraDB for storing of embeddings
 
 ### Target Audience
 - SMEs in Singapore aiming to enhance their cybersecurity posture.
