@@ -27,7 +27,7 @@ This project addresses these gaps by leveraging a chatbot to provide real-time, 
 - **Frontend**: Streamlit for user interface and deployment.
 - **Backend**: Python for chatbot logic and integrations.
 - **Database**: AstraDB for storing of embeddings.
-- **Models Used**: GPT4o-mini, all-mpnet-base-v2, ms-marco-MiniLM-L-6-v2
+- **Models Used**: GPT4o-mini, all-mpnet-base-v2 (bi-encoder), ms-marco-MiniLM-L-6-v2 (re-ranking)
 
 ### Target Audience
 - SMEs in Singapore aiming to enhance their cybersecurity posture.
