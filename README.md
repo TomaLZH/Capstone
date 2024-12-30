@@ -19,15 +19,15 @@ This project addresses these gaps by leveraging a chatbot to provide real-time, 
 
 ### Features
 1. **Interactive Cyber Trust Mark Checklist**: Accessible through chatbot queries for step-by-step progress.
-2. **Readiness Assessment**: Chatbot-driven questionnaires to evaluate SMEs’ current cybersecurity posture.
+2. **Customizable Experience**: Able to get tailored responses based on user's environment type and IT skill level.
 3. **Resource Recommendations**: Centralized access to templates, guides, and policy documents.
 4. **Progress Tracking**: The chatbot keeps track of completed tasks and provides reminders for pending ones.
-5. **Tailored Guidance**: Provides customized recommendations based on the SME’s specific industry and size.
 
 ### Technology Stack
 - **Frontend**: Streamlit for user interface and deployment.
 - **Backend**: Python for chatbot logic and integrations.
-- **Database**: AstraDB for storing of embeddings
+- **Database**: AstraDB for storing of embeddings.
+- **Models Used**: GPT4o-mini, all-mpnet-base-v2, ms-marco-MiniLM-L-6-v2
 
 ### Target Audience
 - SMEs in Singapore aiming to enhance their cybersecurity posture.
@@ -55,7 +55,4 @@ The chatbot is hosted online for easy access. Users can simply visit the provide
 - **CSA Singapore**: For providing guidelines and resources on the Cyber Trust Mark.
 - **Mentors and Advisors**: For their invaluable guidance and feedback.
 - **Open-Source Libraries and Tools**: For enabling the development of this project.
-
----
-For further information, feel free to contact the project team at [Insert Contact Email].
 
