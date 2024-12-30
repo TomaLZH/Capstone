@@ -1,5 +1,3 @@
-# SME Cyber Trust Mark ReadMe
-
 ## Project Title: Empowering SMEs to Attain Singapore's CSA Cyber Trust Mark
 
 ### Overview
