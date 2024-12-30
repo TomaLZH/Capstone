@@ -20,9 +20,9 @@ bi_encoder = SentenceTransformer("sentence-transformers/all-mpnet-base-v2")
 
 # Initialize cross-encoder model for re-ranking query and context
 # This model is used to refine search results based on relevance
-# cross_encoder = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
+cross_encoder = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
 # Alternate Model option (commented out):
-cross_encoder = CrossEncoder("BAAI/bge-reranker-v2-m3")
+# cross_encoder = CrossEncoder("BAAI/bge-reranker-v2-m3")
 
 # Initialize Astra database client for managing collections
 client = DataAPIClient(ASTRA_API_KEY)
