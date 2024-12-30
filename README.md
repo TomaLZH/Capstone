@@ -46,10 +46,8 @@ The chatbot is hosted online for easy access. Users can simply visit the provide
 [Access the Chatbot Here]()
 
 ### Future Enhancements
-- **AI-Based Recommendations**: Use AI to provide predictive analytics and tailored cybersecurity advice.
-- **Voice Integration**: Enable voice-based interactions for a more dynamic user experience.
-- **Multi-Language Support**: Cater to diverse SME communities in Singapore.
 - **Fine Tuning of Model**: Fine Tune model for better performance.
+- **More Datasets**: With more datasets to retrieve from Retrieval Augmented Generation (RAG), accuracy will be better.
 
 ### Acknowledgments
 - **CSA Singapore**: For providing guidelines and resources on the Cyber Trust Mark.
