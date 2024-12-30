@@ -5,9 +5,9 @@ This capstone project focuses on developing a chatbot that supports Small and Me
 
 ### Problem Statement
 SMEs often face challenges in:
-- Understanding the detailed requirements of the CSA Cyber Trust Mark.
-- Allocating resources effectively to meet the certification criteria.
-- Implementing cybersecurity measures that align with best practices.
+- Lacking in-house IT experts who can interpret and implement cybersecurity measures.
+- Limited budgets that make it difficult to hire external consultants or invest in comprehensive solutions.
+- Struggling to understand the complex and technical guidelines of the CSA Cyber Trust Mark certification.
 
 This project addresses these gaps by leveraging a chatbot to provide real-time, tailored guidance and resources to SMEs throughout their certification journey.
 
