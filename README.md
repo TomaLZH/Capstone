@@ -1,5 +1,3 @@
-# SME Cyber Trust Mark Chatbot ReadMe
-
 ## Project Title: Chatbot to Assist SMEs in Achieving Singapore's CSA Cyber Trust Mark
 
 ### Overview
