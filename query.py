@@ -63,7 +63,7 @@ def handle_query(query, chat: Chat):
         openai_client.beta.threads.messages.create(
             thread_id=chat.get_thread_id(),  # Retrieve the thread ID from the chat instance
             role="user",
-            content=f"User's skill level: {chat.get_skill_level()}.\n User's IT Infrastructure Environment: {chat.get_environment()}.\n\n Context: {context}\n\nUser Query: {query}\n",
+            content=f"User's skill level: {chat.get_skill_level()}.\n User's IT Infrastructure Environment: {chat.get_environment()}.\n\n Background Information: {context}\n\nUser Query: {query}\n",
         )
 
         # Execute and poll the assistant's response from OpenAI
