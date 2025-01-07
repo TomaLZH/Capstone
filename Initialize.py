@@ -14,7 +14,7 @@ ASTRA_DB_URL = st.secrets["astradb"]["DB_URL"]
 
 # Initialize bi-encoder model for query embedding
 # This model is used to create embeddings for text similarity
-bi_encoder = SentenceTransformer("sentence-transformers/multi-qa-mpnet-base-cos-v1")
+bi_encoder = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 # Alternate model option (commented out):
 # bi_encoder = SentenceTransformer("sentence-transformers/all-mpnet-base-v2")
 
