@@ -36,8 +36,6 @@ def handle_query(query, chat: Chat):
                   {"role": "user", "content": query}]
     )
     
-    return DomainClause.choices[0].message.content
-    
     #If no clause or domain is mentioned
     if DomainClause.choices[0].message.content == "None":
         
@@ -73,7 +71,7 @@ def handle_query(query, chat: Chat):
     else:
         processed_query = query
         #Embed the domain or clause mentioned in the query
-        results = list(collection.find(sort={"$text": query}, limit=30))
+        results = list(collection.find(sort={"text": query}, limit=30, include_similarity=True))
         return results
         
     
