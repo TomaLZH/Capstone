@@ -16,19 +16,19 @@ def handle_query(query, chat: Chat):
 
     
     What is the Domain or Clause mentioned in the query: What is B.1.1?
-    A: B.1.1
+    B.1.1
     What is the Domain or Clause mentioned in the query: What is B.12?
-    A: B.12
+    B.12
     What is the Domain or Clause mentioned in the query: How do i implement B.1.5?
-    A: B.1.5
+    B.1.5
     What is the Domain or Clause mentioned in the query: What is Cyber Trust Mark?
-    A: None
+    None
     What is the Domain or Clause mentioned in the query: What is the purpose of Cyber Trust Mark?
-    A: None
+    None
     What is the Domain or Clause mentioned in the query: What are the clauses in B.9 for supporter tier?
-    A: B.9
+    B.9
     What is the Domain or Clause mentioned in the query: Hello?
-    A: None
+    None
     """
     DomainClause = openai_client.chat.completions.create(
         model="gpt-4o-mini",
