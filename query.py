@@ -65,8 +65,7 @@ def handle_query(query, chat: Chat):
     else:
         processed_query = query
         #Embed the domain or clause mentioned in the query
-        query_embedding = bi_encoder.encode(DomainClause.choices[0].message.content).astype(np.float32)
-        results = list(collection.find({"$text": {"$search": query_embedding}}, limit=30, include_similarity=True))
+        results = list(collection.find({"$text": {"$search": query}}, limit=30, include_similarity=True))
         return results
         
     
