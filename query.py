@@ -60,7 +60,7 @@ def handle_query(query, chat: Chat):
 
         # Search the collection using the query embedding to find relevant documents
         results = list(collection.find(sort={"$vector": query_embedding}, limit=30, include_similarity=True))
-
+        return "Test"
     #If domain or clause is mentioned
     else:
         processed_query = query
