@@ -11,6 +11,10 @@ def handle_query(query, chat: Chat):
     
     #Check if any Clause or Domain is mentioned in the query
     system_message_for_Clause = """
+    You are an assistant that identifies whether a query mentions a domain or clause in the format B.(number).(optional clause number). 
+    If no domain or clause is mentioned, respond with "None".
+
+    
     What is the Domain or Clause mentioned in the query: What is B.1.1?
     A: B.1.1
     What is the Domain or Clause mentioned in the query: What is B.12?
