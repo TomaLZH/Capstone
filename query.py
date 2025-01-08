@@ -67,6 +67,7 @@ def handle_query(query, chat: Chat):
         #Embed the domain or clause mentioned in the query
         query_embedding = bi_encoder.encode(DomainClause.choices[0].message.content).astype(np.float32)
         results = list(collection.find({"$text": {"$search": query_embedding}}, limit=30, include_similarity=True))
+        return results
         
     
     if results:
@@ -89,7 +90,7 @@ def handle_query(query, chat: Chat):
 
         # Construct the context from the top-ranked passages
         context = "\n\n\n".join([f"Passage: {r[0]}\nRelevance Score: {r[1]:.2f}" for r in sorted_results]) or "none found"
-
+        
         # Send the refined query and context to OpenAI for further processing
         openai_client.beta.threads.messages.create(
             thread_id=chat.get_thread_id(),  # Retrieve the thread ID from the chat instance
