@@ -65,7 +65,7 @@ def handle_query(query, chat: Chat):
     else:
         processed_query = query
         #Embed the domain or clause mentioned in the query
-        results = list(collection.find({"$text": {"$search": query}}, limit=30, include_similarity=True))
+        results = list(collection.find({"$text": {"$search": query}}, limit=30))
         return results
         
     
