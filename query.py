@@ -71,7 +71,7 @@ def handle_query(query, chat: Chat):
     else:
         processed_query = query
         #Embed the domain or clause mentioned in the query
-        results = list(collection.find(sort={"text": query}, limit=30))
+        results = list(collection.find(sort={"$vectorize": query}, limit=30, include_similarity=True))
         return results
         
     
