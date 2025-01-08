@@ -23,12 +23,16 @@ def handle_query(query, chat: Chat):
     A: None
     What is the Domain or Clause mentioned in the query: What are the clauses in B.9 for supporter tier?
     A: B.9
+    What is the Domain or Clause mentioned in the query: Hello?
+    A: None
     """
     DomainClause = openai_client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[{"role": "system", "content": system_message_for_Clause},
                   {"role": "user", "content": query}]
     )
+    
+    return DomainClause.choices[0].message.content
     
     #If no clause or domain is mentioned
     if DomainClause.choices[0].message.content == "None":
