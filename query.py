@@ -8,33 +8,37 @@ import streamlit as st
 bi_encoder, cross_encoder, collection, openai_client, assistant = get_resources()
 
 def handle_query(query, chat: Chat):
-    
-    # #Check if any Clause or Domain is mentioned in the query
+        
+    #     # #Check if any Clause or Domain is mentioned in the query
     # system_message_for_Clause = """
-    # You are an assistant that identifies whether a query mentions a domain or clause in the format B.(number).(optional clause number). 
-    # If no domain or clause is mentioned, respond with "None".
-
+    # You are an assistant that identifies whether a query mentions a domain, clause, or "Risk Ref" in the formats:
+    # - B.(number).(optional clause number) (for domains or clauses)
+    # - Risk Ref (number) (for Risk Ref references)
     
-    # What is the Domain or Clause mentioned in the query: What is B.1.1?
+    # If no domain, clause, or Risk Ref is mentioned, respond with "None".
+    
+    # What is the Domain, Clause, or Risk Ref mentioned in the query: What is B.1.1?
     # B.1.1
-    # What is the Domain or Clause mentioned in the query: What is B.12?
+    # What is the Domain, Clause, or Risk Ref mentioned in the query: What is B.12?
     # B.12
-    # What is the Domain or Clause mentioned in the query: How do i implement B.1.5?
+    # What is the Domain, Clause, or Risk Ref mentioned in the query: How do I implement B.1.5?
     # B.1.5
-    # What is the Domain or Clause mentioned in the query: What is Cyber Trust Mark?
+    # What is the Domain, Clause, or Risk Ref mentioned in the query: What is Cyber Trust Mark?
     # None
-    # What is the Domain or Clause mentioned in the query: What is the purpose of Cyber Trust Mark?
+    # What is the Domain, Clause, or Risk Ref mentioned in the query: What is the purpose of Cyber Trust Mark?
     # None
-    # What is the Domain or Clause mentioned in the query: What are the clauses in B.9 for supporter tier?
+    # What is the Domain, Clause, or Risk Ref mentioned in the query: What are the clauses in B.9 for supporter tier?
     # B.9
-    # What is the Domain or Clause mentioned in the query: Hello?
+    # What is the Domain, Clause, or Risk Ref mentioned in the query: What is Risk Ref 3?
+    # Risk Ref 3
+    # What is the Domain, Clause, or Risk Ref mentioned in the query: What is Risk Reference 21?
+    # Risk Ref 21
+    # What is the Domain, Clause, or Risk Ref mentioned in the query: How do I handle Risk Ref 5 in my implementation?
+    # Risk Ref 5
+    # What is the Domain, Clause, or Risk Ref mentioned in the query: Hello?
     # None
     # """
-    # DomainClause = openai_client.chat.completions.create(
-    #     model="gpt-4o-mini",
-    #     messages=[{"role": "system", "content": system_message_for_Clause},
-    #               {"role": "user", "content": query}]
-    # )
+
     
     # #If no clause or domain is mentioned
     # if DomainClause.choices[0].message.content == "None":
