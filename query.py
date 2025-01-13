@@ -120,7 +120,8 @@ def handle_query(query, chat: Chat):
         context = "\n\n\n".join(
             [f"Passage: {r[0]}\nRelevance Score: {r[1]:.2f}" for r in sorted_results]) or "none found"
         # Send the refined query and context to OpenAI for further processing
-    
+        content=f"Background Information: {context}\n\nCompany Information: {chat.get_infrastructure}\n\nUser Query: {query}\n",
+        return content
         openai_client.beta.threads.messages.create(
             thread_id=chat.get_thread_id(),  # Retrieve the thread ID from the chat instance
             role="user",
