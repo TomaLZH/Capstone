@@ -12,4 +12,5 @@ faiss-cpu
 langchain-community
 pymilvus==2.4.12
 langchain-huggingface
+exceptions
 docx
