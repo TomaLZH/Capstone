@@ -1,5 +1,4 @@
 # src/initialize.py
-from astrapy import DataAPIClient
 from sentence_transformers import SentenceTransformer
 from sentence_transformers.cross_encoder import CrossEncoder
 from openai import OpenAI
