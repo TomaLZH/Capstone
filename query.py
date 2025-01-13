@@ -8,8 +8,6 @@ import streamlit as st
 bi_encoder, cross_encoder, client, openai_client, assistant = get_resources()
 
 
-
-
 def handle_query(query, chat: Chat):
         
         # #Check if any Clause or Domain is mentioned in the query
