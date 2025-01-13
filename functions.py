@@ -34,7 +34,5 @@ def analyze_file(chat:Chat, file):
         messages=[{"role": "system", "content": system_message},
                   {"role": "user", "content": text}]
     )
-    st.write(response.choices[0].message.content)
-    return 0
     Chat.set_infrastructure(response.choices[0].message.content)
     

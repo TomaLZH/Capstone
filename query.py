@@ -53,7 +53,8 @@ def handle_query(query, chat: Chat):
         # Define the system message to guide the assistant's behavior
         system_message = """
         You are an assistant analyzing the conversation. If the user query is clear and unambiguous, return the query as-is.
-        If the query is ambiguous, generate a focused query. If no context can be determined, return the query as-is. Do not replace 'ref' with 'reference'.
+        If the query is ambiguous, generate a focused query based on the history of the conversation, focusing on the latest chats. 
+        If no context can be determined, return the query as-is.'.
         """
 
         # Construct the user message containing conversation history and the query
@@ -122,7 +123,7 @@ def handle_query(query, chat: Chat):
         openai_client.beta.threads.messages.create(
             thread_id=chat.get_thread_id(),  # Retrieve the thread ID from the chat instance
             role="user",
-            content=f"User's skill level: {chat.get_skill_level()}.\n User's IT Infrastructure Environment: {chat.get_environment()}.\n\n Background Information: {context}\n\nUser Query: {query}\n",
+            content=f"Background Information: {context}\n\nCompany Information: {chat.get_infrastructure}\n\nUser Query: {query}\n",
         )
 
         # Execute and poll the assistant's response from OpenAI
