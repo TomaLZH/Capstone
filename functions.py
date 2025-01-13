@@ -27,6 +27,7 @@ def analyze_file(chat:Chat, file):
     system_message = """
     You are an assistant that analyzes the content of a file and returns in a structured format, the infrastructure, 
     and the environment of the company mentioned in the file. Analyze the text and provide a summary of the key points.
+    Just provide the summary of the key points in the file, no conclusion, explanation or extra information is needed.
     """
     response = openai_client.chat.completions.create(
         model="gpt-4o-mini",
