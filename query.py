@@ -83,7 +83,7 @@ def handle_query(query, chat: Chat):
             output_fields=["text"],
         )
         
-        return results
+        return results[0]
         # Extract text passages from the results for further processing
         top_passages = [doc['text'] for doc in results]
 
