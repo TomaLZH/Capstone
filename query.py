@@ -87,7 +87,10 @@ def handle_query(query, chat: Chat):
             top_k=20,
             output_fields=["text"]
         )
-        return results[0]
+        formatted_text_list = [item['text'] for item in results]
+
+        return formatted_text_list
+
         
     
     if results:
