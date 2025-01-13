@@ -87,7 +87,7 @@ def handle_query(query, chat: Chat):
             top_k=20,
             output_fields=["text"]
         )
-        return results
+        return results[0]
         
     
     if results:
