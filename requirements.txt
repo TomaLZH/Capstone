@@ -1,5 +1,4 @@
 openai
-astrapy
 torch
 pdfplumber
 streamlit
@@ -11,4 +10,5 @@ langchain
 sentence-transformers
 faiss-cpu
 langchain-community
+pymilvus==2.4.12
 langchain-huggingface

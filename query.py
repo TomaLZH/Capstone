@@ -5,7 +5,10 @@ from Chat import Chat
 import streamlit as st
 
 # Load models and resources such as encoders, database collections, and OpenAI client
-bi_encoder, cross_encoder, collection, openai_client, assistant = get_resources()
+bi_encoder, cross_encoder, client, openai_client, assistant = get_resources()
+
+def
+
 
 def handle_query(query, chat: Chat):
     
@@ -65,13 +68,12 @@ def handle_query(query, chat: Chat):
         query_embedding /= np.linalg.norm(query_embedding)  # Normalize the embedding
 
         # Search the collection using the query embedding to find relevant documents
-        results = list(collection.find(sort={"$vector": query_embedding}, limit=30, include_similarity=True))
-        return "Test"
+        results = client.search(collection_name="Capstone", anns_field="vector", data=query_embedding, top_k=30, output_fields=["text"])
+        return results
     #If domain or clause is mentioned
     else:
-        processed_query = query
         #Embed the domain or clause mentioned in the query
-        results = list(collection.find(sort={"$vectorize": query}, limit=30, include_similarity=True))
+        results = client.query(collection_name="Capstone", filter='text like %{query}%', top_k=30, output_fields=["text"])
         return results
         
     

@@ -6,11 +6,11 @@ from openai import OpenAI
 from dotenv import load_dotenv
 import os
 import streamlit as st
+from pymilvus import MilvusClient
+
 
 # Load API keys and configurations from Streamlit secrets
 OPENAI_API_KEY = st.secrets["openai"]["API_KEY"]
-ASTRA_API_KEY = st.secrets["astradb"]["API_KEY"]
-ASTRA_DB_URL = st.secrets["astradb"]["DB_URL"]
 
 # Initialize bi-encoder model for query embedding
 # This model is used to create embeddings for text similarity
@@ -24,13 +24,12 @@ cross_encoder = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
 # Alternate Model option (commented out):
 # cross_encoder = CrossEncoder("BAAI/bge-reranker-v2-m3")
 
-# Initialize Astra database client for managing collections
-client = DataAPIClient(ASTRA_API_KEY)
-db = client.get_database_by_api_endpoint(ASTRA_DB_URL)
-collection = db.get_collection("Capstone")
 
 # Log the connected database collections
-print(f"Connected to Astra DB: {db.list_collection_names()}")
+client = MilvusClient(uri="https://in03-6d0166da8e21ddd.serverless.gcp-us-west1.cloud.zilliz.com", token="ac9e06ae092afb90f90b61de112607cb2918fbba386dfc45edba79c7a39639ef9c3abdfd45b2522d7699c5b12e7e6c8638fcc794")
+
+client.describe_collection(collection_name="Capstone")
+
 
 # Initialize OpenAI client for generating assistant responses
 openai_client = OpenAI(api_key=OPENAI_API_KEY)
@@ -40,4 +39,4 @@ assistant = openai_client.beta.assistants.retrieve("asst_H8RXmor1XBDG0F1917fixtH
 # Function to export initialized resources
 # This function returns all initialized models and clients for use in the application
 def get_resources():
-    return bi_encoder, cross_encoder, collection, openai_client, assistant
+    return bi_encoder, cross_encoder, client, openai_client, assistant
