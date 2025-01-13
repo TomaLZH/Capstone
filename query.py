@@ -11,61 +11,65 @@ def
 
 
 def handle_query(query, chat: Chat):
-    
-    #Check if any Clause or Domain is mentioned in the query
-    system_message_for_Clause = """
-    You are an assistant that identifies whether a query mentions a domain or clause in the format B.(number).(optional clause number). 
-    If no domain or clause is mentioned, respond with "None".
-
-    
-    What is the Domain or Clause mentioned in the query: What is B.1.1?
-    B.1.1
-    What is the Domain or Clause mentioned in the query: What is B.12?
-    B.12
-    What is the Domain or Clause mentioned in the query: How do i implement B.1.5?
-    B.1.5
-    What is the Domain or Clause mentioned in the query: What is Cyber Trust Mark?
-    None
-    What is the Domain or Clause mentioned in the query: What is the purpose of Cyber Trust Mark?
-    None
-    What is the Domain or Clause mentioned in the query: What are the clauses in B.9 for supporter tier?
-    B.9
-    What is the Domain or Clause mentioned in the query: Hello?
-    None
-    """
-    DomainClause = openai_client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[{"role": "system", "content": system_message_for_Clause},
-                  {"role": "user", "content": query}]
-    )
-    
-    #If no clause or domain is mentioned
-    if DomainClause.choices[0].message.content == "None":
         
-        # Define the system message to guide the assistant's behavior
-        system_message = """
-        You are an assistant analyzing the conversation. If the user query is clear and unambiguous, return the query as-is.
-        If the query is ambiguous, generate a focused query. If no context can be determined, return the query as-is. Do not replace 'ref' with 'reference'.
-        """
+    #     # #Check if any Clause or Domain is mentioned in the query
+    # system_message_for_Clause = """
+    # You are an assistant that identifies whether a query mentions a domain, clause, or "Risk Ref" in the formats:
+    # - B.(number).(optional clause number) (for domains or clauses)
+    # - Risk Ref (number) (for Risk Ref references)
+    
+    # If no domain, clause, or Risk Ref is mentioned, respond with "None".
+    
+    # What is the Domain, Clause, or Risk Ref mentioned in the query: What is B.1.1?
+    # B.1.1
+    # What is the Domain, Clause, or Risk Ref mentioned in the query: What is B.12?
+    # B.12
+    # What is the Domain, Clause, or Risk Ref mentioned in the query: How do I implement B.1.5?
+    # B.1.5
+    # What is the Domain, Clause, or Risk Ref mentioned in the query: What is Cyber Trust Mark?
+    # None
+    # What is the Domain, Clause, or Risk Ref mentioned in the query: What is the purpose of Cyber Trust Mark?
+    # None
+    # What is the Domain, Clause, or Risk Ref mentioned in the query: What are the clauses in B.9 for supporter tier?
+    # B.9
+    # What is the Domain, Clause, or Risk Ref mentioned in the query: What is Risk Ref 3?
+    # Risk Ref 3
+    # What is the Domain, Clause, or Risk Ref mentioned in the query: What is Risk Reference 21?
+    # Risk Ref 21
+    # What is the Domain, Clause, or Risk Ref mentioned in the query: How do I handle Risk Ref 5 in my implementation?
+    # Risk Ref 5
+    # What is the Domain, Clause, or Risk Ref mentioned in the query: Hello?
+    # None
+    # """
 
-        # Construct the user message containing conversation history and the query
-        user_message = f"Conversation so far:\n{chat.get_history()}\n\nUser Query: {query}"
+    
+    # #If no clause or domain is mentioned
+    # if DomainClause.choices[0].message.content == "None":
+        
+    # Define the system message to guide the assistant's behavior
+    system_message = """
+    You are an assistant analyzing the conversation. If the user query is clear and unambiguous, return the query as-is.
+    If the query is ambiguous, generate a focused query. If no context can be determined, return the query as-is. Do not replace 'ref' with 'reference'.
+    """
 
-        # Use OpenAI GPT to process the query based on the system message
-        completion = openai_client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[{"role": "system", "content": system_message},
-                    {"role": "user", "content": user_message}]
-        )
+    # Construct the user message containing conversation history and the query
+    user_message = f"Conversation so far:\n{chat.get_history()}\n\nUser Query: {query}"
 
-        # Extract the processed query from the GPT completion response
-        processed_query = completion.choices[0].message.content
-        print(processed_query)  # Debugging/logging output
-        logging.info(f"Processed query: {processed_query}")
+    # Use OpenAI GPT to process the query based on the system message
+    completion = openai_client.chat.completions.create(
+        model="gpt-4o-mini",
+         messages=[{"role": "system", "content": system_message},
+                  {"role": "user", "content": user_message}]
+     )
 
-        # Generate an embedding for the processed query using the bi-encoder
-        query_embedding = bi_encoder.encode(processed_query).astype(np.float32)
-        query_embedding /= np.linalg.norm(query_embedding)  # Normalize the embedding
+    # Extract the processed query from the GPT completion response
+    processed_query = completion.choices[0].message.content
+    print(processed_query)  # Debugging/logging output
+    logging.info(f"Processed query: {processed_query}")
+
+    # Generate an embedding for the processed query using the bi-encoder
+    query_embedding = bi_encoder.encode(processed_query).astype(np.float32)
+    query_embedding /= np.linalg.norm(query_embedding)  # Normalize the embedding
 
         # Search the collection using the query embedding to find relevant documents
         results = client.search(collection_name="Capstone", anns_field="vector", data=query_embedding, top_k=30, output_fields=["text"])
@@ -97,7 +101,6 @@ def handle_query(query, chat: Chat):
 
         # Construct the context from the top-ranked passages
         context = "\n\n\n".join([f"Passage: {r[0]}\nRelevance Score: {r[1]:.2f}" for r in sorted_results]) or "none found"
-        
         # Send the refined query and context to OpenAI for further processing
         openai_client.beta.threads.messages.create(
             thread_id=chat.get_thread_id(),  # Retrieve the thread ID from the chat instance
