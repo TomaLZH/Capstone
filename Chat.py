@@ -6,7 +6,7 @@ class Chat:
         self.thread_id = thread.id
         self.skill_level = skill_level
         self.environment = environment
-        self.checklist = {}
+        self.infrastructure = None
 
     def add_message(self, message):
         """Add a message to the chat history and increment the query counter."""
@@ -41,10 +41,10 @@ class Chat:
         """Set the environment of the user."""
         self.environment = environment
 
-    def get_checklist(self):
+    def get_infrastructure(self):
         """Return the checklist of the user."""
-        return self.checklist
+        return self.infrastructure
 
-    def set_checklist(self, checklist):
+    def set_infrastructure(self, infrastructure):
         """Set the checklist of the user."""
-        self.checklist = checklist
+        self.infrastructure = infrastructure

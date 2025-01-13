@@ -96,7 +96,7 @@ def handle_query(query, chat: Chat):
             top_k=20,
             output_fields=["text"]
         )
-        
+
         # Extract text passages from the results for further processing
         top_passages = [doc['text'] for doc in results]
         # Create input pairs for the cross-encoder by combining the query with each passage
