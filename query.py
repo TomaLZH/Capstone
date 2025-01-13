@@ -7,9 +7,10 @@ import streamlit as st
 # Load models and resources such as encoders, database collections, and OpenAI client
 bi_encoder, cross_encoder, client, openai_client, assistant = get_resources()
 
+
 def handle_query(query, chat: Chat):
-        
-        # #Check if any Clause or Domain is mentioned in the query
+
+    # #Check if any Clause or Domain is mentioned in the query
     system_message_for_Clause = """
     You are an assistant that identifies whether a query mentions a domain, clause, or "Risk Ref" in the formats:
     - B.(number).(optional clause number) (for domains or clauses)
@@ -38,18 +39,17 @@ def handle_query(query, chat: Chat):
     What is the Domain, Clause, or Risk Ref mentioned in the query: Hello?
     None
     """
-    
+
     # Construct the user message containing conversation history and the query
     DomainClause = openai_client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[{"role": "system", "content": system_message_for_Clause},
-                {"role": "user", "content": query}]
+                  {"role": "user", "content": query}]
     )
 
-    
     # #If no clause or domain is mentioned
     if DomainClause.choices[0].message.content == "None":
-        
+
         # Define the system message to guide the assistant's behavior
         system_message = """
         You are an assistant analyzing the conversation. If the user query is clear and unambiguous, return the query as-is.
@@ -63,7 +63,7 @@ def handle_query(query, chat: Chat):
         completion = openai_client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[{"role": "system", "content": system_message},
-                    {"role": "user", "content": user_message}]
+                      {"role": "user", "content": user_message}]
         )
 
         # Extract the processed query from the GPT completion response
@@ -71,7 +71,8 @@ def handle_query(query, chat: Chat):
 
         # Generate an embedding for the processed query using the bi-encoder
         query_embedding = bi_encoder.encode(processed_query).astype(np.float32)
-        query_embedding /= np.linalg.norm(query_embedding)  # Normalize the embedding
+        # Normalize the embedding
+        query_embedding /= np.linalg.norm(query_embedding)
 
         # Search the collection using the query embedding to find relevant documents
 
@@ -82,45 +83,40 @@ def handle_query(query, chat: Chat):
             data=[query_embedding],
             output_fields=["text"],
         )
-        
-        formatted_text_list = [item['entity']['text'] for item in results[0]]
-        return formatted_text_list
-        # Extract text passages from the results for further processing
-        top_passages = [doc['text'] for doc in results]
 
+        top_passages = [item['entity']['text'] for item in results[0]]
         # Create input pairs for the cross-encoder by combining the query with each passage
         cross_inp = [[processed_query, passage] for passage in top_passages]
-        
-        #If domain or clause is mentioned
+    # If domain or clause is mentioned
     else:
-        #Embed the domain or clause mentioned in the query
+        # Embed the domain or clause mentioned in the query
         results = client.query(
             collection_name="Capstone",
             filter=f"text like '%{query}%'",
             top_k=20,
             output_fields=["text"]
         )
-            # Extract text passages from the results for further processing
+        # Extract text passages from the results for further processing
         top_passages = [doc['text'] for doc in results]
-
         # Create input pairs for the cross-encoder by combining the query with each passage
         cross_inp = [[query, passage] for passage in top_passages]
-
 
     if results:
         # Predict relevance scores for each pair using the cross-encoder
         cross_scores = cross_encoder.predict(cross_inp)
-        
+
         # Filter results to only include those with a score > 0
         filtered_results = [
             (passage, score) for passage, score in zip(top_passages, cross_scores) if score > 0
         ]
-        
+
         # Sort the results by their relevance scores in descending order and select the top 15
-        sorted_results = sorted(filtered_results, key=lambda x: x[1], reverse=True)[:15]
+        sorted_results = sorted(
+            filtered_results, key=lambda x: x[1], reverse=True)[:15]
 
         # Construct the context from the top-ranked passages
-        context = "\n\n\n".join([f"Passage: {r[0]}\nRelevance Score: {r[1]:.2f}" for r in sorted_results]) or "none found"
+        context = "\n\n\n".join(
+            [f"Passage: {r[0]}\nRelevance Score: {r[1]:.2f}" for r in sorted_results]) or "none found"
         # Send the refined query and context to OpenAI for further processing
         openai_client.beta.threads.messages.create(
             thread_id=chat.get_thread_id(),  # Retrieve the thread ID from the chat instance
@@ -130,12 +126,13 @@ def handle_query(query, chat: Chat):
 
         # Execute and poll the assistant's response from OpenAI
         run = openai_client.beta.threads.runs.create_and_poll(
-            thread_id=chat.get_thread_id(), 
+            thread_id=chat.get_thread_id(),
             assistant_id=assistant.id,
         )
 
         # Retrieve the latest messages from the thread
-        messages = openai_client.beta.threads.messages.list(thread_id=chat.get_thread_id())
+        messages = openai_client.beta.threads.messages.list(
+            thread_id=chat.get_thread_id())
 
         # Extract the assistant's response from the messages
         response = messages.data[0].content[0].text.value
