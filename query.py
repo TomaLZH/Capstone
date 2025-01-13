@@ -83,7 +83,8 @@ def handle_query(query, chat: Chat):
             output_fields=["text"],
         )
         
-        return results[0][0]
+        formatted_text_list = [item['entity']['text'] for item in results[0]]
+        return formatted_text_list
         # Extract text passages from the results for further processing
         top_passages = [doc['text'] for doc in results]
 
