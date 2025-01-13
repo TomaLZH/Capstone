@@ -76,7 +76,14 @@ def handle_query(query, chat: Chat):
         query_embedding /= np.linalg.norm(query_embedding)  # Normalize the embedding
 
         # Search the collection using the query embedding to find relevant documents
-        results = client.search(collection_name="Capstone", anns_field="vector", data=query_embedding, top_k=20, output_fields=["text"])
+
+        results = client.search(
+            collection_name="Capstone",
+            anns_field="vector",
+            data=[query_embedding],
+            output_fields=["text"],
+        )
+        
         return results
     #If domain or clause is mentioned
     else:
