@@ -1,6 +1,6 @@
 import streamlit as st
 from query import handle_query  # Import the query handler function
-from Chat import Chat  # Import the Chat class 
+from Chat import Chat  # Import the Chat class
 from openai import OpenAI
 from Initialize import get_resources
 
@@ -11,20 +11,26 @@ bi_encoder, cross_encoder, collection, openai_client, assistant = get_resources(
 st.title("Cyber Trust Mark Assistant")
 
 # Function to update the skill level when the dropdown changes
+
+
 def update_skill_level():
     # Update the skill level in the chat instance when the session state changes
     chat_instance.set_skill_level(st.session_state.it_skill_level)
-    
+
 # Function to update the company environment when the dropdown changes
+
+
 def update_environment():
     # Update the environment in the chat instance when the session state changes
     chat_instance.set_environment(st.session_state.environment)
+
 
 # Initialize session state for chat instances and user preferences
 if "chats" not in st.session_state:
     # Create a dictionary to store multiple chat instances
     st.session_state.chats = {"chat_1": Chat(openai_client)}
-    st.session_state.selected_chat_id = "chat_1"  # Set the default selected chat instance
+    # Set the default selected chat instance
+    st.session_state.selected_chat_id = "chat_1"
 
 if "it_skill_level" not in st.session_state:
     # Set the default IT skill level to Beginner
@@ -42,7 +48,7 @@ for chat_id in st.session_state.chats.keys():
     if st.sidebar.button(f"{chat_id}"):
         # Switch to the selected chat instance
         st.session_state.selected_chat_id = chat_id
-        
+
 # Button to create a new chat instance
 if st.sidebar.button("New Chat"):
     # Create a new chat instance with a unique ID
@@ -92,7 +98,8 @@ if prompt := st.chat_input("How can I assist you today?"):
 
     # Call the query handler to process the user input
     with st.spinner("Thinking..."):
-        response = handle_query(prompt, chat_instance)  # Pass the selected chat instance to the handler
+        # Pass the selected chat instance to the handler
+        response = handle_query(prompt, chat_instance)
 
     # Display the assistant's response
     st.chat_message("assistant").markdown(response)

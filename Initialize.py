@@ -25,7 +25,8 @@ cross_encoder = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
 
 
 # Log the connected database collections
-client = MilvusClient(uri="https://in03-6d0166da8e21ddd.serverless.gcp-us-west1.cloud.zilliz.com", token="ac9e06ae092afb90f90b61de112607cb2918fbba386dfc45edba79c7a39639ef9c3abdfd45b2522d7699c5b12e7e6c8638fcc794")
+client = MilvusClient(uri="https://in03-6d0166da8e21ddd.serverless.gcp-us-west1.cloud.zilliz.com",
+                      token="ac9e06ae092afb90f90b61de112607cb2918fbba386dfc45edba79c7a39639ef9c3abdfd45b2522d7699c5b12e7e6c8638fcc794")
 
 client.describe_collection(collection_name="Capstone")
 
@@ -33,9 +34,12 @@ client.describe_collection(collection_name="Capstone")
 # Initialize OpenAI client for generating assistant responses
 openai_client = OpenAI(api_key=OPENAI_API_KEY)
 # Retrieve the assistant instance from OpenAI
-assistant = openai_client.beta.assistants.retrieve("asst_H8RXmor1XBDG0F1917fixtHE")
+assistant = openai_client.beta.assistants.retrieve(
+    "asst_H8RXmor1XBDG0F1917fixtHE")
 
 # Function to export initialized resources
 # This function returns all initialized models and clients for use in the application
+
+
 def get_resources():
     return bi_encoder, cross_encoder, client, openai_client, assistant

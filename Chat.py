@@ -1,7 +1,7 @@
 class Chat:
-    def __init__(self, openai_client, skill_level= "Beginner", environment = "None Selected"):
+    def __init__(self, openai_client, skill_level="Beginner", environment="None Selected"):
         self.query_counter = 0
-        self.chat_history = [] 
+        self.chat_history = []
         thread = openai_client.beta.threads.create()
         self.thread_id = thread.id
         self.skill_level = skill_level
@@ -28,11 +28,11 @@ class Chat:
     def get_skill_level(self):
         """Return the skill level of the user."""
         return self.skill_level
-    
+
     def set_skill_level(self, skill_level):
         """Set the skill level of the user."""
         self.skill_level = skill_level
-        
+
     def get_environment(self):
         """Return the environment of the user."""
         return self.environment
@@ -40,11 +40,11 @@ class Chat:
     def set_environment(self, environment):
         """Set the environment of the user."""
         self.environment = environment
-        
+
     def get_checklist(self):
         """Return the checklist of the user."""
         return self.checklist
-    
+
     def set_checklist(self, checklist):
         """Set the checklist of the user."""
         self.checklist = checklist
