@@ -81,7 +81,12 @@ def handle_query(query, chat: Chat):
     #If domain or clause is mentioned
     else:
         #Embed the domain or clause mentioned in the query
-        results = client.query(collection_name="Capstone", filter='text like %{query}%', top_k=20, output_fields=["text"])
+        results = client.query(
+            collection_name="Capstone",
+            filter=f"text like '%{query}%'",
+            top_k=20,
+            output_fields=["text"]
+        )
         return results
         
     
