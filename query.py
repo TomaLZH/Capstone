@@ -47,8 +47,6 @@ def handle_query(query, chat: Chat):
                   {"role": "user", "content": query}]
     )
 
-    return DomainClause.choices[0].message.content
-
     # #If no clause or domain is mentioned
     if DomainClause.choices[0].message.content == "None":
 
