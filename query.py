@@ -92,10 +92,11 @@ def handle_query(query, chat: Chat):
         # Embed the domain or clause mentioned in the query
         results = client.query(
             collection_name="Capstone",
-            filter=f"text like '%{query}%'",
+            filter=f"text like '%{DomainClause.choices[0].message.content}%'",
             top_k=20,
             output_fields=["text"]
         )
+        
         # Extract text passages from the results for further processing
         top_passages = [doc['text'] for doc in results]
         # Create input pairs for the cross-encoder by combining the query with each passage
