@@ -80,12 +80,11 @@ def handle_query(query, chat: Chat):
         results = client.search(
             collection_name="Capstone",
             anns_field="vector",
+            top_k=20,
             data=[query_embedding],
             output_fields=["text"],
         )
-        
-        return results
-    #If domain or clause is mentioned
+        #If domain or clause is mentioned
     else:
         #Embed the domain or clause mentioned in the query
         results = client.query(
@@ -94,8 +93,6 @@ def handle_query(query, chat: Chat):
             top_k=20,
             output_fields=["text"]
         )
-        formatted_text_list = [item['text'] for item in results]
-        return formatted_text_list
     
     if results:
         # Extract text passages from the results for further processing
