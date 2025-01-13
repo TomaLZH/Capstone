@@ -2,7 +2,9 @@ import streamlit as st
 from query import handle_query  # Import the query handler function
 from Chat import Chat  # Import the Chat class
 from openai import OpenAI
-from Initialize import get_resources
+from Initialize import get_resources    
+import pandas as pd
+from functions import analyze_file
 
 # Load required resources and models
 bi_encoder, cross_encoder, collection, openai_client, assistant = get_resources()
@@ -64,6 +66,15 @@ st.subheader("Company Configuration and IT Skill Level")
 # Show the selected environment and skill level
 st.write("Selected Company Environment:", chat_instance.get_environment())
 st.write("Selected IT Skill Level:", chat_instance.get_skill_level())
+st.write("Upload Company Details: ")
+# File uploader for company details
+uploaded_file = st.file_uploader("Choose a file", type=["csv", "xlsx", "docx"], help="Upload your company details file.")
+
+if uploaded_file is not None:
+    # Process the uploaded file
+    file_details = {"filename": uploaded_file.name, "filetype": uploaded_file.type, "filesize": uploaded_file.size}
+    st.write(file_details)
+    analyze_file(uploaded_file)
 
 # Dropdown for selecting the company's environment
 environment = st.selectbox(
