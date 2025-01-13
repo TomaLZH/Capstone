@@ -68,8 +68,6 @@ def handle_query(query, chat: Chat):
 
         # Extract the processed query from the GPT completion response
         processed_query = completion.choices[0].message.content
-        print(processed_query)  # Debugging/logging output
-        logging.info(f"Processed query: {processed_query}")
 
         # Generate an embedding for the processed query using the bi-encoder
         query_embedding = bi_encoder.encode(processed_query).astype(np.float32)
@@ -84,6 +82,12 @@ def handle_query(query, chat: Chat):
             data=[query_embedding],
             output_fields=["text"],
         )
+                # Extract text passages from the results for further processing
+        top_passages = [doc['text'] for doc in results]
+
+        # Create input pairs for the cross-encoder by combining the query with each passage
+        cross_inp = [[processed_query, passage] for passage in top_passages]
+        
         #If domain or clause is mentioned
     else:
         #Embed the domain or clause mentioned in the query
@@ -93,14 +97,14 @@ def handle_query(query, chat: Chat):
             top_k=20,
             output_fields=["text"]
         )
-    
-    if results:
-        # Extract text passages from the results for further processing
+            # Extract text passages from the results for further processing
         top_passages = [doc['text'] for doc in results]
 
         # Create input pairs for the cross-encoder by combining the query with each passage
-        cross_inp = [[processed_query, passage] for passage in top_passages]
+        cross_inp = [[query, passage] for passage in top_passages]
 
+
+    if results:
         # Predict relevance scores for each pair using the cross-encoder
         cross_scores = cross_encoder.predict(cross_inp)
         
