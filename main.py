@@ -74,7 +74,7 @@ if uploaded_file is not None:
     # Process the uploaded file
     file_details = {"filename": uploaded_file.name, "filetype": uploaded_file.type, "filesize": uploaded_file.size}
     st.write(file_details)
-    analyze_file(uploaded_file)
+    analyze_file(chat_instance, uploaded_file)
 
 # Dropdown for selecting the company's environment
 environment = st.selectbox(
