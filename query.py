@@ -88,10 +88,7 @@ def handle_query(query, chat: Chat):
             output_fields=["text"]
         )
         formatted_text_list = [item['text'] for item in results]
-
         return formatted_text_list
-
-        
     
     if results:
         # Extract text passages from the results for further processing
