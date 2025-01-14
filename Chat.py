@@ -1,5 +1,5 @@
 class Chat:
-    def __init__(self, openai_client, skill_level="Beginner");
+    def __init__(self, openai_client, skill_level="Beginner"):
         self.query_counter = 0
         self.chat_history = []
         thread = openai_client.beta.threads.create()
