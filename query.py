@@ -91,7 +91,7 @@ def handle_query(query, chat: Chat):
     # If domain or clause is mentioned
     else:
         # Embed the domain or clause mentioned in the query
-        st.write(DomainClause.choices[0].message.content)
+        st.write(f"Search Term = {DomainClause.choices[0].message.content}")
         results = client.query(
             collection_name="Capstone",
             filter=f"text like '%{DomainClause.choices[0].message.content}%'",
