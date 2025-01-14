@@ -2,15 +2,15 @@ import streamlit as st
 from query import handle_query  # Import the query handler function
 from Chat import Chat  # Import the Chat class
 from openai import OpenAI
-from Initialize import get_resources    
+from Initialize import get_resources
 import pandas as pd
 from functions import analyze_file
 
 # Load required resources and models
 bi_encoder, cross_encoder, collection, openai_client, assistant = get_resources()
 
-# App title
-st.title("Cyber Trust Mark Assistant")
+# # App title
+# st.title("Cyber Trust Mark Assistant")
 
 # Function to update the skill level when the dropdown changes
 
@@ -30,7 +30,6 @@ if "chats" not in st.session_state:
 if "it_skill_level" not in st.session_state:
     # Set the default IT skill level to Beginner
     st.session_state.it_skill_level = "Beginner"
-
 
 # Sidebar for managing chat instances
 st.sidebar.header("Chat Instances")
@@ -54,26 +53,27 @@ chat_instance = st.session_state.chats[st.session_state.selected_chat_id]
 st.subheader("Company Configuration and IT Skill Level")
 st.write("Selected IT Skill Level:", chat_instance.get_skill_level())
 st.write("Upload Company Details: ")
+
 # File uploader for company details
-# File uploader for company details
-uploaded_file = st.file_uploader("Choose a file", type=["csv", "xlsx", "docx"], help="Upload your company details file.")
+uploaded_file = st.file_uploader("Choose a file", type=[
+                                 "csv", "xlsx", "docx"], help="Upload your company details file.")
 
 if uploaded_file is not None:
     # Check if the file has already been processed
     if "uploaded_file_name" not in st.session_state or st.session_state.uploaded_file_name != uploaded_file.name:
         # Process the uploaded file
-        file_details = {"filename": uploaded_file.name, "filetype": uploaded_file.type, "filesize": uploaded_file.size}
+        file_details = {"filename": uploaded_file.name,
+                        "filetype": uploaded_file.type, "filesize": uploaded_file.size}
         st.write(file_details)
 
         # Analyze the file and store the results in session state
-        st.session_state.analyzed_file_data = analyze_file(chat_instance, uploaded_file)
+        st.session_state.analyzed_file_data = analyze_file(
+            chat_instance, uploaded_file)
         st.session_state.uploaded_file_name = uploaded_file.name
 
     # Display analyzed data or results
     st.write("File Analysis Results:")
     st.write(st.session_state.analyzed_file_data)
-
-
 
 # Dropdown for selecting the IT skill level
 it_skill_level = st.selectbox(

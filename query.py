@@ -39,14 +39,14 @@ def handle_query(query, chat: Chat):
     What is the Domain, Clause, or Risk Ref mentioned in the query: Hello?
     None
     """
-    
+
     # Construct the user message containing conversation history and the query
     DomainClause = openai_client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[{"role": "system", "content": system_message_for_Clause},
                   {"role": "user", "content": query}]
     )
-    
+
     # #If no clause or domain is mentioned
     if DomainClause.choices[0].message.content == "None":
 
@@ -120,7 +120,7 @@ def handle_query(query, chat: Chat):
         # Construct the context from the top-ranked passages
         context = "\n\n\n".join(
             [f"Passage: {r[0]}\nRelevance Score: {r[1]:.2f}" for r in sorted_results]) or "none found"
-        # Send the refined query and context to OpenAI for further processing    
+        # Send the refined query and context to OpenAI for further processing
         openai_client.beta.threads.messages.create(
             thread_id=chat.get_thread_id(),  # Retrieve the thread ID from the chat instance
             role="user",

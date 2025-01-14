@@ -21,8 +21,9 @@ def read_file(file):
         return df.to_string()
     else:
         return "Unsupported file format"
-    
-def analyze_file(chat:Chat, file):
+
+
+def analyze_file(chat: Chat, file):
     text = read_file(file)
     system_message = """
     You are an assistant that analyzes the content of a file and returns in a structured format, the infrastructure, 
@@ -35,4 +36,3 @@ def analyze_file(chat:Chat, file):
                   {"role": "user", "content": text}]
     )
     Chat.set_infrastructure(chat, response.choices[0].message.content)
-    
