@@ -30,7 +30,7 @@ def handle_query(query, chat: Chat):
     None
     What is the Domain, Clause, or Risk Ref mentioned in the query: What are the clauses in B.9 for supporter tier?
     B.9
-    What is the Domain, Clause, or Risk Ref mentioned in the query: What is Risk Ref 3?
+    What is the Domain, Clause, or Risk Ref mentioned in the query: What is risk ref 3?
     Risk Ref 3
     What is the Domain, Clause, or Risk Ref mentioned in the query: What is Risk Reference 21?
     Risk Ref 21
