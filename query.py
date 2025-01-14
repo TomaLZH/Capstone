@@ -39,14 +39,18 @@ def handle_query(query, chat: Chat):
     What is the Domain, Clause, or Risk Ref mentioned in the query: Hello?
     None
     """
-
+    
     # Construct the user message containing conversation history and the query
     DomainClause = openai_client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[{"role": "system", "content": system_message_for_Clause},
                   {"role": "user", "content": query}]
     )
+    
+    return DomainClause.choices[0].message.content
 
+    
+    
     # #If no clause or domain is mentioned
     if DomainClause.choices[0].message.content == "None":
 
