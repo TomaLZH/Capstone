@@ -14,7 +14,7 @@ def handle_query(query, chat: Chat):
     system_message_for_Clause = """
     You are an assistant that identifies whether a query mentions a domain, clause, or "Risk Ref" in the formats:
     - B.(number).(optional clause number) (for domains or clauses)
-    - Risk Ref (number) (for Risk Ref references)
+    - Risk Ref: (number) (for Risk Ref references)
     
     If no domain, clause, or Risk Ref is mentioned, respond with "None".
     
@@ -31,11 +31,11 @@ def handle_query(query, chat: Chat):
     What is the Domain, Clause, or Risk Ref mentioned in the query: What are the clauses in B.9 for supporter tier?
     B.9
     What is the Domain, Clause, or Risk Ref mentioned in the query: What is risk ref 3?
-    Risk Ref 3
+    Risk Ref: 3
     What is the Domain, Clause, or Risk Ref mentioned in the query: What is Risk Reference 21?
-    Risk Ref 21
+    Risk Ref: 21
     What is the Domain, Clause, or Risk Ref mentioned in the query: How do I handle Risk Ref 5 in my implementation?
-    Risk Ref 5
+    Risk Ref: 5
     What is the Domain, Clause, or Risk Ref mentioned in the query: Hello?
     None
     """
