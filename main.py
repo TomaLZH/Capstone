@@ -54,14 +54,25 @@ chat_instance = st.session_state.chats[st.session_state.selected_chat_id]
 st.subheader("Company Configuration and IT Skill Level")
 st.write("Selected IT Skill Level:", chat_instance.get_skill_level())
 st.write("Upload Company Details: ")
-# # File uploader for company details
-# uploaded_file = st.file_uploader("Choose a file", type=["csv", "xlsx", "docx"], help="Upload your company details file.")
+# File uploader for company details
+# File uploader for company details
+uploaded_file = st.file_uploader("Choose a file", type=["csv", "xlsx", "docx"], help="Upload your company details file.")
 
-# if uploaded_file is not None:
-#     # Process the uploaded file
-#     file_details = {"filename": uploaded_file.name, "filetype": uploaded_file.type, "filesize": uploaded_file.size}
-#     st.write(file_details)
-#     analyze_file(chat_instance, uploaded_file)
+if uploaded_file is not None:
+    # Check if the file has already been processed
+    if "uploaded_file_name" not in st.session_state or st.session_state.uploaded_file_name != uploaded_file.name:
+        # Process the uploaded file
+        file_details = {"filename": uploaded_file.name, "filetype": uploaded_file.type, "filesize": uploaded_file.size}
+        st.write(file_details)
+
+        # Analyze the file and store the results in session state
+        st.session_state.analyzed_file_data = analyze_file(chat_instance, uploaded_file)
+        st.session_state.uploaded_file_name = uploaded_file.name
+
+    # Display analyzed data or results
+    st.write("File Analysis Results:")
+    st.write(st.session_state.analyzed_file_data)
+
 
 
 # Dropdown for selecting the IT skill level
