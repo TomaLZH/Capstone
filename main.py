@@ -19,13 +19,6 @@ def update_skill_level():
     # Update the skill level in the chat instance when the session state changes
     chat_instance.set_skill_level(st.session_state.it_skill_level)
 
-# Function to update the company environment when the dropdown changes
-
-
-def update_environment():
-    # Update the environment in the chat instance when the session state changes
-    chat_instance.set_environment(st.session_state.environment)
-
 
 # Initialize session state for chat instances and user preferences
 if "chats" not in st.session_state:
@@ -38,9 +31,6 @@ if "it_skill_level" not in st.session_state:
     # Set the default IT skill level to Beginner
     st.session_state.it_skill_level = "Beginner"
 
-if "environment" not in st.session_state:
-    # Set the default environment to None Selected
-    st.session_state.environment = "None Selected"
 
 # Sidebar for managing chat instances
 st.sidebar.header("Chat Instances")
@@ -61,10 +51,7 @@ if st.sidebar.button("New Chat"):
 # Retrieve the selected chat instance
 chat_instance = st.session_state.chats[st.session_state.selected_chat_id]
 
-# Introduction Section: Display and allow configuration of company environment and IT skill level
 st.subheader("Company Configuration and IT Skill Level")
-# Show the selected environment and skill level
-st.write("Selected Company Environment:", chat_instance.get_environment())
 st.write("Selected IT Skill Level:", chat_instance.get_skill_level())
 st.write("Upload Company Details: ")
 # File uploader for company details
@@ -76,14 +63,6 @@ if uploaded_file is not None:
     st.write(file_details)
     analyze_file(chat_instance, uploaded_file)
 
-# Dropdown for selecting the company's environment
-environment = st.selectbox(
-    "Select your company's environment:",
-    ["None Selected", "On-premises", "Cloud-based", "Hybrid"],
-    help="Choose the environment that best describes your organization.",
-    key="environment",  # Bind this dropdown to session_state
-    on_change=update_environment  # Update the chat instance when changed
-)
 
 # Dropdown for selecting the IT skill level
 it_skill_level = st.selectbox(
