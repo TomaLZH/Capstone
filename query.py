@@ -56,7 +56,7 @@ def handle_query(query, chat: Chat):
         If the query is ambiguous, generate a focused query based on the history of the conversation, focusing on the latest chats. 
         If no context can be determined, return the query as-is.'.
         """
-
+        
         # Construct the user message containing conversation history and the query
         user_message = f"Conversation so far:\n{chat.get_history()}\n\nUser Query: {query}"
 
@@ -66,6 +66,7 @@ def handle_query(query, chat: Chat):
             messages=[{"role": "system", "content": system_message},
                       {"role": "user", "content": user_message}]
         )
+        st.write(f"Search Term = {completion.choices[0].message.content}")
 
         # Extract the processed query from the GPT completion response
         processed_query = completion.choices[0].message.content
@@ -84,7 +85,6 @@ def handle_query(query, chat: Chat):
             data=[query_embedding],
             output_fields=["text"],
         )
-
         top_passages = [item['entity']['text'] for item in results[0]]
         # Create input pairs for the cross-encoder by combining the query with each passage
         cross_inp = [[processed_query, passage] for passage in top_passages]
