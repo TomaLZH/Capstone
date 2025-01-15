@@ -66,7 +66,7 @@ def handle_query(query, chat: Chat):
             messages=[{"role": "system", "content": system_message},
                       {"role": "user", "content": user_message}]
         )
-        st.write(f"Search Term = {completion.choices[0].message.content}")
+        st.write(f"Semantic Search Term = {completion.choices[0].message.content}")
 
         # Extract the processed query from the GPT completion response
         processed_query = completion.choices[0].message.content
@@ -91,7 +91,7 @@ def handle_query(query, chat: Chat):
     # If domain or clause is mentioned
     else:
         # Embed the domain or clause mentioned in the query
-        st.write(f"Search Term = {DomainClause.choices[0].message.content}")
+        st.write(f"Lexicon Search Term = {DomainClause.choices[0].message.content}")
         results = client.query(
             collection_name="Capstone",
             filter=f"text like '%{DomainClause.choices[0].message.content}%'",
@@ -120,6 +120,10 @@ def handle_query(query, chat: Chat):
         # Construct the context from the top-ranked passages
         context = "\n\n\n".join(
             [f"Passage: {r[0]}\nRelevance Score: {r[1]:.2f}" for r in sorted_results]) or "none found"
+        
+
+        return context
+    
         # Send the refined query and context to OpenAI for further processing
         openai_client.beta.threads.messages.create(
             thread_id=chat.get_thread_id(),  # Retrieve the thread ID from the chat instance
