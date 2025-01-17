@@ -21,7 +21,7 @@ def handle_query(query, chat: Chat):
     What is the Domain, Clause, or Risk Ref mentioned in the query: What is B.1.1?
     B.1.1
     What is the Domain, Clause, or Risk Ref mentioned in the query: What is B.12?
-    B.12
+    B.12.
     What is the Domain, Clause, or Risk Ref mentioned in the query: How do I implement B.1.5?
     B.1.5
     What is the Domain, Clause, or Risk Ref mentioned in the query: What is Cyber Trust Mark?
@@ -29,7 +29,7 @@ def handle_query(query, chat: Chat):
     What is the Domain, Clause, or Risk Ref mentioned in the query: What is the purpose of Cyber Trust Mark?
     None
     What is the Domain, Clause, or Risk Ref mentioned in the query: What are the clauses in B.9 for supporter tier?
-    B.9
+    B.9.
     What is the Domain, Clause, or Risk Ref mentioned in the query: What is risk ref 3?
     Risk Ref: 3
     What is the Domain, Clause, or Risk Ref mentioned in the query: What is Risk Reference 21?
