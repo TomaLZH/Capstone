@@ -66,7 +66,7 @@ def handle_query(query, chat: Chat):
                       {"role": "user", "content": user_message}]
         )
         st.write(f"Semantic Search Term = {completion.choices[0].message.content}")
-
+        query = completion.choices[0].message.content
         # Extract the processed query from the GPT completion response
         processed_query = completion.choices[0].message.content
 
