@@ -52,13 +52,12 @@ def handle_query(query, chat: Chat):
 
         # Define the system message to guide the assistant's behavior
         system_message = """
-        You are an assistant analyzing the conversation. If the user query is clear and unambiguous, return the query as-is.
-        If the query is ambiguous, generate a focused query based on the history of the conversation, focusing on the latest chats. 
-        If no context can be determined, return the query as-is.'.
+        You are an AI assistant tasked with reformulating user queries to improve retrieval in a RAG (Retrieval-Augmented Generation) system.
+        Given the original query and chat history, rewrite it to include additional details or clarifications, 
+        ensuring the reformulated query retrieves the most accurate and relevant information.
         """
-        
         # Construct the user message containing conversation history and the query
-        user_message = f"Conversation so far:\n{chat.get_history()}\n\nUser Query: {query}"
+        user_message = f"Conversation so far:\n{chat.get_history()}\n\nOriginal Query: {query}\n\n Rewritten Query:"
 
         # Use OpenAI GPT to process the query based on the system message
         completion = openai_client.chat.completions.create(
