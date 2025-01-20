@@ -64,8 +64,7 @@ if uploaded_file is not None:
         # Process the uploaded file
         file_details = {"filename": uploaded_file.name,
                         "filetype": uploaded_file.type, "filesize": uploaded_file.size}
-        st.write(Chat.get_infrastructure)
-
+        st.write(file_details)
         # Analyze the file and store the results in session state
         st.session_state.analyzed_file_data = analyze_file(
             chat_instance, uploaded_file)
@@ -73,7 +72,7 @@ if uploaded_file is not None:
 
     # Display analyzed data or results
     st.write("File Analysis Results:")
-    st.write(Chat.get_infrastructure)
+    st.write(Chat.get_infrastructure())
 
 # Dropdown for selecting the IT skill level
 it_skill_level = st.selectbox(
