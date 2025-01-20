@@ -46,6 +46,7 @@ if st.sidebar.button("New Chat"):
     new_chat_id = f"Chat_{len(st.session_state.chats) + 1}"
     st.session_state.chats[new_chat_id] = Chat(openai_client)
     st.session_state.selected_chat_id = new_chat_id  # Switch to the new chat instance
+    st.rerun()
 
 # Retrieve the selected chat instance
 chat_instance = st.session_state.chats[st.session_state.selected_chat_id]
