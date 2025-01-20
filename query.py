@@ -23,7 +23,7 @@ def handle_query(query, chat: Chat):
     What is the Domain, Clause, or Risk Ref mentioned in the query: What is B.1.1?
     B.1.1
     What is the Domain, Clause, or Risk Ref mentioned in the query: What is B.12?
-    B.12
+    B.12.
     What is the Domain, Clause, or Risk Ref mentioned in the query: How do I implement B.1.5?
     B.1.5
     What is the Domain, Clause, or Risk Ref mentioned in the query: What is Cyber Trust Mark?
@@ -31,7 +31,7 @@ def handle_query(query, chat: Chat):
     What is the Domain, Clause, or Risk Ref mentioned in the query: What is the purpose of Cyber Trust Mark?
     None
     What is the Domain, Clause, or Risk Ref mentioned in the query: What are the clauses in B.9 for supporter tier?
-    B.9
+    B.9.
     What is the Domain, Clause, or Risk Ref mentioned in the query: What is risk ref 3?
     Risk Ref: 3
     What is the Domain, Clause, or Risk Ref mentioned in the query: What is Risk Reference 21?
@@ -56,13 +56,12 @@ def handle_query(query, chat: Chat):
 
         # Define the system message to guide the assistant's behavior
         system_message = """
-        You are an assistant analyzing the conversation. If the user query is clear and unambiguous, return the query as-is.
-        If the query is ambiguous, generate a focused query based on the history of the conversation, focusing on the latest chats. 
-        If no context can be determined, return the query as-is.'.
+        You are an AI assistant tasked with reformulating user queries to improve retrieval in a RAG (Retrieval-Augmented Generation) system.
+        Given the original query and chat history, rewrite it to include additional details or clarifications, 
+        ensuring the reformulated query retrieves the most accurate and relevant information.
         """
-        
         # Construct the user message containing conversation history and the query
-        user_message = f"Conversation so far:\n{chat.get_history()}\n\nUser Query: {query}"
+        user_message = f"Conversation so far:\n{chat.get_history()}\n\nOriginal Query: {query}\n\n Rewritten Query:"
 
         # Use OpenAI GPT to process the query based on the system message
         completion = openai_client.chat.completions.create(
@@ -71,7 +70,7 @@ def handle_query(query, chat: Chat):
                       {"role": "user", "content": user_message}]
         )
         st.write(f"Semantic Search Term = {completion.choices[0].message.content}")
-
+        query = completion.choices[0].message.content
         # Extract the processed query from the GPT completion response
         processed_query = completion.choices[0].message.content
 
@@ -141,10 +140,7 @@ def handle_query(query, chat: Chat):
         # Construct the context from the top-ranked passages
         context = "\n\n\n".join(
             [f"Passage: {r[0]}\nRelevance Score: {r[1]:.2f}" for r in sorted_results]) or "none found"
-        
 
-        return context
-    
         # Send the refined query and context to OpenAI for further processing
         openai_client.beta.threads.messages.create(
             thread_id=chat.get_thread_id(),  # Retrieve the thread ID from the chat instance

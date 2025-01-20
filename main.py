@@ -78,7 +78,7 @@ if uploaded_file is not None:
 # Dropdown for selecting the IT skill level
 it_skill_level = st.selectbox(
     "Select your IT skill level:",
-    ["Beginner", "Intermediate", "Advanced"],
+    ["Beginner", "Advanced"],
     help="Choose the IT skill level that best represents your team's expertise.",
     key="it_skill_level",  # Bind this dropdown to session_state
     on_change=update_skill_level  # Update the chat instance when changed
