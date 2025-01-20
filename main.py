@@ -11,7 +11,6 @@ bi_encoder, cross_encoder, collection, openai_client, assistant = get_resources(
 
 # # App title
 # st.title("Cyber Trust Mark Assistant")
-
 # Function to update the skill level when the dropdown changes
 
 
@@ -107,4 +106,3 @@ if prompt := st.chat_input("How can I assist you today?"):
     st.chat_message("assistant").markdown(response)
     chat_instance.add_message({"role": "assistant", "content": response})
     st.rerun()
-
