@@ -69,8 +69,9 @@ def handle_query(query, chat: Chat):
             messages=[{"role": "system", "content": system_message},
                       {"role": "user", "content": user_message}]
         )
-        st.write(f"Semantic Search Term = {completion.choices[0].message.content}")
-        query = completion.choices[0].message.content
+        st.write(
+            f"Semantic Search Term = {completion.choices[0].message.content}")
+
         # Extract the processed query from the GPT completion response
         processed_query = completion.choices[0].message.content
 
@@ -111,7 +112,8 @@ def handle_query(query, chat: Chat):
 
     else:
         # Embed the domain or clause mentioned in the query
-        st.write(f"Lexicon Search Term = {DomainClause.choices[0].message.content}")
+        st.write(
+            f"Lexicon Search Term = {DomainClause.choices[0].message.content}")
         results = client.query(
             collection_name="Capstone",
             filter=f"text like '%{DomainClause.choices[0].message.content}%'",
