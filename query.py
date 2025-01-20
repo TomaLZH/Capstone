@@ -106,7 +106,7 @@ def handle_query(query, chat: Chat):
             messages=[{"role": "system", "content": system_message},
                       {"role": "user", "content": user_message}]
         )
-        Chat.set_infrastructure(completion.choices[0].message.content)
+        chat.set_infrastructure(completion.choices[0].message.content)
         return "Your company information has been updated successfully."
 
     else:
