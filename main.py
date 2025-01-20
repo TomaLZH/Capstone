@@ -59,7 +59,7 @@ st.write("Upload Company Details: ")
 uploaded_file = st.file_uploader("Choose a file", type=[
                                  "csv", "xlsx", "docx"], help="Upload your company details file.")
 
-if chat_instance.get_infrastructure() is not None:
+if uploaded_file is not None:
     # Check if the file has already been processed
     if "uploaded_file_name" not in st.session_state or st.session_state.uploaded_file_name != uploaded_file.name:
         # Process the uploaded file
