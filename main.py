@@ -72,7 +72,7 @@ if uploaded_file is not None:
 
     # Display analyzed data or results
     st.write("File Analysis Results:")
-    st.write(Chat.get_infrastructure())
+    st.write(chat_instance.get_infrastructure())
 
 # Dropdown for selecting the IT skill level
 it_skill_level = st.selectbox(

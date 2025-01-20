@@ -100,7 +100,7 @@ def handle_query(query, chat: Chat):
         """
 
         # Construct the user message containing conversation history and the query
-        user_message = f"Original Company Information: {Chat.get_infrastructure}\n\nUser Query: {query}"
+        user_message = f"Original Company Information: {chat.get_infrastructure()}\n\nUser Query: {query}"
         completion = openai_client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[{"role": "system", "content": system_message},
