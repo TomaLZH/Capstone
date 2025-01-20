@@ -16,7 +16,7 @@ def handle_query(query, chat: Chat):
     
     1. Check if the query is about editing company information. If so, respond with "Editing Company Information", if not proceed to the next step.
 
-    2. Identify whether a query mentions a domain, clause, or "Risk Ref" in the formats:
+    2. Identify whether a query mentions a domain, clause, or "Risk Ref" strictly in the following 2 formats:
     - B.(number).(optional clause number) (for domains or clauses)
     - Risk Ref: (number) (for Risk Ref references)
         
