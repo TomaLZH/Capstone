@@ -12,12 +12,14 @@ def handle_query(query, chat: Chat):
 
     # #Check if any Clause or Domain is mentioned in the query
     system_message_for_Clause = """
-    You are an assistant that identifies whether a query mentions a domain, clause, or "Risk Ref" in the formats:
+    You are an assistant that processes queries to determine their intent and extract information. Follow these steps:
+    
+    1. Check if the query is about editing company information. If so, respond with "Editing Company Information", if not proceed to the next step.
+
+    2. Identify whether a query mentions a domain, clause, or "Risk Ref" in the formats:
     - B.(number).(optional clause number) (for domains or clauses)
     - Risk Ref: (number) (for Risk Ref references)
-    
-    If no domain, clause, or Risk Ref is mentioned, respond with "None".
-    
+        
     What is the Domain, Clause, or Risk Ref mentioned in the query: What is B.1.1?
     B.1.1
     What is the Domain, Clause, or Risk Ref mentioned in the query: What is B.12?
@@ -38,6 +40,8 @@ def handle_query(query, chat: Chat):
     Risk Ref: 5
     What is the Domain, Clause, or Risk Ref mentioned in the query: Hello?
     None
+
+    If no domain, clause, or Risk Ref is mentioned, respond with "None".
     """
 
     # Construct the user message containing conversation history and the query
@@ -89,6 +93,23 @@ def handle_query(query, chat: Chat):
         # Create input pairs for the cross-encoder by combining the query with each passage
         cross_inp = [[processed_query, passage] for passage in top_passages]
     # If domain or clause is mentioned
+
+    elif DomainClause.choices[0].message.content.startswith("Editing Company Information"):
+        system_message = """
+            You are an assistant that help edit company information based on the user query.
+            Respond with the edited company information without changing the structure or any other information apart from the requested changes.
+        """
+
+        # Construct the user message containing conversation history and the query
+        user_message = f"Original Company Information: {Chat.get_infrastructure}\n\nUser Query: {query}"
+        completion = openai_client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[{"role": "system", "content": system_message},
+                      {"role": "user", "content": user_message}]
+        )
+        Chat.set_infrastructure(completion.choices[0].message.content)
+        return "Your company information has been updated successfully."
+
     else:
         # Embed the domain or clause mentioned in the query
         st.write(f"Lexicon Search Term = {DomainClause.choices[0].message.content}")
