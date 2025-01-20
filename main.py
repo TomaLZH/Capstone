@@ -105,5 +105,5 @@ if prompt := st.chat_input("How can I assist you today?"):
     # Display the assistant's response
     st.chat_message("assistant").markdown(response)
     chat_instance.add_message({"role": "assistant", "content": response})
-    st.experimental_rerun()
+    st.rerun()
 
