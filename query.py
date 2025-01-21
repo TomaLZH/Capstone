@@ -16,7 +16,7 @@ def handle_query(query, chat: Chat):
     
     1. Check if the query is about editing company information. If so, respond with "Editing Company Information", if not proceed to the next step.
 
-    2. Identify whether a query mentions a domain, clause, or "Risk Ref" strictly in the following 2 formats:
+    2. Identify whether a query mentions a domain number, clause number, or "Risk Ref" number strictly in the following 2 formats:
     - B.(number).(optional clause number) (for domains or clauses)
     - Risk Ref: (number) (for Risk Ref references)
         
@@ -146,6 +146,8 @@ def handle_query(query, chat: Chat):
         context = "\n\n\n".join(
             [f"Passage: {r[0]}\nRelevance Score: {r[1]:.2f}" for r in sorted_results]) or "none found"
         
+        st.write(f"Context = {context}")
+
         # Send the refined query and context to OpenAI for further processing
         openai_client.beta.threads.messages.create(
             thread_id=chat.get_thread_id(),  # Retrieve the thread ID from the chat instance
