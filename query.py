@@ -41,7 +41,7 @@ def handle_query(query, chat: Chat):
     What is the Domain, Clause, or Risk Ref mentioned in the query: Hello?
     None
 
-    If no domain number, clause number, or Risk Ref can be determined, respond with "None".
+    If no domain number, clause number, or Risk Ref number is found in user's query, respond with "None".
     """
 
     # Construct the user message containing conversation history and the query
