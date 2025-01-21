@@ -89,9 +89,10 @@ def handle_query(query, chat: Chat):
             data=[query_embedding],
             output_fields=["text"],
         )
+        
         top_passages = [item['entity']['text'] for item in results[0]]
         # Create input pairs for the cross-encoder by combining the query with each passage
-        cross_inp = [[processed_query, passage] for passage in top_passages]
+        cross_inp = [[query, passage] for passage in top_passages]
     # If domain or clause is mentioned
 
     elif DomainClause.choices[0].message.content.startswith("Editing Company Information"):
