@@ -57,7 +57,7 @@ def handle_query(query, chat: Chat):
         # Define the system message to guide the assistant's behavior
         system_message = """
         You are an AI assistant tasked with reformulating user queries to improve retrieval in a RAG (Retrieval-Augmented Generation) system.
-        Given the original query and chat history, rewrite it to include additional details or clarifications, 
+        Given the original query and chat history, rewrite it to include clarifications, without changing the user's intent.
         ensuring the reformulated query retrieves the most accurate and relevant information.
         """
         # Construct the user message containing conversation history and the query
