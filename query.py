@@ -97,7 +97,7 @@ def predict_relevance_and_filter_results(query, top_passages):
     return sorted_results
 
 
-def generate_final_response(sorted_results, context, query, chat):
+def generate_final_response(sorted_results, query, chat):
     """ Combine context and query to generate the final response. """
     context_str = "\n\n\n".join(
         [f"Passage: {r[0]}\nRelevance Score: {r[1]:.2f}" for r in sorted_results]) or "none found"
@@ -153,4 +153,4 @@ def handle_query(query, chat: Chat):
     sorted_results = predict_relevance_and_filter_results(query, top_passages)
 
     # Generate and return the final response
-    return generate_final_response(sorted_results, query, query, chat)
+    return generate_final_response(sorted_results, query, chat)
