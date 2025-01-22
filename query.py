@@ -153,9 +153,9 @@ def handle_query(query, chat: Chat):
 
     if domain_clause == "None":
         processed_query = reformulate_query(query, chat)
+        st.write(f"Reformulated Query = {processed_query}")
         query_embedding = bi_encoder.encode(processed_query).astype(np.float32)
         query_embedding /= np.linalg.norm(query_embedding)
-
         top_passages = search_and_retrieve_results(query_embedding)
 
     elif domain_clause.startswith("Editing Company Information"):
