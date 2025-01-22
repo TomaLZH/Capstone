@@ -20,27 +20,27 @@ def handle_query(query, chat: Chat):
     - B.(number).(optional clause number) (for domains or clauses)
     - Risk Ref: (number) (for Risk Ref references)
         
-    What is the Domain, Clause, or Risk Ref mentioned in the query: What is B.1.1?
+    Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is B.1.1?
     B.1.1
-    What is the Domain, Clause, or Risk Ref mentioned in the query: What is B.12?
+    Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is B.12?
     B.12.
-    What is the Domain, Clause, or Risk Ref mentioned in the query: How do I implement B.1.5?
+    Query: What is the Domain, Clause, or Risk Ref mentioned in the query: How do I implement B.1.5?
     B.1.5
-    What is the Domain, Clause, or Risk Ref mentioned in the query: What is Cyber Trust Mark?
+    Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is Cyber Trust Mark?
     None
-    What is the Domain, Clause, or Risk Ref mentioned in the query: What is the purpose of Cyber Trust Mark?
+    Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is the purpose of Cyber Trust Mark?
     None
-    What is the Domain, Clause, or Risk Ref mentioned in the query: What are the clauses in B.9 for supporter tier?
+    Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What are the clauses in B.9 for supporter tier?
     B.9.
-    What is the Domain, Clause, or Risk Ref mentioned in the query: What are the clauses in B.15?
+    Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What are the clauses in B.15?
     B.15.
-    What is the Domain, Clause, or Risk Ref mentioned in the query: What is risk ref 3?
+    Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is risk ref 3?
     Risk Ref: 3
-    What is the Domain, Clause, or Risk Ref mentioned in the query: What is Risk Reference 21?
+    Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is Risk Reference 21?
     Risk Ref: 21
-    What is the Domain, Clause, or Risk Ref mentioned in the query: How do I handle Risk Ref 5 in my implementation?
+    Query: What is the Domain, Clause, or Risk Ref mentioned in the query: How do I handle Risk Ref 5 in my implementation?
     Risk Ref: 5
-    What is the Domain, Clause, or Risk Ref mentioned in the query: Hello?
+    Query: What is the Domain, Clause, or Risk Ref mentioned in the query: Hello?
     None
 
     If no domain number, clause number, or Risk Ref number is found in user's query, respond with "None".
