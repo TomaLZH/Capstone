@@ -58,9 +58,9 @@ def handle_query(query, chat: Chat):
 
         # Define the system message to guide the assistant's behavior
         system_message = """
-        You are an AI assistant tasked with reformulating user queries to improve retrieval in a RAG (Retrieval-Augmented Generation) system.
-        Given the original query and chat history, rewrite it to include clarifications, without changing the user's intent.
-        ensuring the reformulated query retrieves the most accurate and relevant information.
+        You are an AI assistant tasked with reformulating user queries to improve retrieval in a RAG (Retrieval-Augmented Generation) system. Follow this two-step process:
+        1) Determine Clarity: First, analyze whether the user query makes sense on its own. If it is clear and self-contained, return it as is without modification.
+        2) Enhance Using Context: If the query is ambiguous, incomplete, or dependent on prior chat history for clarity, rewrite it to incorporate necessary details from the chat history. Ensure the reformulated query maintains the user's intent while retrieving the most accurate and relevant information.
         """
         # Construct the user message containing conversation history and the query
         user_message = f"Conversation so far:\n{chat.get_history()}\n\nOriginal Query: {query}\n\n Rewritten Query:"
