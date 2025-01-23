@@ -74,7 +74,9 @@ if uploaded_file is not None:
     st.write("File Analysis Results:")
     st.write(chat_instance.get_infrastructure())
 
-st.write("Checklist: " + chat_instance.get_checklist())
+# Display the checklist for the selected chat instance
+checklist = chat_instance.get_checklist()
+st.write("Checklist: " + checklist if checklist else "No checklist available.")
 
 # Dropdown for selecting the IT skill level
 it_skill_level = st.selectbox(
