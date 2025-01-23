@@ -319,7 +319,7 @@ def generate_final_response(sorted_results, query, chat):
     openai_client.beta.threads.messages.create(
         thread_id=chat.get_thread_id(),  # Retrieve the thread ID from the chat instance
         role="user",
-        content=f"Background Information: {context_str}\n\nCompany Information: {chat.get_infrastructure()}\n\nUser Query: {query}\n",
+        content=f"Background Information: {context_str}\n\nCompany Information: {chat.get_infrastructure()}\n\nUser Skill level: {chat.get_skill_level()}\n\nUser Query: {query}\n",
     )
 
     # Execute and poll the assistant's response from OpenAI
