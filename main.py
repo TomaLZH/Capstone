@@ -74,6 +74,7 @@ if uploaded_file is not None:
     st.write("File Analysis Results:")
     st.write(chat_instance.get_infrastructure())
 
+st.write("Checklist: " + chat_instance.get_checklist())
 
 # Dropdown for selecting the IT skill level
 it_skill_level = st.selectbox(
@@ -83,7 +84,7 @@ it_skill_level = st.selectbox(
     key="it_skill_level",  # Bind this dropdown to session_state
     on_change=update_skill_level  # Update the chat instance when changed
 )
-st.write("Checklist: " + chat_instance.get_checklist())
+
 # Display the chat messages for the selected chat instance
 st.subheader(f"{st.session_state.selected_chat_id}")
 for message in chat_instance.get_history():
