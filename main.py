@@ -83,7 +83,7 @@ it_skill_level = st.selectbox(
     key="it_skill_level",  # Bind this dropdown to session_state
     on_change=update_skill_level  # Update the chat instance when changed
 )
-
+st.write("Checklist: " + chat_instance.get_checklist())
 # Display the chat messages for the selected chat instance
 st.subheader(f"{st.session_state.selected_chat_id}")
 for message in chat_instance.get_history():

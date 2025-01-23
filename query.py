@@ -306,7 +306,15 @@ def generate_checklist(query, chat):
 
 
     """
-    return
+    
+    # Send the query for classification
+    checklist = openai_client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[{"role": "system", "content": system_instruction},
+                  {"role": "user", "content": query}]
+    )
+
+    return checklist.choices[0].message.content 
 
 
 def generate_final_response(sorted_results, query, chat):
@@ -358,7 +366,7 @@ def handle_query(query, chat: Chat):
             top_k=20,
             output_fields=["text"]
         )
-
+        chat.set_checklist(generate_checklist(query, chat))
         top_passages = [doc['text'] for doc in results]
 
     # Predict relevance and filter results
