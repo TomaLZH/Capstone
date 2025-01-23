@@ -121,6 +121,194 @@ def predict_relevance_and_filter_results(query, top_passages):
     return sorted_results
 
 
+def generate_checklist(query, chat):
+    system_instruction = """
+        You are an AI assistant that generates a checklist based on the user query. Follow these steps:
+
+        1. **Analyze the user query** to identify the relevant Tier, Domains, or Clauses. If none are found, return "None". 
+        2. **Generate a checklist** based on the information provided in the dataset below.  
+
+        #### Dataset:  
+        {
+        "Domains": {
+            "B.1 Governance": {
+                "Supporter Tier": ["B.1.1"],
+                "Practitioner Tier": ["B.1.2"],
+                "Promoter Tier": ["B.1.3"],
+                "Performer Tier": ["B.1.4", "B.1.5", "B.1.6"],
+                "Advocate Tier": ["B.1.7", "B.1.8"]
+                },
+            "B.2 Policies and Procedures": {
+                "Supporter Tier": ["B.2.1"],
+                "Practitioner Tier": ["B.2.2"],
+                "Promoter Tier": ["B.2.3"],
+                "Performer Tier": ["B.2.4", "B.2.5", "B.2.6"],
+                "Advocate Tier": ["B.2.7", "B.2.8", "B.2.9"]
+                },
+            "B.3 Risk Management": {
+                "Supporter Tier": ["B.3.1", "B.3.2"],
+                "Practitioner Tier": ["B.3.3", "B.3.4"],
+                "Promoter Tier": ["B.3.5", "B.3.6"],
+                "Performer Tier": ["B.3.7", "B.3.8", "B.3.9"],
+                "Advocate Tier": ["B.3.10", "B.3.11", "B.3.12"]
+                }
+            "B.4 Cyber Strategy": {
+                "Supporter Tier": ["B.4.1"],
+                "Practitioner Tier": ["B.4.2"],
+                "Promoter Tier": ["B.4.3"],
+                "Performer Tier": ["B.4.4"],
+                "Advocate Tier": ["B.4.5", "B.4.6", "B.4.7", "B.4.8", "B.4.9"]
+                }
+            "B.5 Compliance": {
+                "Supporter Tier": ["B.5.1"],
+                "Practitioner Tier": ["B.5.2"],
+                "Promoter Tier": ["B.5.3", "B.5.4"],
+                "Performer Tier": ["B.5.5", "B.5.6"],
+                "Advocate Tier": ["B.5.7", "B.5.8", "B.5.9"]
+                }
+            "B.6 Audit": {
+                "Supporter Tier": ["B.6.1"],
+                "Practitioner Tier": ["B.6.2"],
+                "Promoter Tier": ["B.6.3"],
+                "Performer Tier": ["B.6.4", "B.6.5", "B.6.6"],
+                "Advocate Tier": ["B.6.7", "B.6.8"]
+                }
+            "B.7 Training and Awareness": {
+                "Supporter Tier": ["B.7.1"],
+                "Practitioner Tier": ["B.7.2", "B.7.3"],
+                "Promoter Tier": ["B.7.4", "B.7.5"],
+                "Performer Tier": ["B.7.6", "B.7.7", "B.7.8"],
+                "Advocate Tier": ["B.7.9", "B.7.10", "B.7.11"]
+                }
+            "B.8 Asset Management": {
+                "Supporter Tier": ["B.8.1"],
+                "Practitioner Tier": ["B.8.2"],
+                "Promoter Tier": ["B.8.3", "B.8.4", "B.8.5"],
+                "Performer Tier": ["B.8.6", "B.8.7"],
+                "Advocate Tier": ["B.8.8", "B.8.9", "B.8.10"]
+                }
+            "B.9 Data protection and privacy": {
+                "Supporter Tier": ["B.9.1", "B.9.2", "B.9.3"],
+                "Practitioner Tier": ["B.9.4"],
+                "Promoter Tier": ["B.9.5", "B.9.6", "B.9.7"],
+                "Performer Tier": ["B.9.8", "B.9.9", "B.9.10"],
+                "Advocate Tier": ["B.9.11", "B.9.12", "B.9.13"]
+                }
+            "B.10 Backups": {
+                "Supporter Tier": ["B.10.1"],
+                "Practitioner Tier": ["B.10.2", "B.10.3"],
+                "Promoter Tier": ["B.10.4", "B.10.5"],
+                "Performer Tier": ["B.10.6", "B.10.7"],
+                "Advocate Tier": ["B.10.8", "B.10.9", "B.10.10"]
+                }
+            "B.11 Bring YOur Own Device (BYOD)": {
+                "Supporter Tier": ["B.11.1"],
+                "Practitioner Tier": ["B.11.2"],
+                "Promoter Tier": ["B.11.3"],
+                "Performer Tier": ["B.11.4"],
+                "Advocate Tier": ["B.11.5", "B.11.6", "B.11.7"]
+                }
+            "B.12 System Security": {
+                "Supporter Tier": ["B.12.1"],
+                "Practitioner Tier": ["B.12.2", "B.12.3"],
+                "Promoter Tier": ["B.12.4", "B.12.5", "B.12.6"],
+                "Performer Tier": ["B.12.7", "B.12.8", "B.12.9", "B.12.10"],
+                "Advocate Tier": ["B.12.11", "B.12.12", "B.12.13"]
+                }
+            "B.13 Antivirus/Antimalware": {
+                "Supporter Tier": ["B.13.1"],
+                "Practitioner Tier": ["B.13.2", "B.13.3", "B.13.4", "B.13.5"],
+                "Promoter Tier": ["B.13.6"],
+                "Performer Tier": ["B.13.7"],
+                "Advocate Tier": ["B.13.8", "B.13.9", "B.13.10"]
+                }
+            "B.14 Secure Software Development Life Cycle": {
+                "Supporter Tier": ["B.14.1"],
+                "Practitioner Tier": ["B.14.2"],
+                "Promoter Tier": ["B.14.3"],
+                "Performer Tier": ["B.14.4"],
+                "Advocate Tier": ["B.14.5", "B.14.6", "B.14.7", "B.14.8"]
+                }
+            "B.15 Access Control": {
+                "Supporter Tier": ["B.15.1"],
+                "Practitioner Tier": ["B.15.2", "B.15.3"],
+                "Promoter Tier": ["B.15.4", "B.15.5", "B.15.6"],
+                "Performer Tier": ["B.15.7", "B.15.8", "B.15.9"],
+                "Advocate Tier": ["B.15.10", "B.15.11"]
+                }
+            "B.16 Cyber Threat Mangement": {
+                "Supporter Tier": ["B.16.1"],
+                "Practitioner Tier": ["B.16.2"],
+                "Promoter Tier": ["B.16.3"],
+                "Performer Tier": ["B.16.4", "B.16.5", "B.16.6", "B.16.7", "B.16.8"],
+                "Advocate Tier": ["B.16.9", "B.16.10", "B.16.11"]
+                }
+            "B.17 Third-party risk and oversight": {
+                "Supporter Tier": ["B.17.1"],
+                "Practitioner Tier": ["B.17.2"],
+                "Promoter Tier": ["B.17.3"],
+                "Performer Tier": ["B.17.4"],
+                "Advocate Tier": ["B.17.5", "B.17.6", "B.17.7", "B.17.8", "B.17.9"]
+                }
+            "B.18 Vulnerability Assessment": {
+                "Supporter Tier": ["B.18.1"],
+                "Practitioner Tier": ["B.18.2"],
+                "Promoter Tier": ["B.18.3", "B.18.4"],
+                "Performer Tier": ["B.18.5", "B.18.6", "B.18.7"],
+                "Advocate Tier": ["B.18.8", "B.18.9", "B.18.10", "B.18.11"]
+                }
+            "B.19 Physical/Environmental Security": {
+                "Supporter Tier": ["B.19.1"],
+                "Practitioner Tier": ["B.19.2", "B.19.3", "B.19.4"],
+                "Promoter Tier": ["B.19.5", "B.19.6", "B.19.7"],
+                "Performer Tier": ["B.19.8", "B.19.9", "B.19.10"],
+                "Advocate Tier": ["B.19.11", "B.19.12"]
+                }
+            "B.20 Network Security": {
+                "Supporter Tier": ["B.20.1"],
+                "Practitioner Tier": ["B.20.2", "B.20.3", "B.20.4"],
+                "Promoter Tier": ["B.20.5", "B.20.6"],
+                "Performer Tier": ["B.20.7", "B.20.8", "B.20.9"],
+                "Advocate Tier": ["B.20.10", "B.20.11"]
+                }
+            "B.21 Incident Response": {
+                "Supporter Tier": ["B.21.1"],
+                "Practitioner Tier": ["B.21.2"],
+                "Promoter Tier": ["B.21.3", "B.21.4"],
+                "Performer Tier": ["B.21.5", "B.21.6"],
+                "Advocate Tier": ["B.21.7", "B.21.8"]
+                }
+            "B.22 Business Continuity/Disaster recovery": {
+                "Supporter Tier": ["B.22.1"],
+                "Practitioner Tier": ["B.22.2"],
+                "Promoter Tier": ["B.22.3", "B.22.4"],
+                "Performer Tier": ["B.22.5", "B.22.6", "B.22.7", "B.22.8"],
+                "Advocate Tier": ["B.22.9", "B.22.10"]
+                }
+            }
+        }   
+        3. **Respond based on query type**:
+        - For a **specific clause query** (e.g., "What is B.1.1?"), return relevant clauses in the domain or tier most appropriate for the user's query.
+        - For a **specific domain and tier query** (e.g., "What are the clauses in B.9 for supporter tier?"), return the relevant clauses for that tier within the domain.
+        - For a **specific domain query** (e.g., "What are the clauses in B.15?"), return the clauses for all tiers within the domain.
+        - For a **tier-wide query** (e.g., "What are all the clauses I need to implement for advocate tier?"), return the relevant clauses across all domains for that tier.
+        - If no relevant information is found, return "None".
+
+        #### Example Output:  
+        {
+        "checklist_title": "Clauses for Advocate Tier",
+        "Domains": {
+            "B.1 Governance": ["B.1.7", "B.1.8"],
+            "B.2 Policies and Procedures": ["B.2.7", "B.2.8", "B.2.9"],
+            ...
+            }
+        }
+
+
+    """
+    return
+
+
 def generate_final_response(sorted_results, query, chat):
     """ Combine context and query to generate the final response. """
     context_str = "\n\n\n".join(
