@@ -14,7 +14,7 @@ def extract_domain_clause_or_risk_ref(query):
     
     1. Check if the query is about editing company information. If so, respond with "Editing Company Information", if not proceed to the next step.
 
-    2. Identify whether a query mentions a domain number, clause number, or "Risk Ref" number strictly in the following 2 formats:
+    2. Identify whether a query mentions a tier, domain number, clause number, or "Risk Ref" number strictly in the following formats:
     - B.(number).(optional clause number) (for domains or clauses)
     - Risk Ref: (number) (for Risk Ref references)
         
@@ -40,8 +40,12 @@ def extract_domain_clause_or_risk_ref(query):
     Risk Ref: 5
     Query: What is the Domain, Clause, or Risk Ref mentioned in the query: Hello?
     None
+    
+    If no domain number, clause number, or Risk Ref number is found in user's query, proceed to the next step. If found, return the extracted domain, clause, or Risk Ref number.
 
-    If no domain number, clause number, or Risk Ref number is found in user's query, respond with "None".
+    3. Identify whether the query mentions a preparedness tier (Supporter, Practitioner, Promoter, Performer, Advocate). If found, return the extracted tier.
+    
+    4. If the query does not contain any of the above information, return "None".
     """
 
     # Send query for classification
