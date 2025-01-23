@@ -44,7 +44,7 @@ class Chat:
     def get_checklist(self):
         """Return the checklist of the user."""
         return self.checklist
-    
+
     def set_checklist(self, checklist):
         """Set the checklist of the user."""
         self.checklist = checklist

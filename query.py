@@ -310,7 +310,7 @@ def generate_checklist(query, chat):
 
 
     """
-    
+
     # Send the query for classification
     checklist = openai_client.chat.completions.create(
         model="gpt-4o-mini",
@@ -318,7 +318,7 @@ def generate_checklist(query, chat):
                   {"role": "user", "content": query}]
     )
 
-    return checklist.choices[0].message.content 
+    return checklist.choices[0].message.content
 
 
 def generate_final_response(sorted_results, query, chat):
