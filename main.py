@@ -82,8 +82,11 @@ checklist = chat_instance.get_checklist()
 # Convert the string to a dictionary
 checklist_dict = json.loads(checklist)
 if checklist_dict:
-    for i in checklist_dict.items():
-        st.write(i)
+        
+    for domain, clauses in checklist_dict.items():
+        st.write(f"### {domain}")
+        for clause in clauses:
+            st.write(f"- [ ] {clause}")
 
 
 
