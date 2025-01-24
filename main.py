@@ -78,12 +78,11 @@ if uploaded_file is not None:
 
 # Display the checklist for the selected chat instance
 checklist = chat_instance.get_checklist()
-st.write(checklist)
 
 # Convert the string to a dictionary
 checklist_dict = json.loads(checklist)
 if checklist_dict:
-    st.write(checklist["Domains"])
+    st.write(checklist_dict["Domains"])
 
 
 
