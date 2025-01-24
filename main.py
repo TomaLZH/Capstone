@@ -83,13 +83,7 @@ st.write(checklist)
 # Convert the string to a dictionary
 checklist_dict = json.loads(checklist)
 if checklist_dict:
-    for domain, tiers in checklist_dict["Domains"].items():
-        st.subheader(domain)  # Display domain name
-        for tier, clauses in tiers.items():
-            st.write(f"**{tier}**:")  # Display the tier name
-            for clause in clauses:
-                st.markdown(f"- {clause}")  # List each clause for the tier
-
+    st.write(checklist["Domains"])
 
 
 
