@@ -80,8 +80,8 @@ if uploaded_file is not None:
 checklist = chat_instance.get_checklist()
 
 # Convert the string to a dictionary
-checklist_dict = json.loads(checklist)
-if checklist_dict:    
+if checklist:    
+    checklist_dict = json.loads(checklist)
     # Extracting the title and the domains
     checklist_title = checklist_dict['checklist_title']
     domains = checklist_dict['Domains']
