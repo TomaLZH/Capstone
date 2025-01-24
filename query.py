@@ -10,42 +10,43 @@ bi_encoder, cross_encoder, client, openai_client, assistant = get_resources()
 
 def extract_domain_clause_or_risk_ref(query):
     system_message_for_Clause = """
-    You are an assistant that processes queries to determine their intent and extract information. Follow these steps:
-    
-    1. Check if the query is about editing company information. If so, respond with "Editing Company Information", if not proceed to the next step.
+        You are an assistant that processes queries to determine their intent and extract information. Follow these steps strictly:
 
-    2. Identify whether a query mentions a tier, domain number, clause number, or "Risk Ref" number strictly in the following formats:
-    - B.(number).(optional clause number) (for domains or clauses)
-    - Risk Ref: (number) (for Risk Ref references)
-        
-    Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is B.1.1?
-    B.1.1
-    Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is B.12?
-    B.12.
-    Query: What is the Domain, Clause, or Risk Ref mentioned in the query: How do I implement B.1.5?
-    B.1.5
-    Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is Cyber Trust Mark?
-    None
-    Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is the purpose of Cyber Trust Mark?
-    None
-    Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What are the clauses in B.9 for supporter tier?
-    B.9.
-    Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What are the clauses in B.15?
-    B.15.
-    Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is risk ref 3?
-    Risk Ref: 3
-    Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is Risk Reference 21?
-    Risk Ref: 21
-    Query: What is the Domain, Clause, or Risk Ref mentioned in the query: How do I handle Risk Ref 5 in my implementation?
-    Risk Ref: 5
-    Query: What is the Domain, Clause, or Risk Ref mentioned in the query: Hello?
-    None
-    
-    3. If no domain number, clause number, or Risk Ref number is found in user's query, proceed to the next step. If found, return the extracted domain, clause, or Risk Ref number and do no continue to the next step.
+        1. Check if the query is about editing company information. If so, respond with "Editing Company Information" and stop, without proceeding to the next steps.
 
-    4. If and only if no domain number, clause number, or Risk Ref number is found in user's query, Identify whether the query mentions a preparedness tier (Supporter, Practitioner, Promoter, Performer, Advocate). If found, return the extracted tier.
-    
-    5. If the query does not contain any of the above information, return "None".
+        2. Identify whether a query mentions a tier, domain number, clause number, or "Risk Ref" number strictly in the following formats:
+            - B.(number).(optional clause number) (for domains or clauses)
+            - Risk Ref: (number) (for Risk Ref references)
+
+            **If any domain number, clause number, or Risk Ref number is found, return it immediately and do not proceed to any further steps.**
+
+        3. If no domain number, clause number, or Risk Ref number is found in the user's query, identify whether the query mentions a preparedness tier (Supporter, Practitioner, Promoter, Performer, Advocate). 
+            - If found, return the extracted tier.
+            
+        4. If the query does not contain any of the above information, return "None".
+
+        **Examples:**
+        Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is B.1.1?
+        B.1.1
+
+        Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is B.12?
+        B.12.
+
+        Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is the purpose of Cyber Trust Mark?
+        None
+
+        Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is Risk Ref 3?
+        Risk Ref: 3
+
+        Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What tier does Performer belong to?
+        Performer
+
+        Query: What is the Domain, Clause, or Risk Ref mentioned in the query: Hello?
+        None
+
+        Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What do i do for B.4 for supporter tier?
+        B.4.
+
     """
 
     # Send query for classification
