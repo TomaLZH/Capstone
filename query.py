@@ -120,8 +120,6 @@ def predict_relevance_and_filter_results(query, top_passages):
     filtered_results = [
         (passage, score) for passage, score in zip(top_passages, cross_scores) if score > 0
     ]
-    if len(filtered_results) > 15:
-        return "Too many clauses to display. We have updated the checklist above, please check it."
 
     sorted_results = sorted(
         filtered_results, key=lambda x: x[1], reverse=True)[:15]
