@@ -75,10 +75,8 @@ if uploaded_file is not None:
     st.write(chat_instance.get_infrastructure())
 
 # Display the checklist for the selected chat instance
-checklist = dict(chat_instance.get_checklist())
+checklist = chat_instance.get_checklist()
 st.write(checklist)
-if checklist is not None:
-    st.write(checklist["Domains"])
 
 
 
