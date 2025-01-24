@@ -76,15 +76,7 @@ if uploaded_file is not None:
 
 # Display the checklist for the selected chat instance
 checklist = chat_instance.get_checklist()
-
-if isinstance(checklist.get("Domains"), dict):
-    for domain, clauses in checklist["Domains"].items():
-        st.subheader(domain)  # Display domain name
-        st.write("Clauses:")
-        for clause in clauses:
-            st.markdown(f"- {clause}")  # List the clauses for each domain
-else:
-    st.write(checklist)
+st.write(checklist)
 
 
 
