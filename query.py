@@ -120,6 +120,8 @@ def predict_relevance_and_filter_results(query, top_passages):
     filtered_results = [
         (passage, score) for passage, score in zip(top_passages, cross_scores) if score > 0
     ]
+    if len(filtered_results) > 15:
+        return "Too many clauses to display. We have updated the checklist above, please check it."
 
     sorted_results = sorted(
         filtered_results, key=lambda x: x[1], reverse=True)[:15]
@@ -342,8 +344,6 @@ def handle_query(query, chat: Chat):
         )
         chat.set_checklist(generate_checklist(query, chat))
         top_passages = [doc['text'] for doc in results]
-        if len(results) > 15:
-            return "Results have been updated at the checklist above, please refer to the checklist for more information on any of the clauses."
 
     # Predict relevance and filter results
     sorted_results = predict_relevance_and_filter_results(query, top_passages)
