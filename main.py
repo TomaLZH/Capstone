@@ -6,6 +6,8 @@ from Initialize import get_resources
 import pandas as pd
 from functions import analyze_file
 import json
+import random
+
 
 
 # Load required resources and models
@@ -113,8 +115,25 @@ for message in chat_instance.get_history():
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
+# List of possible prompts to randomly choose from
+prompts = [
+    "How do I implement Domain B.7 for Advocate tier?",
+    "Would you like to learn about Domain B.8?",
+    "Tell me about your implementation of B.7?",
+    "What help do you need for Domain B.9?",
+    "What documents are needed for the Cyber Trust Mark?",
+    "What is Risk Ref 9",
+    "What is the Cyber Trust Mark?",
+    "Give me an filled example of Risk Ref 18"
+]
+
+# Randomly select a prompt
+prompt = random.choice(prompts)
+
+
+
 # Handle user input and assistant responses
-if prompt := st.chat_input("How do i implement Domain B.7 for Advocate tier?"):
+if prompt := st.chat_input(prompt):
     # Display the user's input in the chat interface
     st.chat_message("user").markdown(prompt)
     chat_instance.add_message({"role": "user", "content": prompt})
