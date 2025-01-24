@@ -78,7 +78,7 @@ if uploaded_file is not None:
 checklist = chat_instance.get_checklist()
 st.write(checklist)
 if checklist is not None:
-    st.write(checklist["Domains"])
+    st.write(checklist[0])
 
 
 
