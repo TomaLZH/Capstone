@@ -41,7 +41,7 @@ def extract_domain_clause_or_risk_ref(query):
     Query: What is the Domain, Clause, or Risk Ref mentioned in the query: Hello?
     None
     
-    If no domain number, clause number, or Risk Ref number is found in user's query, proceed to the next step. If found, return the extracted domain, clause, or Risk Ref number.
+    If no domain number, clause number, or Risk Ref number is found in user's query, proceed to the next step. If found, return the extracted domain, clause, or Risk Ref number and do no continue to the next step.
 
     3. Identify whether the query mentions a preparedness tier (Supporter, Practitioner, Promoter, Performer, Advocate). If found, return the extracted tier.
     
