@@ -5,6 +5,8 @@ from openai import OpenAI
 from Initialize import get_resources
 import pandas as pd
 from functions import analyze_file
+import json
+
 
 # Load required resources and models
 bi_encoder, cross_encoder, collection, openai_client, assistant = get_resources()
@@ -77,6 +79,17 @@ if uploaded_file is not None:
 # Display the checklist for the selected chat instance
 checklist = chat_instance.get_checklist()
 st.write(checklist)
+
+# Convert the string to a dictionary
+checklist_dict = json.loads(checklist)
+if checklist_dict:
+    for domain, tiers in checklist_dict["Domains"].items():
+        st.subheader(domain)  # Display domain name
+        for tier, clauses in tiers.items():
+            st.write(f"**{tier}**:")  # Display the tier name
+            for clause in clauses:
+                st.markdown(f"- {clause}")  # List each clause for the tier
+
 
 
 
