@@ -95,7 +95,7 @@ for message in chat_instance.get_history():
         st.markdown(message["content"])
 
 # Handle user input and assistant responses
-if prompt := st.chat_input("How can I assist you today?"):
+if prompt := st.chat_input("How do i implement Domain B.7 for Advocate tier?"):
     # Display the user's input in the chat interface
     st.chat_message("user").markdown(prompt)
     chat_instance.add_message({"role": "user", "content": prompt})
