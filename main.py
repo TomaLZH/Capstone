@@ -124,7 +124,8 @@ prompts = [
     "What documents are needed for the Cyber Trust Mark?",
     "What is Risk Ref 9",
     "What is the Cyber Trust Mark?",
-    "Give me an filled example of Risk Ref 18"
+    "Give me an filled example of Risk Ref 18",
+    "What are all the Clauses in Domain B.22?",
 ]
 
 # Randomly select a prompt
