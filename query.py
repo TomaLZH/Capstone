@@ -367,11 +367,12 @@ def handle_query(query, chat: Chat):
         results = client.query(
             collection_name="Capstone",
             filter=f"text like '%{domain_clause}%'",
-            top_k=20,
             output_fields=["text"]
         )
         chat.set_checklist(generate_checklist(query, chat))
         top_passages = [doc['text'] for doc in results]
+        if len(results) > 15:
+            return "Results have been updated at the checklist above, please refer to the checklist for more information on any of the clauses."
 
     # Predict relevance and filter results
     sorted_results = predict_relevance_and_filter_results(query, top_passages)
