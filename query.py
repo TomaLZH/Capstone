@@ -38,8 +38,8 @@ def extract_domain_clause_or_risk_ref(query):
         Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is Risk Ref 3?
         Risk Ref: 3
 
-        Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What tier does Performer belong to?
-        Performer
+        Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What are all the clauses for advocate tier?
+        Advocate
 
         Query: What is the Domain, Clause, or Risk Ref mentioned in the query: Hello?
         None
