@@ -328,7 +328,8 @@ def handle_query(query, chat: Chat):
         query_embedding = bi_encoder.encode(processed_query).astype(np.float32)
         query_embedding /= np.linalg.norm(query_embedding)
         top_passages = search_and_retrieve_results(query_embedding)
-
+        sorted_results = predict_relevance_and_filter_results(query, top_passages)
+        
     elif domain_clause.startswith("Editing Company Information"):
         return handle_edit_company_info(query, chat)
 
@@ -341,10 +342,10 @@ def handle_query(query, chat: Chat):
             output_fields=["text"]
         )
         chat.set_checklist(generate_checklist(query, chat))
-        top_passages = [doc['text'] for doc in results]
+        sorted_results = [doc['text'] for doc in results]
 
     # Predict relevance and filter results
-    sorted_results = predict_relevance_and_filter_results(query, top_passages)
+   
 
     # Generate and return the final response
     return generate_final_response(sorted_results, query, chat)
