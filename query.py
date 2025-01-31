@@ -269,7 +269,7 @@ def generate_checklist(query, chat):
         - For a **tier-wide query** (e.g., "What are all the clauses I need to implement for advocate tier?"), return the relevant clauses across all domains for that tier.
         - If no relevant information is found, return "None".
 
-        #### Example Output:  
+        #### Output Format:  
         {
         "checklist_title": "Clauses for Advocate Tier",
         "Domains": {
