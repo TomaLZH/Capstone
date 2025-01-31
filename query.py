@@ -341,7 +341,7 @@ def handle_query(query, chat: Chat):
             output_fields=["text"]
         )
         chat.set_checklist(generate_checklist(query, chat))
-        sorted_results = [doc['text'] for doc in results]
+        top_passages = [doc['text'] for doc in results]
 
     # Predict relevance and filter results
     sorted_results = predict_relevance_and_filter_results(query, top_passages)
