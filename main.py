@@ -134,7 +134,7 @@ prompt = random.choice(prompts)
 
 
 # Handle user input and assistant responses
-if prompt := st.chat_input(prompt):
+if prompt := st.chat_input("What is Risk Ref 9"):
     # Display the user's input in the chat interface
     st.chat_message("user").markdown(prompt)
     chat_instance.add_message({"role": "user", "content": prompt})
