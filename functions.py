@@ -26,10 +26,23 @@ def read_file(file):
 def analyze_file(chat: Chat, file):
     text = read_file(file)
     system_message = """
-    You are an assistant that analyzes the content of a file and returns in a structured format, the infrastructure, 
-    and the environment of the company mentioned in the file. Analyze the text and provide a summary of the key points.
-    Just provide the summary of the key points in the file, no conclusion, explanation or extra information is needed.
-    """
+        You are a cybersecurity compliance assistant that extracts critical information needed for security certifications (e.g., ISO 27001, SOC 2, PCI DSS). 
+        Analyze the text and strictly include only details relevant to:
+        
+        - Technology stack: Software, cloud providers (AWS/Azure/GCP), and security tools
+        - Workforce details: Number of employees/contractors and their locations
+        - Infrastructure: Data centers, physical offices, and network architecture
+        - Data management: Sensitive data types and storage locations
+        - Compliance status: Existing security frameworks or certifications
+        - Access controls: Authentication methods and privilege management
+        - Third-party integrations: Vendors/partners with system access
+        - Security measures: Encryption standards, network segmentation, audit processes
+        - Physical security: Facility controls and surveillance systems
+        - Incident response: Breach history and recovery procedures
+        
+        Return a structured summary with only factual, explicit information found in the text. 
+        Exclude projections, marketing claims, and unrelated operational details.
+        """
     response = openai_client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[{"role": "system", "content": system_message},
