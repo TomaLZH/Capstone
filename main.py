@@ -22,6 +22,43 @@ def update_skill_level():
     # Update the skill level in the chat instance when the session state changes
     chat_instance.set_skill_level(st.session_state.it_skill_level)
 
+import streamlit as st
+
+# Initialize session state for login pop-up
+if "show_login" not in st.session_state:
+    st.session_state.show_login = False
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
+
+# Function to toggle login pop-up
+def toggle_login():
+    st.session_state.show_login = not st.session_state.show_login
+
+# Top-right login button (using columns to position)
+col1, col2 = st.columns([8, 1])
+with col2:
+    if st.button("🔑 Login"):
+        toggle_login()
+
+# Display login pop-up if button is clicked
+if st.session_state.show_login:
+    with st.sidebar:  # Simulating a pop-up
+        st.write("### Login")
+        username = st.text_input("Username")
+        password = st.text_input("Password", type="password")
+        if st.button("Submit"):
+            # Example: Dummy login validation
+            if username == "admin" and password == "password":  
+                st.session_state.logged_in = True
+                st.session_state.show_login = False  # Hide login pop-up after login
+                st.success("Logged in successfully!")
+            else:
+                st.error("Invalid credentials, try again.")
+
+# Display logged-in state
+if st.session_state.logged_in:
+    st.sidebar.write(f"✅ Logged in as {username}")
+
 
 # Initialize session state for chat instances and user preferences
 if "chats" not in st.session_state:

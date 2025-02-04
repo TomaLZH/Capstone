@@ -2,14 +2,17 @@ import sqlite3
 
 # Connect to SQLite database
 conn = sqlite3.connect('sqlite3.db')
-
-# Create a cursor object
 cursor = conn.cursor()
 
-# Create a table
+# Drop the existing table (if it exists)
+cursor.execute('DROP TABLE IF EXISTS users')
+
+# Recreate the table with the new columns
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY,
+    username TEXT NOT NULL,
+    password TEXT NOT NULL,
     data BLOB
 )
 ''')
