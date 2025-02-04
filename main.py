@@ -59,7 +59,6 @@ if st.session_state.show_login:
                 st.session_state.username = username
                 st.session_state.show_login = False
                 st.sidebar.success(f"✅ Logged in as {username}")
-                st.rerun()
 
             elif result["status"] == 201:  # New user registered
                 st.session_state.logged_in = True
@@ -67,7 +66,6 @@ if st.session_state.show_login:
                 st.session_state.show_login = False
                 st.sidebar.success(
                     f"🎉 Account created! Logged in as {username}")
-                st.rerun()
 
             else:  # Invalid password
                 st.error(result["message"])
