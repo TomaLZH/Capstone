@@ -6,7 +6,10 @@ from dotenv import load_dotenv
 import os
 import streamlit as st
 from pymilvus import MilvusClient
+import sqlite3
 
+con = sqlite3.connect("sqlite.db")
+cur = con.cursor()
 
 # Load API keys and configurations from Streamlit secrets
 OPENAI_API_KEY = st.secrets["openai"]["API_KEY"]
@@ -42,4 +45,4 @@ assistant = openai_client.beta.assistants.retrieve(
 
 
 def get_resources():
-    return bi_encoder, cross_encoder, client, openai_client, assistant
+    return cur, bi_encoder, cross_encoder, client, openai_client, assistant
