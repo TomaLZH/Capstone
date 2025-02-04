@@ -28,6 +28,8 @@ if "show_login" not in st.session_state:
     st.session_state.show_login = False
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
+if "username" not in st.session_state:
+    st.session_state.username = None
 
 # Function to toggle login pop-up
 
@@ -45,19 +47,34 @@ with col2:
 # Display login pop-up if button is clicked
 if st.session_state.show_login:
     with st.sidebar:  # Simulating a pop-up
-        st.write("### Login")
+        st.write("### Login / Register")
         username = st.text_input("Username")
         password = st.text_input("Password", type="password")
+
         if st.button("Submit"):
             result = authenticate_user(username, password)
-            if result["status"] == 200:
-                st.session_state.logged_in = True
-                toggle_login()
-                st.sidebar.write(f"✅ Logged in as {username}")
-                st.rerun()        
-            else:
-                st.error("Invalid username or password")
 
+            if result["status"] == 200:  # Login successful
+                st.session_state.logged_in = True
+                st.session_state.username = username
+                st.session_state.show_login = False
+                st.sidebar.success(f"✅ Logged in as {username}")
+                st.rerun()
+
+            elif result["status"] == 201:  # New user registered
+                st.session_state.logged_in = True
+                st.session_state.username = username
+                st.session_state.show_login = False
+                st.sidebar.success(
+                    f"🎉 Account created! Logged in as {username}")
+                st.rerun()
+
+            else:  # Invalid password
+                st.error(result["message"])
+
+# Display logged-in user info
+if st.session_state.logged_in:
+    st.sidebar.write(f"👤 Logged in as **{st.session_state.username}**")
 
 
 # Initialize session state for chat instances and user preferences
