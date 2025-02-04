@@ -51,8 +51,11 @@ if st.session_state.show_login:
         if st.button("Submit"):
             # Example: Dummy login validation
             result = authenticate_user(username, password)
-            st.write(result)
-
+            if result["status"] == 200:
+                st.session_state.logged_in = True
+                toggle_login()
+            st.write(result["message"])
+            st.rerun()        
 
 # Display logged-in state
 if st.session_state.logged_in:
