@@ -269,7 +269,7 @@ def generate_checklist(query, chat):
         - For a **tier-wide query** (e.g., "What are all the clauses I need to implement for advocate tier?"), return the relevant clauses across all domains for that tier.
         - If no relevant information is found, return "None".
 
-        #### Example Output:  
+        #### Output Format:  
         {
         "checklist_title": "Clauses for Advocate Tier",
         "Domains": {
@@ -328,7 +328,7 @@ def handle_query(query, chat: Chat):
         query_embedding = bi_encoder.encode(processed_query).astype(np.float32)
         query_embedding /= np.linalg.norm(query_embedding)
         top_passages = search_and_retrieve_results(query_embedding)
-
+        
     elif domain_clause.startswith("Editing Company Information"):
         return handle_edit_company_info(query, chat)
 
