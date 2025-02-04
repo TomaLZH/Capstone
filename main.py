@@ -13,7 +13,6 @@ from databasefunctions import authenticate_user
 # Load required resources and models
 conn, cur, bi_encoder, cross_encoder, collection, openai_client, assistant = get_resources()
 
-username = "Not logged in"
 # # App title
 # st.title("Cyber Trust Mark Assistant")
 # Function to update the skill level when the dropdown changes
@@ -50,14 +49,14 @@ if st.session_state.show_login:
         username = st.text_input("Username")
         password = st.text_input("Password", type="password")
         if st.button("Submit"):
-            # Example: Dummy login validation
             result = authenticate_user(username, password)
             if result["status"] == 200:
                 st.session_state.logged_in = True
                 toggle_login()
-            st.write(result["message"])
-            st.rerun()        
-
+                st.rerun()        
+            else:
+                st.error("Invalid username or password")
+                
 # Display logged-in state
 if st.session_state.logged_in:
     st.sidebar.write(f"✅ Logged in as {username}")
