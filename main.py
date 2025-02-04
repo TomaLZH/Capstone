@@ -11,7 +11,7 @@ import random
 
 
 # Load required resources and models
-bi_encoder, cross_encoder, collection, openai_client, assistant = get_resources()
+cur, bi_encoder, cross_encoder, collection, openai_client, assistant = get_resources()
 
 # # App title
 # st.title("Cyber Trust Mark Assistant")
