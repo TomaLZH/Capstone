@@ -9,7 +9,7 @@ from pymilvus import MilvusClient
 import sqlite3
 
 conn = sqlite3.connect("sqlite3.db")
-cur = con.cursor()
+cur = conn.cursor()
 
 # Load API keys and configurations from Streamlit secrets
 OPENAI_API_KEY = st.secrets["openai"]["API_KEY"]
