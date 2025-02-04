@@ -53,13 +53,11 @@ if st.session_state.show_login:
             if result["status"] == 200:
                 st.session_state.logged_in = True
                 toggle_login()
+                st.sidebar.write(f"✅ Logged in as {username}")
                 st.rerun()        
             else:
                 st.error("Invalid username or password")
-                
-# Display logged-in state
-if st.session_state.logged_in:
-    st.sidebar.write(f"✅ Logged in as {username}")
+
 
 
 # Initialize session state for chat instances and user preferences
