@@ -4,10 +4,11 @@ from Chat import Chat  # Import the Chat class
 from openai import OpenAI
 from Initialize import get_resources
 import pandas as pd
-from functions import analyze_file
 import json
+from functions import analyze_file
+import pickle
 import random
-from databasefunctions import authenticate_user
+from databasefunctions import authenticate_user, update_chat_log
 
 
 # Load required resources and models
@@ -198,4 +199,8 @@ if prompt := st.chat_input("What is Risk Ref 9"):
     # Display the assistant's response
     st.chat_message("assistant").markdown(response)
     chat_instance.add_message({"role": "assistant", "content": response})
+    if st.session_state.logged_in:
+        # Save the chat history to the database
+        update_chat_log(st.session_state.username, pickle.dumps(chat_instance))
+
     st.rerun()
