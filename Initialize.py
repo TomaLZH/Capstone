@@ -8,7 +8,7 @@ import streamlit as st
 from pymilvus import MilvusClient
 import sqlite3
 
-con = sqlite3.connect("sqlite.db")
+con = sqlite3.connect("sqlite3.db")
 cur = con.cursor()
 
 # Load API keys and configurations from Streamlit secrets
