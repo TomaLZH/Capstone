@@ -3,7 +3,7 @@ import hashlib
 
 # Function to create a new database connection
 def connect_db():
-    return sqlite3.connect("users.db", check_same_thread=False)
+    return sqlite3.connect("sqlite3.db", check_same_thread=False)
 
 # Function to hash passwords using SHA-256
 def hash_password(password):
