@@ -13,8 +13,7 @@ from databasefunctions import authenticate_user
 # Load required resources and models
 conn, cur, bi_encoder, cross_encoder, collection, openai_client, assistant = get_resources()
 
-username = None
-st.session_state.logged_in = False
+username = "Not logged in"
 # # App title
 # st.title("Cyber Trust Mark Assistant")
 # Function to update the skill level when the dropdown changes
