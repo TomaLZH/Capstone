@@ -8,7 +8,7 @@ import streamlit as st
 from pymilvus import MilvusClient
 import sqlite3
 
-con = sqlite3.connect("sqlite3.db")
+conn = sqlite3.connect("sqlite3.db")
 cur = con.cursor()
 
 # Load API keys and configurations from Streamlit secrets
@@ -45,4 +45,4 @@ assistant = openai_client.beta.assistants.retrieve(
 
 
 def get_resources():
-    return cur, bi_encoder, cross_encoder, client, openai_client, assistant
+    return conn, cur, bi_encoder, cross_encoder, client, openai_client, assistant

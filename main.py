@@ -7,11 +7,11 @@ import pandas as pd
 from functions import analyze_file
 import json
 import random
-
+from databasefunctions import authenticate_user
 
 
 # Load required resources and models
-cur, bi_encoder, cross_encoder, collection, openai_client, assistant = get_resources()
+conn, cur, bi_encoder, cross_encoder, collection, openai_client, assistant = get_resources()
 
 # # App title
 # st.title("Cyber Trust Mark Assistant")
@@ -22,7 +22,6 @@ def update_skill_level():
     # Update the skill level in the chat instance when the session state changes
     chat_instance.set_skill_level(st.session_state.it_skill_level)
 
-import streamlit as st
 
 # Initialize session state for login pop-up
 if "show_login" not in st.session_state:
@@ -31,8 +30,11 @@ if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 
 # Function to toggle login pop-up
+
+
 def toggle_login():
     st.session_state.show_login = not st.session_state.show_login
+
 
 # Top-right login button (using columns to position)
 col1, col2 = st.columns([8, 1])
@@ -48,12 +50,8 @@ if st.session_state.show_login:
         password = st.text_input("Password", type="password")
         if st.button("Submit"):
             # Example: Dummy login validation
-            if username == "admin" and password == "password":  
-                st.session_state.logged_in = True
-                st.session_state.show_login = False  # Hide login pop-up after login
-                st.success("Logged in successfully!")
-            else:
-                st.error("Invalid credentials, try again.")
+            authenticate_user(username, password)
+
 
 # Display logged-in state
 if st.session_state.logged_in:
@@ -118,7 +116,7 @@ if uploaded_file is not None:
 # Display the checklist for the selected chat instance
 checklist = chat_instance.get_checklist()
 # Convert the string to a dictionary
-if checklist:    
+if checklist:
     checklist_dict = json.loads(checklist)
     # Extracting the title and the domains
     checklist_title = checklist_dict['checklist_title']
@@ -132,7 +130,6 @@ if checklist:
         st.write(f"#### {domain}")
         for clause in clauses:
             st.write(f"- [ ] {clause}")
-
 
 
 # Dropdown for selecting the IT skill level
@@ -166,7 +163,6 @@ prompts = [
 
 # Randomly select a prompt
 prompt = random.choice(prompts)
-
 
 
 # Handle user input and assistant responses

@@ -5,7 +5,7 @@ from Chat import Chat
 import streamlit as st
 
 # Load models and resources such as encoders, database collections, and OpenAI client
-cur, bi_encoder, cross_encoder, client, openai_client, assistant = get_resources()
+conn, cur, bi_encoder, cross_encoder, client, openai_client, assistant = get_resources()
 
 
 def extract_domain_clause_or_risk_ref(query):
