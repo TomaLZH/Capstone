@@ -50,7 +50,8 @@ if st.session_state.show_login:
         password = st.text_input("Password", type="password")
         if st.button("Submit"):
             # Example: Dummy login validation
-            authenticate_user(username, password)
+            result = authenticate_user(username, password)
+            st.write(result)
 
 
 # Display logged-in state
