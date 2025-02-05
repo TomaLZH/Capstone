@@ -12,7 +12,7 @@ from databasefunctions import authenticate_user, update_chat_log
 
 
 # Load required resources and models
-conn, cur, bi_encoder, cross_encoder, collection, openai_client, assistant = get_resources()
+engine, bi_encoder, cross_encoder, collection, openai_client, assistant = get_resources()
 
 # # App title
 # st.title("Cyber Trust Mark Assistant")

@@ -13,3 +13,4 @@ langchain-community
 pymilvus==2.4.12
 langchain-huggingface
 python-docx
+google-cloud-secret-manager
