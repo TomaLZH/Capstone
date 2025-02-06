@@ -7,7 +7,7 @@ import pandas as pd
 import json
 from functions import analyze_file
 import pickle
-from databasefunctions import authenticate_user, update_chat_log
+from databasefunctions import authenticate_user, update_chat_object
 import random
 
 # Load required resources and models
@@ -118,5 +118,5 @@ if prompt := st.chat_input("What is Risk Ref 9"):
     st.chat_message("assistant").markdown(response)
     chat_instance.add_message({"role": "assistant", "content": response})
     if st.session_state.logged_in:
-        update_chat_log(st.session_state.username, pickle.dumps(chat_instance))
+        update_chat_object(st.session_state.username, pickle.dumps(chat_instance))
     st.rerun()

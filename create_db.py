@@ -1,27 +1,33 @@
 import streamlit as st
-import sqlalchemy
+import pandas as pd
+import base64
+import pickle
 
 # Connect to PostgreSQL
 conn = st.connection("postgresql", type="sql")
 
-# # Insert data safely using session.execute()
-# with conn.session as session:
-#     session.execute(
-#         sqlalchemy.text("INSERT INTO my_table (username, password) VALUES (:username, :password)"),
-#         {"username": "John", "password": "12345"}  # Use parameterized queries
-#     )
-#     session.commit()  # Commit the transaction
+# Fetch data, encoding BYTEA in base64
+df = conn.query("SELECT ID, Username, Password, encode(data, 'base64') AS data FROM my_table")
 
-# Fetch and display data
-df = conn.query("SELECT * FROM my_table")
+# Function to decode base64 and unpickle
+def decode_and_unpickle(data):
+    if data:
+        try:
+            binary_data = base64.b64decode(data)  # Decode base64
+            return pickle.loads(binary_data)  # Unpickle
+        except Exception as e:
+            return f"Error unpickling: {str(e)}"
+    return None
 
-st.write("Users in database:")
-for _, row in df.iterrows():
-    print(f"Username: {row['username']}, Password: {row['password']}")
-    
-# Alter the table to change the password column type
-# with conn.session as session:
-#     session.execute(
-#         sqlalchemy.text("ALTER TABLE my_table ALTER COLUMN password TYPE VARCHAR(255)")
-#     )
-#     session.commit()  # Commit the transaction
+# Apply decoding to the 'Data' column
+df["data"] = df["data"].apply(decode_and_unpickle)
+
+# Print the decoded skill levels (or error message) in the terminal
+for data in df["data"]:
+    if hasattr(data, "get_skill_level"):
+        print(data.get_skill_level())  # Print skill level to terminal
+    else:
+        print("No skill level method found in the decoded object.")  # Print error message if no method
+
+# Print the full DataFrame to terminal
+print(df)

@@ -2,6 +2,7 @@ import hashlib
 import pickle
 import sqlalchemy
 from sqlalchemy.orm import sessionmaker
+from Chat import Chat
 from Initialize import get_resources
 
 # Get PostgreSQL engine
@@ -44,7 +45,7 @@ def authenticate_user(username, password):
             return {"status": 201, "message": "User registered successfully!", "user": new_user}
 
 # Function to update user chat log
-def update_chat_log(username, chat_data):
+def update_chat_object(username, chat_data: Chat):
     with session as s:
         s.execute(sqlalchemy.text("UPDATE my_table SET data = :data WHERE username = :username"),
                   {"data": pickle.dumps(chat_data), "username": username})
