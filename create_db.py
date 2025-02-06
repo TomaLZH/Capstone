@@ -18,3 +18,10 @@ df = conn.query("SELECT * FROM my_table")
 st.write("Users in database:")
 for _, row in df.iterrows():
     print(f"Username: {row['username']}, Password: {row['password']}")
+    
+# Alter the table to change the password column type
+# with conn.session as session:
+#     session.execute(
+#         sqlalchemy.text("ALTER TABLE my_table ALTER COLUMN password TYPE VARCHAR(255)")
+#     )
+#     session.commit()  # Commit the transaction
