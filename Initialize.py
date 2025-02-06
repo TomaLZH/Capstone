@@ -7,7 +7,7 @@ from pymilvus import MilvusClient
 # Load API keys from Streamlit secrets
 OPENAI_API_KEY = st.secrets["openai"]["API_KEY"]
 
-st.connection("postgresql", type="sql")
+conn = st.connection("postgresql", type="sql")
 
 # Initialize bi-encoder model for query embedding
 bi_encoder = SentenceTransformer("sentence-transformers/all-mpnet-base-v2")
@@ -26,4 +26,4 @@ openai_client = OpenAI(api_key=OPENAI_API_KEY)
 assistant = openai_client.beta.assistants.retrieve("asst_H8RXmor1XBDG0F1917fixtHE")
 
 def get_resources():
-    return bi_encoder, cross_encoder, client, openai_client, assistant
+    return conn, bi_encoder, cross_encoder, client, openai_client, assistant
