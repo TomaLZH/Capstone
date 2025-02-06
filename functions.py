@@ -6,7 +6,7 @@ from Chat import Chat
 import docx
 from Initialize import get_resources
 
-conn, cur, bi_encoder, cross_encoder, client, openai_client, assistant = get_resources()
+conn, bi_encoder, cross_encoder, client, openai_client, assistant = get_resources()
 
 
 def read_file(file):
