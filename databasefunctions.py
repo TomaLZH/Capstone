@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 from Initialize import get_resources
 
 # Get PostgreSQL engine
-conn, _, _, _, _ = get_resources()
+conn, _, _, _, _,_ = get_resources()
 
 # Create session
 Session = sessionmaker(bind=conn)
