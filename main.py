@@ -7,7 +7,7 @@ import pandas as pd
 import json
 from functions import analyze_file
 import pickle
-from databasefunctions import authenticate_user, update_chat_object
+from databasefunctions import authenticate_user
 import random
 
 # Load required resources and models
