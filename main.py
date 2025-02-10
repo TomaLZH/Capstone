@@ -90,7 +90,7 @@ uploaded_file = st.file_uploader("Choose a file", type=["csv", "xlsx", "docx"])
 if uploaded_file and ("uploaded_file_name" not in st.session_state or st.session_state.uploaded_file_name != uploaded_file.name):
     st.session_state.analyzed_file_data = analyze_file(chat_instance, uploaded_file)
     st.session_state.uploaded_file_name = uploaded_file.name
-    update_company_infrastructure(st.session_state.username, st.session_state.analyzed_file_data)
+    update_company_infrastructure(st.session_state.username, chat_instance.get_infrastructure())
 
 
 # Display checklist
