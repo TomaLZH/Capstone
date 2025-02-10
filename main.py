@@ -20,6 +20,10 @@ if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 if "username" not in st.session_state:
     st.session_state.username = None
+if "infrastructure" not in st.session_state:
+    st.session_state.infrastructure = None
+if "skill_level" not in st.session_state:
+    st.session_state.skill_level = "Beginner"
 
 # Function to toggle login pop-up
 def toggle_login():
@@ -43,6 +47,7 @@ if st.session_state.show_login:
                 st.session_state.logged_in = True
                 st.session_state.username = username
                 st.session_state.show_login = False
+                st.session_state.infrastructure = result["user"]
                 st.rerun()
             else:
                 st.error(result["message"])
@@ -50,6 +55,7 @@ if st.session_state.show_login:
 # Display logged-in user info
 if st.session_state.logged_in:
     st.sidebar.write(f"👤 Logged in as **{st.session_state.username}**")
+    st.sidebar.write(f"🏢 Company: **{st.session_state.infrastructure}**")
 
 # Initialize single chat instance
 if "chat_instance" not in st.session_state:
