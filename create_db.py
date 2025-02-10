@@ -1,18 +1,25 @@
 import streamlit as st
-import pandas as pd
-import base64
-import pickle
-
-# Import the Chat class from chat.py
-from Chat import Chat
-
-# Clear any existing cache
-st.cache_data.clear()
-st.cache_resource.clear()
+from sqlalchemy import text  # Import text() from SQLAlchemy
 
 # Connect to PostgreSQL
 conn = st.connection("postgresql", type="sql")
 
-# Fetch data from the database
-df = conn.query("SELECT * FROM my_table")
-print(df)
+# SQL Query to create the table
+create_table_query =    text("""
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    infrastructure TEXT,
+    checklist JSONB,
+    skill_level TEXT
+);
+"""
+)
+# Execute the query
+# Use session.execute() for DDL queries
+with conn.session as session:
+    session.execute(create_table_query)
+    session.commit()  # Commit changes
+
+st.success("Table 'users' created successfully with a JSONB checklist!")
