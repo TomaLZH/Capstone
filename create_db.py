@@ -5,7 +5,7 @@ import pandas as pd
 conn = st.connection("postgresql", type="sql")
 
 # Query to select all users
-query = "SELECT * FROM users;"
+query = "SELECT infrastructure FROM users;"
 
 # Execute query and fetch data into a Pandas DataFrame
 df = conn.query(query)
