@@ -7,7 +7,7 @@ import pandas as pd
 import json
 from functions import analyze_file
 import pickle
-from databasefunctions import authenticate_user
+from databasefunctions import authenticate_user, update_company_infrastructure
 import random
 
 # Load required resources and models
@@ -24,6 +24,8 @@ if "infrastructure" not in st.session_state:
     st.session_state.infrastructure = None
 if "skill_level" not in st.session_state:
     st.session_state.skill_level = "Beginner"
+if "check_list" not in st.session_state:
+    st.session_state.check_list = None
 
 # Function to toggle login pop-up
 def toggle_login():
@@ -47,7 +49,9 @@ if st.session_state.show_login:
                 st.session_state.logged_in = True
                 st.session_state.username = username
                 st.session_state.show_login = False
-                st.session_state.infrastructure = result["user"]
+                st.session_state.infrastructure = result["user"][3]
+                st.session_state.skill_level = result["user"][5]
+                st.session_state.check_list = result["user"][4]
                 st.rerun()
             else:
                 st.error(result["message"])
@@ -56,6 +60,8 @@ if st.session_state.show_login:
 if st.session_state.logged_in:
     st.sidebar.write(f"👤 Logged in as **{st.session_state.username}**")
     st.sidebar.write(f"🏢 Company: **{st.session_state.infrastructure}**")
+    st.sidebar.write(f"🎓 Skill Level: **{st.session_state.skill_level}**")
+    st.sidebar.write(f"📋 Checklist: **{st.session_state.check_list}**")
 
 # Initialize single chat instance
 if "chat_instance" not in st.session_state:
@@ -84,6 +90,8 @@ uploaded_file = st.file_uploader("Choose a file", type=["csv", "xlsx", "docx"])
 if uploaded_file and ("uploaded_file_name" not in st.session_state or st.session_state.uploaded_file_name != uploaded_file.name):
     st.session_state.analyzed_file_data = analyze_file(chat_instance, uploaded_file)
     st.session_state.uploaded_file_name = uploaded_file.name
+    update_company_infrastructure(st.session_state.username, st.session_state.analyzed_file_data["company_name"])
+
 
 # Display checklist
 checklist = chat_instance.get_checklist()
