@@ -53,7 +53,7 @@ if st.session_state.show_login:
                 st.session_state.skill_level = result["user"][5]
                 st.session_state.check_list = result["user"][4]
 
-                # Initialize chat instance and set attributes after login
+                # Initialize chat instance
                 st.session_state.chat_instance = Chat(openai_client)
                 chat_instance = st.session_state.chat_instance
                 chat_instance.set_skill_level(st.session_state.skill_level)
@@ -70,15 +70,10 @@ if st.session_state.logged_in:
     st.sidebar.write(f"🎓 Skill Level: **{st.session_state.skill_level}**")
     st.sidebar.write(f"📋 Checklist: **{st.session_state.check_list}**")
 
-# Check if the user is logged in
+# Initialize single chat instance
 if "chat_instance" not in st.session_state:
-    if st.session_state.logged_in:
-        # Initialize chat instance with user settings
-        chat_instance = st.session_state.chat_instance
-    else:
-        # Create a default chat instance for guest users
-        st.session_state.chat_instance = Chat(openai_client)
-        chat_instance = st.session_state.chat_instance
+    st.session_state.chat_instance = Chat(openai_client)
+chat_instance = st.session_state.chat_instance
 
 # Set IT skill level
 if "it_skill_level" not in st.session_state:
@@ -104,6 +99,7 @@ if uploaded_file and ("uploaded_file_name" not in st.session_state or st.session
     st.session_state.uploaded_file_name = uploaded_file.name
     update_company_infrastructure(st.session_state.username, chat_instance.get_infrastructure())
     st.rerun()
+
 
 # Display checklist
 checklist = chat_instance.get_checklist()
