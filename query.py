@@ -3,6 +3,7 @@ import numpy as np
 import logging
 from Chat import Chat
 import streamlit as st
+from databasefunctions import update_company_infrastructure
 
 # Load models and resources such as encoders, database collections, and OpenAI client
 conn, bi_encoder, cross_encoder, client, openai_client, assistant = get_resources()
@@ -109,6 +110,7 @@ def handle_edit_company_info(query, chat):
     )
 
     chat.set_infrastructure(completion.choices[0].message.content)
+    update_company_infrastructure(chat.get_username(), chat.get_infrastructure())
     return "Your company information has been updated successfully."
 
 

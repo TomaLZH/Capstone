@@ -59,6 +59,7 @@ if st.session_state.show_login:
                 chat_instance.set_skill_level(st.session_state.skill_level)
                 chat_instance.set_infrastructure(st.session_state.infrastructure)
                 chat_instance.set_checklist(st.session_state.check_list)
+                chat_instance.set_username(st.session_state.username)
                 st.rerun()
             else:
                 st.error(result["message"])
