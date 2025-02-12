@@ -132,7 +132,7 @@ def generate_checklist(query, chat):
     system_instruction = """
         You are an AI assistant that generates a checklist based on the user query. Follow these steps:
 
-        1. **Analyze the user query** to identify the relevant Tier, Domains, or Clauses. If none are found, return "None". 
+        1. **Analyze the user query** to strictly identify the relevant Tier, Domains, or Clauses. If no tier, domains or clauses are found, return "None". 
         2. **Generate a checklist** based on the information provided in the dataset below.  
 
         #### Dataset:  
