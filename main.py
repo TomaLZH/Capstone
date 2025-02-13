@@ -104,7 +104,8 @@ if uploaded_file and ("uploaded_file_name" not in st.session_state or st.session
 
 # Display checklist
 checklist = chat_instance.get_checklist()
-if checklist:
+st.write(checklist)
+if checklist or checklist is not "None":
     checklist_dict = json.loads(checklist)
     st.write(f"### {checklist_dict['checklist_title']}")
     for domain, clauses in checklist_dict['Domains'].items():
