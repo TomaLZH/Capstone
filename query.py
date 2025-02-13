@@ -45,6 +45,9 @@ def extract_domain_clause_or_risk_ref(query):
         Query: What is the Domain, Clause, or Risk Ref mentioned in the query: Hello?
         None
 
+        Query: WHat is the Domain, Clause or Risk Ref mentioned in the query: What is BCDR?
+        None
+        
         Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What do i do for B.4 for supporter tier?
         B.4.
 
