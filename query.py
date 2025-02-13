@@ -123,7 +123,7 @@ def predict_relevance_and_filter_results(query, top_passages, scorelimit = 0):
     cross_scores = cross_encoder.predict(cross_inp)
 
     filtered_results = [
-        (passage, score) for passage, score in zip(top_passages, cross_scores) if score > 0
+        (passage, score) for passage, score in zip(top_passages, cross_scores) if score > scorelimit
     ]
 
     sorted_results = sorted(
