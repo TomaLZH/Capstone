@@ -113,11 +113,12 @@ def handle_edit_company_info(query, chat):
     )
 
     chat.set_infrastructure(completion.choices[0].message.content)
-    update_company_infrastructure(chat.get_username(), chat.get_infrastructure())
+    update_company_infrastructure(
+        chat.get_username(), chat.get_infrastructure())
     return "Your company information has been updated successfully."
 
 
-def predict_relevance_and_filter_results(query, top_passages):
+def predict_relevance_and_filter_results(query, top_passages, number_of_results=50):
     """ Predict relevance scores for the results and filter based on relevance. """
     cross_inp = [[query, passage] for passage in top_passages]
     cross_scores = cross_encoder.predict(cross_inp)
@@ -127,7 +128,7 @@ def predict_relevance_and_filter_results(query, top_passages):
     ]
 
     sorted_results = sorted(
-        filtered_results, key=lambda x: x[1], reverse=True)[:15]
+        filtered_results, key=lambda x: x[1], reverse=True)[:number_of_results]
     return sorted_results
 
 
@@ -333,7 +334,9 @@ def handle_query(query, chat: Chat):
         query_embedding = bi_encoder.encode(processed_query).astype(np.float32)
         query_embedding /= np.linalg.norm(query_embedding)
         top_passages = search_and_retrieve_results(query_embedding)
-        
+        sorted_results = predict_relevance_and_filter_results(
+            query, top_passages, 15)
+
     elif domain_clause.startswith("Editing Company Information"):
         return handle_edit_company_info(query, chat)
 
@@ -347,9 +350,10 @@ def handle_query(query, chat: Chat):
         )
         chat.set_checklist(generate_checklist(query, chat))
         top_passages = [doc['text'] for doc in results]
+        sorted_results = predict_relevance_and_filter_results(
+            query, top_passages)
 
     # Predict relevance and filter results
-    sorted_results = predict_relevance_and_filter_results(query, top_passages)
 
     # Generate and return the final response
     return generate_final_response(sorted_results, query, chat)
