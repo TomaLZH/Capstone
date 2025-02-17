@@ -7,7 +7,7 @@ import pandas as pd
 import json
 from functions import analyze_file
 import pickle
-from databasefunctions import authenticate_user, update_company_infrastructure, update_skill_level, update_checklist
+from databasefunctions import authenticate_user, update_company_infrastructure, update_skilllevel, update_checklist
 import random
 
 # Load required resources and models
@@ -84,7 +84,7 @@ def update_skill_level():
     chat_instance.set_skill_level(st.session_state.it_skill_level)
     #If logged in, update database
     if st.session_state.logged_in:
-        update_skill_level(st.session_state.username, st.session_state.it_skill_level)
+        update_skilllevel(st.session_state.username, st.session_state.it_skill_level)
     st.rerun()
 
 

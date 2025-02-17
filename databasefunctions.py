@@ -55,7 +55,7 @@ def update_company_infrastructure(username, infrastructure):
                   {"infrastructure": infrastructure, "username": username})
         s.commit()
 
-def update_skill_level(username, skill_level):
+def update_skilllevel(username, skill_level):
     with session as s:
         s.execute(sqlalchemy.text("UPDATE users SET skill_level = :skill_level WHERE username = :username"),
                   {"skill_level": skill_level, "username": username})
