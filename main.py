@@ -82,7 +82,11 @@ if "it_skill_level" not in st.session_state:
 
 def update_skill_level():
     chat_instance.set_skill_level(st.session_state.it_skill_level)
-    update_skill_level(st.session_state.username, st.session_state.it_skill_level)
+    #If logged in, update database
+    if st.session_state.logged_in:
+        update_skill_level(st.session_state.username, st.session_state.it_skill_level)
+    st.rerun()
+
 
 # UI for IT skill level selection
 st.subheader("Company Configuration and IT Skill Level")
@@ -99,7 +103,9 @@ uploaded_file = st.file_uploader("Choose a file", type=["csv", "xlsx", "docx"])
 if uploaded_file and ("uploaded_file_name" not in st.session_state or st.session_state.uploaded_file_name != uploaded_file.name):
     st.session_state.analyzed_file_data = analyze_file(chat_instance, uploaded_file)
     st.session_state.uploaded_file_name = uploaded_file.name
-    update_company_infrastructure(st.session_state.username, chat_instance.get_infrastructure())
+    #if logged in, update database
+    if st.session_state.logged_in:
+        update_company_infrastructure(st.session_state.username, chat_instance.get_infrastructure())
     st.rerun()
 
 
@@ -112,7 +118,9 @@ if checklist and checklist != "None":
         st.write(f"#### {domain}")
         for clause in clauses:
             st.write(f"- [ ] {clause}")
-    update_checklist(st.session_state.username, checklist)
+    #if logged in, update database
+    if st.session_state.logged_in:
+        update_checklist(st.session_state.username, checklist)
 
 # Display chat history
 st.subheader("Chat")
@@ -120,19 +128,6 @@ for message in chat_instance.get_history():
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# Random prompt selection
-prompts = [
-    "How do I implement Domain B.7 for Advocate tier?",
-    "Would you like to learn about Domain B.8?",
-    "Tell me about your implementation of B.7?",
-    "What help do you need for Domain B.9?",
-    "What documents are needed for the Cyber Trust Mark?",
-    "What is Risk Ref 9",
-    "What is the Cyber Trust Mark?",
-    "Give me a filled example of Risk Ref 18",
-    "What are all the Clauses in Domain B.22?",
-]
-prompt = random.choice(prompts)
 
 # Handle user input
 if prompt := st.chat_input("What is Risk Ref 9"):
