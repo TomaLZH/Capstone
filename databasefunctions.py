@@ -54,3 +54,15 @@ def update_company_infrastructure(username, infrastructure):
         s.execute(sqlalchemy.text("UPDATE users SET infrastructure = :infrastructure WHERE username = :username"),
                   {"infrastructure": infrastructure, "username": username})
         s.commit()
+
+def update_skill_level(username, skill_level):
+    with session as s:
+        s.execute(sqlalchemy.text("UPDATE users SET skill_level = :skill_level WHERE username = :username"),
+                  {"skill_level": skill_level, "username": username})
+        s.commit()
+
+def update_check_list(username, check_list):
+    with session as s:
+        s.execute(sqlalchemy.text("UPDATE users SET check_list = :check_list WHERE username = :username"),
+                  {"check_list": check_list, "username": username})
+        s.commit()

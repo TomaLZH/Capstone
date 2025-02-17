@@ -7,7 +7,7 @@ import pandas as pd
 import json
 from functions import analyze_file
 import pickle
-from databasefunctions import authenticate_user, update_company_infrastructure
+from databasefunctions import authenticate_user, update_company_infrastructure, update_skill_level, update_checklist
 import random
 
 # Load required resources and models
@@ -82,6 +82,7 @@ if "it_skill_level" not in st.session_state:
 
 def update_skill_level():
     chat_instance.set_skill_level(st.session_state.it_skill_level)
+    update_skill_level(st.session_state.username, st.session_state.it_skill_level)
 
 # UI for IT skill level selection
 st.subheader("Company Configuration and IT Skill Level")
@@ -111,6 +112,7 @@ if checklist and checklist != "None":
         st.write(f"#### {domain}")
         for clause in clauses:
             st.write(f"- [ ] {clause}")
+    update_checklist(st.session_state.username, checklist)
 
 # Display chat history
 st.subheader("Chat")
