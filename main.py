@@ -85,7 +85,6 @@ def update_skill_level():
     #If logged in, update database
     if st.session_state.logged_in:
         update_skilllevel(st.session_state.username, st.session_state.it_skill_level)
-    st.rerun()
 
 
 # UI for IT skill level selection
