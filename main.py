@@ -118,8 +118,8 @@ if checklist and checklist != "None":
         for clause in clauses:
             st.write(f"- [ ] {clause}")
     #if logged in, update database
-    if st.session_state.logged_in:
-        update_checklist(st.session_state.username, checklist)
+    # if st.session_state.logged_in:
+        # update_checklist(st.session_state.username, checklist)
 
 # Display chat history
 st.subheader("Chat")
