@@ -115,24 +115,16 @@ import streamlit as st
 checklist = chat_instance.get_checklist()
 
 if checklist and checklist != "None":
-    st.write(checklist)
     checklist_dict = json.loads(checklist)
     st.write(f"### {checklist_dict['checklist_title']}")
     
-    def display_clauses(clauses):
-        """Recursive function to display clauses, handling nested structures."""
-        for item in clauses:
-            if isinstance(item, dict):  # If the item is a dictionary, display its key and recursive clauses
-                for subdomain, subclauses in item.items():
-                    st.write(f"#### {subdomain}")
-                    display_clauses(subclauses)
-            else:
-                st.write(f"- [ ] {item}")  # Display the item (clause)
-    
-    for domain, clauses in checklist_dict['Domains'].items():
+    for domain, tiers in checklist_dict['Domains'].items():
         st.write(f"#### {domain}")
-        display_clauses(clauses)
-
+        # Iterate over each tier (Supporter, Practitioner, etc.)
+        for tier, clauses in tiers.items():
+            st.write(f"##### {tier}")  # Display the tier (Supporter, Practitioner, etc.)
+            for clause in clauses:
+                st.write(f"- [ ] {clause}")  # Display each clause
     # If logged in, update database
     # if st.session_state.logged_in:
     #     update_checklist(st.session_state.username, checklist)
