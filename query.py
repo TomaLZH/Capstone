@@ -385,7 +385,7 @@ def handle_query(query, chat: Chat):
 
         # If there are more than 20 results, return a message
         if len(top_passages) > 20:
-            return "Too many clauses, refer to checklist for all the clauses"
+            return "Please refer to checklist for all the clauses"
 
         # Otherwise, predict relevance and filter results
         sorted_results = predict_relevance_and_filter_results(
