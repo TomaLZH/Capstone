@@ -345,9 +345,10 @@ def handle_query(query, chat: Chat):
     else:
         # Embed the domain or clause mentioned in the query
         st.write(f"Lexicon Search Term = {domain_clause}")
+        filter_condition = " AND ".join([f"text like '%{term}%'" for term in domain_clause])
         results = client.query(
             collection_name="Capstone",
-            filter=f"text like '%{domain_clause}%'",
+            filter=filter_condition,
             output_fields=["text"]
         )
         chat.set_checklist(generate_checklist(query, chat))
