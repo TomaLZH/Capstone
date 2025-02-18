@@ -115,6 +115,7 @@ import streamlit as st
 checklist = chat_instance.get_checklist()
 
 if checklist and checklist != "None":
+    st.write(checklist)
     checklist_dict = json.loads(checklist)
     st.write(f"### {checklist_dict['checklist_title']}")
     
