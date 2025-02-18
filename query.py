@@ -19,28 +19,30 @@ def extract_domain_clause_or_risk_ref(query):
             - B.(number).(optional clause number) (for domains or clauses)
             - Risk Ref: (number) (for Risk Ref references)
 
-            **If any domain number, clause number, or Risk Ref number is found, return it immediately and do not proceed to any further steps.**
-
-        3. If no domain number, clause number, or Risk Ref number is found in the user's query, identify whether the query mentions a preparedness tier (Supporter, Practitioner, Promoter, Performer, Advocate). 
-            - If found, return the extracted tier.
+            **If any domain number, clause number, or Risk Ref number is found, return it immediately and do not proceed to any further steps.**    
+        
+        3. Identify whether the query mentions a tier ("Supporter","Practitioner", "Performer", "Promoter", "Advocate"), If so, return the tier name.
             
         4. If the query does not contain any of the above information, return "None".
 
+        5. Make sure the output is in array format, even if it contains only one element.
+
+
         **Examples:**
         Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is B.1.1?
-        B.1.1
+        ["B.1.1"]
 
         Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is B.12?
-        B.12.
+        ["B.12."]
 
         Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is the purpose of Cyber Trust Mark?
         None
 
         Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is Risk Ref 3?
-        Risk Ref: 3
+        ["Risk Ref: 3"]
 
         Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What are all the clauses for advocate tier?
-        Advocate
+        ["Advocate"]
 
         Query: What is the Domain, Clause, or Risk Ref mentioned in the query: Hello?
         None
@@ -49,7 +51,7 @@ def extract_domain_clause_or_risk_ref(query):
         None
         
         Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What do i do for B.4 for supporter tier?
-        B.4.
+        ["B.4.","Supporter"]
 
     """
 
@@ -113,11 +115,12 @@ def handle_edit_company_info(query, chat):
     )
 
     chat.set_infrastructure(completion.choices[0].message.content)
-    update_company_infrastructure(chat.get_username(), chat.get_infrastructure())
+    update_company_infrastructure(
+        chat.get_username(), chat.get_infrastructure())
     return "Your company information has been updated successfully."
 
 
-def predict_relevance_and_filter_results(query, top_passages, scorelimit = 0):
+def predict_relevance_and_filter_results(query, top_passages, scorelimit=0):
     """ Predict relevance scores for the results and filter based on relevance. """
     cross_inp = [[query, passage] for passage in top_passages]
     cross_scores = cross_encoder.predict(cross_inp)
@@ -333,9 +336,9 @@ def handle_query(query, chat: Chat):
         query_embedding = bi_encoder.encode(processed_query).astype(np.float32)
         query_embedding /= np.linalg.norm(query_embedding)
         top_passages = search_and_retrieve_results(query_embedding)
-        sorted_results = predict_relevance_and_filter_results(query, top_passages)
+        sorted_results = predict_relevance_and_filter_results(
+            query, top_passages)
 
-        
     elif domain_clause.startswith("Editing Company Information"):
         return handle_edit_company_info(query, chat)
 
@@ -349,7 +352,8 @@ def handle_query(query, chat: Chat):
         )
         chat.set_checklist(generate_checklist(query, chat))
         top_passages = [doc['text'] for doc in results]
-        sorted_results = predict_relevance_and_filter_results(query, top_passages, -50)
+        sorted_results = predict_relevance_and_filter_results(
+            query, top_passages, -50)
 
     # Predict relevance and filter results
 

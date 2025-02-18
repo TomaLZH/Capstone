@@ -1,56 +1,53 @@
-import pdfplumber
-import pandas as pd
+from pymilvus import MilvusClient, DataType, Function, FunctionType
 
-# Function to truncate text to ensure it does not exceed the max length
-def truncate_text(data, max_length=2000):
-    # Truncate each string field if it exceeds max_length
-    return {key: (value[:max_length] if isinstance(value, str) else value) for key, value in data.items()}
+client = MilvusClient(uri="https://in03-6d0166da8e21ddd.serverless.gcp-us-west1.cloud.zilliz.com",
+                      token="ac9e06ae092afb90f90b61de112607cb2918fbba386dfc45edba79c7a39639ef9c3abdfd45b2522d7699c5b12e7e6c8638fcc794")
 
-# Open the PDF file
-with pdfplumber.open("Singapore_CSA_Cyber_Trust_mark_Cloud_Companion_Guide.pdf") as pdf:
-    all_tables = []
-    
-    # Extract tables from pages 20 to 70 (0-indexed, so range is 19 to 69)
-    for page_num in range(19, 70):
-        page = pdf.pages[page_num]
-        tables = page.extract_tables()
-        
-        # Append each table found to the list
-        if tables:
-            all_tables.extend(tables)
+# schema = client.create_schema()
 
-# Function to map first element as the header for each row in the table
-def map_table_with_headers(table):
-    header = ["Clause", "Controls", "Customers Considering"]
-    mapped_table = []
-    for i in range(1, len(table)):  # Starting from 1 to skip the header row if necessary
-        row = table[i][:-1]  # Remove the last column from each row
-        mapped_table.append(dict(zip(header, row)))
-    return mapped_table
+# schema.add_field("ID", datatype=DataType.INT64, is_primary=True, auto_id=True)
+# schema.add_field("text", datatype=DataType.VARCHAR, max_length=2000, enable_analyzer=True)
+# schema.add_field("vector", datatype=DataType.FLOAT_VECTOR, dim=768)
+# schema.add_field(field_name="sparse", datatype=DataType.SPARSE_FLOAT_VECTOR)
 
-# Function to remove newline characters from each cell in the table
-def remove_newlines_from_table(table):
-    return [[cell.replace('\n', '') if isinstance(cell, str) else cell for cell in row] for row in table]
+# bm25_function = Function(
+#     name="text_bm25_emb",
+#     input_field_names=["text"],
+#     output_field_names=["sparse"]
+#     function_type=FunctionType.BM25,
+# )
 
-# Clean and map all tables
-cleaned_tables = [remove_newlines_from_table(table) for table in all_tables]  # Clean newlines first
-mapped_tables = [map_table_with_headers(table) for table in cleaned_tables]  # Map headers after cleaning
+# schema.add_function(bm25_function)
 
-# Flatten the data and apply truncation to ensure no text exceeds the max length
-flattened_data = []
-for table in mapped_tables:
-    for row in table:
-        truncated_row = truncate_text(row)  # Truncate each row to fit varchar length
-        flattened_data.append(truncated_row)
+# index_params = client.prepare_index_params()
 
-# Output the first row (for preview)
-print(flattened_data[0])  # This will print the first row of the flattened data
+# index_params.add_index(
+#     field_name="sparse",
+#     index_type="AUTOINDEX",
+#     metric_type="BM25"
+# )
 
-# Convert the list of dictionaries to a DataFrame
-df = pd.DataFrame(flattened_data)
+# index_params.add_index(
+#     field_name="vector",
+#     index_type="IVF_FLAT",
+#     metric_type="COSINE"
+# )
 
-# Write the DataFrame to an Excel file
-output_file = "output.xlsx"
-df.to_excel(output_file, index=False, engine='openpyxl')
+# client.drop_collection("Capstonev2")  # Deletes the existing collection
+# client.create_collection(collection_name="Capstonev2", schema=schema, index_params=index_params)
 
-print(f"Data has been written to {output_file}")
+# search_params = {
+#     "nprobe": 16
+# }
+
+# hi = client.search(
+#     collection_name='Capstonev2', 
+#     data=['B.1'],
+#     anns_field='sparse',
+#     output_fields=['ID', 'text'],
+#     search_params=search_params
+# )
+
+# print(hi)
+
+client.drop_collection("Capstone")  # Deletes the existing collection
