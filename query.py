@@ -270,7 +270,7 @@ def generate_checklist(query, chat):
             }
         }   
         3. **Respond based on query type**:
-        - For a **specific clause query** (e.g., "What is B.1.1?"), return relevant clauses in the domain or tier most appropriate for the user's query.
+        - For a **specific clause query** (e.g., "What is B.1.1?"), return relevant clauses in the domain most appropriate for the user's query.
         - For a **specific domain and tier query** (e.g., "What are the clauses in B.9 for supporter tier?"), return the relevant clauses for that tier within the domain.
         - For a **specific domain query** (e.g., "What are the clauses in B.15?"), return the clauses for all tiers within the domain.
         - For a **tier-wide query** (e.g., "What are all the clauses I need to implement for advocate tier?"), return the relevant clauses across all domains for that tier.

@@ -108,18 +108,34 @@ if uploaded_file and ("uploaded_file_name" not in st.session_state or st.session
     st.rerun()
 
 
+import json
+import streamlit as st
+
 # Display checklist
 checklist = chat_instance.get_checklist()
+
 if checklist and checklist != "None":
     checklist_dict = json.loads(checklist)
     st.write(f"### {checklist_dict['checklist_title']}")
+    
+    def display_clauses(clauses):
+        """Recursive function to display clauses, handling nested structures."""
+        for item in clauses:
+            if isinstance(item, dict):  # If the item is a dictionary, display its key and recursive clauses
+                for subdomain, subclauses in item.items():
+                    st.write(f"#### {subdomain}")
+                    display_clauses(subclauses)
+            else:
+                st.write(f"- [ ] {item}")  # Display the item (clause)
+    
     for domain, clauses in checklist_dict['Domains'].items():
         st.write(f"#### {domain}")
-        for clause in clauses:
-            st.write(f"- [ ] {clause}")
-    #if logged in, update database
+        display_clauses(clauses)
+
+    # If logged in, update database
     # if st.session_state.logged_in:
-        # update_checklist(st.session_state.username, checklist)
+    #     update_checklist(st.session_state.username, checklist)
+
 
 # Display chat history
 st.subheader("Chat")
