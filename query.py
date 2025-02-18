@@ -3,6 +3,7 @@ import numpy as np
 import logging
 from Chat import Chat
 import streamlit as st
+import ast
 from databasefunctions import update_company_infrastructure
 
 # Load models and resources such as encoders, database collections, and OpenAI client
@@ -343,7 +344,8 @@ def handle_query(query, chat: Chat):
     else:
         # Embed the domain or clause mentioned in the query
         st.write(f"Lexicon Search Term = {domain_clause}")
-        filter_condition = " AND ".join([f"text like '%{term}%'" for term in domain_clause])
+        array = ast.literal_eval(domain_clause)
+        filter_condition = " AND ".join([f"text like '%{term}%'" for term in array])
         results = client.query(
             collection_name="Capstone",
             filter=filter_condition,
