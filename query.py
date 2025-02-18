@@ -325,6 +325,37 @@ def generate_final_response(sorted_results, query, chat):
     return response
 
 
+def lexicon_search(domain_clause):
+    """ Perform a lexicon search based on the domain or clause mentioned in the query. """
+    try:
+        # Convert domain_clause from string to array
+        array = ast.literal_eval(domain_clause)
+        # Ensure the array is not empty
+        if not array:
+            return "No valid terms found in the domain clause."
+    except ValueError:
+        return "Invalid format for domain clause."
+
+    # Create filter condition for query
+    filter_condition = " AND ".join(
+        [f"text like '%{term}%'" for term in array])
+
+    # Perform the query
+    results = client.query(
+        collection_name="Capstone",
+        filter=filter_condition,
+        output_fields=["text"]
+    )
+
+    # Ensure results are returned
+    if not results:
+        return "No results found for the given terms."
+
+    # Extract top passages
+    top_passages = [doc['text'] for doc in results]
+    return top_passages
+
+
 def handle_query(query, chat: Chat):
     """ Main function to handle the query, split into smaller parts. """
     domain_clause = extract_domain_clause_or_risk_ref(query)
@@ -342,21 +373,23 @@ def handle_query(query, chat: Chat):
         return handle_edit_company_info(query, chat)
 
     else:
-        # Embed the domain or clause mentioned in the query
+        # Perform lexicon search
         st.write(f"Lexicon Search Term = {domain_clause}")
-        array = ast.literal_eval(domain_clause)
-        filter_condition = " AND ".join([f"text like '%{term}%'" for term in array])
-        results = client.query(
-            collection_name="Capstone",
-            filter=filter_condition,
-            output_fields=["text"]
-        )
+        top_passages = lexicon_search(domain_clause)
+
+        if isinstance(top_passages, str):
+            return top_passages  # Return error message if any
+
+        # Generate checklist and extract top passages
         chat.set_checklist(generate_checklist(query, chat))
-        top_passages = [doc['text'] for doc in results]
+
+        # If there are more than 20 results, return a message
+        if len(top_passages) > 20:
+            return "Too many clauses, refer to checklist for all the clauses"
+
+        # Otherwise, predict relevance and filter results
         sorted_results = predict_relevance_and_filter_results(
             query, top_passages, -50)
-
-    # Predict relevance and filter results
 
     # Generate and return the final response
     return generate_final_response(sorted_results, query, chat)
