@@ -1,3 +1,6 @@
 .env
 .streamlit/secrets.toml
 create_db.py
+soup.py
+Upload_Data_to_Milvus.ipynb
+upload_data_to_milvus.py
