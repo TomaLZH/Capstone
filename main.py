@@ -125,6 +125,9 @@ if checklist and checklist != "None":
             st.write(f"##### {tier}")  # Display the tier (Supporter, Practitioner, etc.)
             for clause in clauses:
                 st.write(f"- [ ] {clause}")  # Display each clause
+
+
+                
     # If logged in, update database
     # if st.session_state.logged_in:
     #     update_checklist(st.session_state.username, checklist)

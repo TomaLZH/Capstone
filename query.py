@@ -278,11 +278,14 @@ def generate_checklist(query, chat):
 
         #### Output Format:  
         {
-        "checklist_title": "Clauses for Advocate Tier",
-        "Domains": {
-            "B.1 Governance": ["B.1.7", "B.1.8"],
-            "B.2 Policies and Procedures": ["B.2.7", "B.2.8", "B.2.9"],
-            ...
+            "checklist_title": "Clauses for Advocate Tier",
+            "Domains": {
+                "B.1 Governance": {
+                    "Advocate Tier": ["B.1.7", "B.1.8"]
+                },
+                "B.2 Policies and Procedures": {
+                    "Advocate Tier": ["B.2.7", "B.2.8", "B.2.9"]
+                }
             }
         }
 
