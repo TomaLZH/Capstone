@@ -14,7 +14,7 @@ def extract_domain_clause_or_risk_ref(query):
     system_message_for_Clause = """
         You are an assistant that processes queries to determine their intent and extract information. Follow these steps strictly:
 
-        1. Check if the query directly asks to edit company information (e.g., change details, update, etc.). If so, respond with 'Editing Company Information' and stop.
+        1. Check if the query directly asks to edit company information (e.g. change details, update, etc.). If so, respond with 'Editing Company Information' and stop.
   
         2. Identify whether a query mentions a tier, domain number, clause number, or "Risk Ref" number strictly in the following formats:
             - B.(number).(optional clause number) (for domains or clauses)
