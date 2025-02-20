@@ -24,9 +24,6 @@ def extract_domain_clause_or_risk_ref(query):
 
         4. Make sure the output is in array format, even if it contains only one element.
 
-        5. Check if the query directly asks to edit their company information. If so, respond with 'Editing Company Information' and stop.
-
-
         **Examples:**
         Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is B.1.1?
         ["B.1.1"]
