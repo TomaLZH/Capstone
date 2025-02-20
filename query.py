@@ -319,7 +319,7 @@ def generate_final_response(sorted_results, query, chat):
     run = openai_client.beta.threads.runs.create_and_poll(
         thread_id=chat.get_thread_id(),
         assistant_id=assistant.id,
-        max_completion_tokens=4000
+        max_completion_tokens=16000
     )
 
     messages = openai_client.beta.threads.messages.list(
