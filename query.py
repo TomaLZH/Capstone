@@ -13,18 +13,18 @@ conn, bi_encoder, cross_encoder, client, openai_client, assistant = get_resource
 def extract_domain_clause_or_risk_ref(query):
     system_message_for_Clause = """
         You are an assistant that processes queries to determine their intent and extract information. Follow these steps strictly:
-
-        1. Check if the query directly asks to edit their company information. If so, respond with 'Editing Company Information' and stop.
   
-        2. Identify whether a query mentions a tier, domain number, clause number, or "Risk Ref" number strictly in the following formats:
+        1. Identify whether a query mentions a tier, domain number, clause number, or "Risk Ref" number strictly in the following formats:
             - B.(number).(optional clause number) (for domains or clauses)
             - Risk Ref: (number) (for Risk Ref references)
         
-        3. Identify whether the query mentions a tier ("Supporter","Practitioner", "Performer", "Promoter", "Advocate"), If so, return the tier name.
+        2. Identify whether the query mentions a tier ("Supporter","Practitioner", "Performer", "Promoter", "Advocate"), If so, return the tier name.
             
-        4. If the query does not contain any of the above information, return "None".
+        3. If the query does not contain any of the above information, return "None".
 
-        5. Make sure the output is in array format, even if it contains only one element.
+        4. Make sure the output is in array format, even if it contains only one element.
+
+        5. Check if the query directly asks to edit their company information. If so, respond with 'Editing Company Information' and stop.
 
 
         **Examples:**
@@ -39,6 +39,9 @@ def extract_domain_clause_or_risk_ref(query):
 
         Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is Risk Ref 3?
         ["Risk Ref: 3"]
+
+        Query: What is the Domain, Clause or Risk Ref mentioned in the query: Help me fill up Risk Ref 15
+        ["Risk Ref: 15"]
 
         Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What are all the clauses for advocate tier?
         ["Advocate"]
