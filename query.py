@@ -40,8 +40,8 @@ def extract_domain_clause_or_risk_ref(query):
         Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is Risk Ref 3?
         ["Risk Ref: 3"]
 
-        Query: What is the Domain, Clause or Risk Ref mentioned in the query: Help me fill up Risk Ref 15
-        ["Risk Ref: 15"]
+        Query: What is the Domain, Clause or Risk Ref mentioned in the query: fill up risk ref 17 based on my company
+        ["Risk Ref: 17"]
 
         Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What are all the clauses for advocate tier?
         ["Advocate"]
