@@ -128,7 +128,7 @@ if checklist and checklist != "None":
 
 #Add a Button to loop through a array and handle queruy all of them
 array_of_queries = [
-"B.18.5", "B.18.6", "B.18.7", "B.18.8", "B.18.9", "B.18.10", "B.18.11"
+    "B.19.2", "B.19.3", "B.19.4", "B.19.5", "B.19.6", "B.19.7", "B.19.8", "B.19.9", "B.19.10", "B.19.11", "B.19.12"
 ]
 
 
