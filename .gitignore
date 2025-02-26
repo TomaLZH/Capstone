@@ -9,3 +9,4 @@ upload file to milvus.py
 *.pdf
 Create Evaluation Data.py
 Create Evaluation Excel.py
+/__pycache__/*
