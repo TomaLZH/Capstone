@@ -128,16 +128,14 @@ if checklist and checklist != "None":
 
 #Add a Button to loop through a array and handle queruy all of them
 array_of_queries = [
-    "B.22.2",
-    "B.22.3",
-    "B.22.4",
-    "B.22.5",
-    "B.22.6",
-    "B.22.7",
-    "B.22.8",
-    "B.22.9",
-    "B.22.10"
+    "B.18.3", "B.18.4", "B.18.5", "B.18.6", "B.18.7", "B.18.8", "B.18.9", "B.18.10", "B.18.11",
+    "B.19.2", "B.19.3", "B.19.4", "B.19.5", "B.19.6", "B.19.7", "B.19.8", "B.19.9", "B.19.10", "B.19.11", "B.19.12",
+    "B.20.2", "B.20.3", "B.20.4", "B.20.5", "B.20.6", "B.20.7", "B.20.8", "B.20.9", "B.20.10", "B.20.11",
+    "B.21.1", "B.21.2", "B.21.3", "B.21.4", "B.21.5", "B.21.6", "B.21.7", "B.21.8"
 ]
+
+
+
 if st.button("Evaluate all clauses"):
     for query in array_of_queries:
         current_query = "How do I implement clause " + query + "?"
