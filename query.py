@@ -121,6 +121,7 @@ def handle_edit_company_info(query, chat):
 
 def predict_relevance_and_filter_results(query, top_passages, scorelimit=0):
     """ Predict relevance scores for the results and filter based on relevance. """
+
     cross_inp = [[query, passage] for passage in top_passages]
     cross_scores = cross_encoder.predict(cross_inp)
 
