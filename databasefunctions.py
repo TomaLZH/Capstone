@@ -66,3 +66,13 @@ def update_checklist(username, check_list):
         s.execute(sqlalchemy.text("UPDATE users SET check_list = :check_list WHERE username = :username"),
                   {"check_list": check_list, "username": username})
         s.commit()
+
+
+
+#Evaluation table functions
+
+def add_evaluation(question, my_answer):
+    with session as s:
+        s.execute(sqlalchemy.text("INSERT INTO Evaluation (question, my_answer) VALUES (:question, :my_answer)"),
+                  {"question": question, "my_answer": my_answer})
+        s.commit()

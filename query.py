@@ -4,7 +4,7 @@ import logging
 from Chat import Chat
 import streamlit as st
 import ast
-from databasefunctions import update_company_infrastructure
+from databasefunctions import update_company_infrastructure, add_evaluation
 
 # Load models and resources such as encoders, database collections, and OpenAI client
 conn, bi_encoder, cross_encoder, client, openai_client, assistant = get_resources()
@@ -325,6 +325,8 @@ def generate_final_response(sorted_results, query, chat):
     messages = openai_client.beta.threads.messages.list(
         thread_id=chat.get_thread_id())
 
+    add_evaluation(query, run.choices[0].message.content)
+        
     response = messages.data[0].content[0].text.value
     return response
 
