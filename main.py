@@ -133,11 +133,11 @@ if checklist and checklist != "None":
 
 
 
-if st.button("Evaluate all clauses"):
-    for query in array_of_queries:
-        current_query = "How do I implement clause " + query + "?"
-        response = handle_query(current_query, chat_instance)
-        st.write("Clause: ", query, "Done")
+# if st.button("Evaluate all clauses"):
+#     for query in array_of_queries:
+#         current_query = "How do I implement clause " + query + "?"
+#         response = handle_query(current_query, chat_instance)
+#         st.write("Clause: ", query, "Done")
 
 
 # Display chat history
