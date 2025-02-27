@@ -1,0 +1,20 @@
+import streamlit as st
+from sqlalchemy import text
+
+# Connect to PostgreSQL
+conn = st.connection("postgresql", type="sql")
+
+# Retrieve rows from database to put into new Excel file
+query = """
+SELECT * FROM Evaluation;
+"""
+
+# Execute the query using conn and wrap the query in `text()`
+with conn.session as session:
+    result = session.execute(text(query)).fetchall()
+
+# Create Excel file
+import pandas as pd
+
+df = pd.DataFrame(result, columns=["id", "question", "my_answer", "my_grade", "gpt_answer", "gpt_grade", "reason", "better_answer"])
+df.to_excel("evaluation.xlsx", index=False)

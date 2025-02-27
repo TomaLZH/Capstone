@@ -1,12 +1,9 @@
 .env
 .streamlit/secrets.toml
 create_db.py
-soup.py
-Upload_Data_to_Milvus.ipynb
 upload_data_to_milvus.py
-upload file to milvus.py
-*.xlsx
+# *.xlsx
 *.pdf
-Create Evaluation Data.py
-Create Evaluation Excel.py
+# Create Evaluation Data.py
+# Create Evaluation Excel.py
 /__pycache__/*
