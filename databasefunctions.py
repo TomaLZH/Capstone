@@ -77,12 +77,27 @@ def add_evaluation(question, my_answer):
                   {"question": question, "my_answer": my_answer})
         s.commit()
 
+
+
 def add_gpt_answer(question, gpt_answer):
     try:
-        with session as s:
-            s.execute(sqlalchemy.text("UPDATE Evaluation SET gpt_answer = :gpt_answer WHERE question = :question"),
-                      {"gpt_answer": gpt_answer, "question": question})
-            s.commit()
+        result = session.execute(
+            sqlalchemy.text("SELECT COUNT(*) FROM Evaluation WHERE question = :question"),
+            {"question": question}
+        ).scalar()
+        
+        if result == 0:
+            print("No matching question found.")
+            return
+
+        session.execute(
+            sqlalchemy.text("UPDATE Evaluation SET gpt_answer = :gpt_answer WHERE question = :question"),
+            {"gpt_answer": gpt_answer, "question": question}
+        )
+        session.commit()
         print("Updated gpt_answer successfully.")
     except Exception as e:
+        session.rollback()
         print(f"Error updating gpt_answer: {e}")
+    finally:
+        session.close()
