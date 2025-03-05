@@ -32,7 +32,7 @@ def grade_answers(question, my_answer, gpt_answer):
 
     My Answer Score: [score]/100  
     Answer 2 Score: [score]/100  
-    Better Answer for beginners: [My Answer/Answer 2]
+    Higher Scoring Answer: [My Answer/Answer 2]
     """
 
     response = openai_client.chat.completions.create(
