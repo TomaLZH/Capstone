@@ -53,7 +53,7 @@ class Chat:
     def get_username(self):
         """Return the username of the user."""
         return self.username
-    
+
     def set_username(self, username):
         """Set the username of the user."""
         self.username = username

@@ -28,8 +28,11 @@ if "check_list" not in st.session_state:
     st.session_state.check_list = None
 
 # Function to toggle login pop-up
+
+
 def toggle_login():
     st.session_state.show_login = not st.session_state.show_login
+
 
 # Top-right login button
 col1, col2 = st.columns([8, 1])
@@ -57,7 +60,8 @@ if st.session_state.show_login:
                 st.session_state.chat_instance = Chat(openai_client)
                 chat_instance = st.session_state.chat_instance
                 chat_instance.set_skill_level(st.session_state.skill_level)
-                chat_instance.set_infrastructure(st.session_state.infrastructure)
+                chat_instance.set_infrastructure(
+                    st.session_state.infrastructure)
                 chat_instance.set_checklist(st.session_state.check_list)
                 chat_instance.set_username(st.session_state.username)
                 st.rerun()
@@ -80,11 +84,13 @@ chat_instance = st.session_state.chat_instance
 if "it_skill_level" not in st.session_state:
     st.session_state.it_skill_level = "Beginner"
 
+
 def update_skill_level():
     chat_instance.set_skill_level(st.session_state.it_skill_level)
-    #If logged in, update database
+    # If logged in, update database
     if st.session_state.logged_in:
-        update_skilllevel(st.session_state.username, st.session_state.it_skill_level)
+        update_skilllevel(st.session_state.username,
+                          st.session_state.it_skill_level)
 
 
 # UI for IT skill level selection
@@ -100,16 +106,15 @@ st.selectbox(
 st.write("Upload Company Details:")
 uploaded_file = st.file_uploader("Choose a file", type=["csv", "xlsx", "docx"])
 if uploaded_file and ("uploaded_file_name" not in st.session_state or st.session_state.uploaded_file_name != uploaded_file.name):
-    st.session_state.analyzed_file_data = analyze_file(chat_instance, uploaded_file)
+    st.session_state.analyzed_file_data = analyze_file(
+        chat_instance, uploaded_file)
     st.session_state.uploaded_file_name = uploaded_file.name
-    #if logged in, update database
+    # if logged in, update database
     if st.session_state.logged_in:
-        update_company_infrastructure(st.session_state.username, chat_instance.get_infrastructure())
+        update_company_infrastructure(
+            st.session_state.username, chat_instance.get_infrastructure())
     st.rerun()
 
-
-import json
-import streamlit as st
 
 # Display checklist
 checklist = chat_instance.get_checklist()
@@ -117,19 +122,18 @@ checklist = chat_instance.get_checklist()
 if checklist and checklist != "None":
     checklist_dict = json.loads(checklist)
     st.write(f"### {checklist_dict['checklist_title']}")
-    
+
     for domain, tiers in checklist_dict['Domains'].items():
         st.write(f"#### {domain}")
         # Iterate over each tier (Supporter, Practitioner, etc.)
         for tier, clauses in tiers.items():
-            st.write(f"##### {tier}")  # Display the tier (Supporter, Practitioner, etc.)
+            # Display the tier (Supporter, Practitioner, etc.)
+            st.write(f"##### {tier}")
             for clause in clauses:
                 st.write(f"- [ ] {clause}")  # Display each clause
 
 # Add a Button to loop through a array and handle queruy all of them
 # array_of_queries = ["B.22.2", "B.22.3", "B.22.4", "B.22.5", "B.22.6", "B.22.7", "B.22.8", "B.22.9", "B.22.10"]
-
-
 
 
 # if st.button("Evaluate all clauses"):

@@ -14,21 +14,19 @@ clause_questions = [
 ]
 
 
-
-
 conn, bi_encoder, cross_encoder, collection, openai_client, assistant = get_resources()
 
 for i in range(len(clauses)):
-    print("Running for clause " + clauses[i])   
+    print("Running for clause " + clauses[i])
     current_clause_number = "How do I implement clause " + clauses[i] + "?"
     current_clause = "How do i implement clause " + clause_questions[i] + "?"
 
-    #Call open ai completion to get the response
+    # Call open ai completion to get the response
     response = openai_client.chat.completions.create(
-        model = "gpt-4o-mini",
-        messages=[{"role":"user", "content":current_clause}],
+        model="gpt-4o-mini",
+        messages=[{"role": "user", "content": current_clause}],
     )
-    #Get the response from the assistant
+    # Get the response from the assistant
     response = response.choices[0].message.content
     print(current_clause_number)
     add_gpt_answer(current_clause_number, response)

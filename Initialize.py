@@ -16,14 +16,16 @@ bi_encoder = SentenceTransformer("sentence-transformers/all-mpnet-base-v2")
 cross_encoder = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
 
 # Initialize Milvus vector database client
-client = MilvusClient(uri= st.secrets["milvus"]["url"],
-                      token= st.secrets["milvus"]["token"])
+client = MilvusClient(uri=st.secrets["milvus"]["url"],
+                      token=st.secrets["milvus"]["token"])
 
 client.describe_collection(collection_name="Capstone")
 
 # Initialize OpenAI client
 openai_client = OpenAI(api_key=OPENAI_API_KEY)
-assistant = openai_client.beta.assistants.retrieve("asst_H8RXmor1XBDG0F1917fixtHE")
+assistant = openai_client.beta.assistants.retrieve(
+    "asst_H8RXmor1XBDG0F1917fixtHE")
+
 
 def get_resources():
     return conn, bi_encoder, cross_encoder, client, openai_client, assistant

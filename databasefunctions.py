@@ -55,11 +55,13 @@ def update_company_infrastructure(username, infrastructure):
                   {"infrastructure": infrastructure, "username": username})
         s.commit()
 
+
 def update_skilllevel(username, skill_level):
     with session as s:
         s.execute(sqlalchemy.text("UPDATE users SET skill_level = :skill_level WHERE username = :username"),
                   {"skill_level": skill_level, "username": username})
         s.commit()
+
 
 def update_checklist(username, check_list):
     with session as s:
@@ -68,8 +70,7 @@ def update_checklist(username, check_list):
         s.commit()
 
 
-
-#Evaluation table functions
+# Evaluation table functions
 def add_evaluation(question, my_answer):
     with session as s:
         s.execute(sqlalchemy.text("INSERT INTO Evaluation (question, my_answer) VALUES (:question, :my_answer)"),
@@ -77,20 +78,21 @@ def add_evaluation(question, my_answer):
         s.commit()
 
 
-
 def add_gpt_answer(question, gpt_answer):
     try:
         result = session.execute(
-            sqlalchemy.text("SELECT COUNT(*) FROM Evaluation WHERE question = :question"),
+            sqlalchemy.text(
+                "SELECT COUNT(*) FROM Evaluation WHERE question = :question"),
             {"question": question}
         ).scalar()
-        
+
         if result == 0:
             print("No matching question found.")
             return
 
         session.execute(
-            sqlalchemy.text("UPDATE Evaluation SET gpt_answer = :gpt_answer WHERE question = :question"),
+            sqlalchemy.text(
+                "UPDATE Evaluation SET gpt_answer = :gpt_answer WHERE question = :question"),
             {"gpt_answer": gpt_answer, "question": question}
         )
         session.commit()
@@ -105,16 +107,18 @@ def add_gpt_answer(question, gpt_answer):
 def add_advanced_answer(question, advanced_answer):
     try:
         result = session.execute(
-            sqlalchemy.text("SELECT COUNT(*) FROM Evaluation WHERE question = :question"),
+            sqlalchemy.text(
+                "SELECT COUNT(*) FROM Evaluation WHERE question = :question"),
             {"question": question}
         ).scalar()
-        
+
         if result == 0:
             print("No matching question found.")
             return
 
         session.execute(
-            sqlalchemy.text("UPDATE Evaluation SET advanced_answer = :advanced_answer WHERE question = :question"),
+            sqlalchemy.text(
+                "UPDATE Evaluation SET advanced_answer = :advanced_answer WHERE question = :question"),
             {"advanced_answer": advanced_answer, "question": question}
         )
         session.commit()
