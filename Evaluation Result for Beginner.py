@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Load the data from the Excel file
-file_path = 'Grade Output for Beginners.xlsx'
+file_path = 'graded_output.xlsx'
 data = pd.read_excel(file_path)
 
 # Extract the 'better_answer' column and grade columns

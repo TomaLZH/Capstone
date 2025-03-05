@@ -23,16 +23,16 @@ def grade_answers(question, my_answer, gpt_answer):
     ---
     **Question:** {question}
 
-    **My Answer:** {my_answer}
+    **Answer 1:** {my_answer}
 
     **Answer 2:** {gpt_answer}
 
     ---
     Output Format (Only output the scores in the following format and nothing else):
 
-    My Answer Score: [score]/100  
+    Answer 1 Score: [score]/100  
     Answer 2 Score: [score]/100  
-    Higher Scoring Answer: [My Answer/Answer 2]
+    Higher Scoring Answer: [Answer 1/Answer 2]
     """
 
     response = openai_client.chat.completions.create(
@@ -55,4 +55,4 @@ for index, row in df.iterrows():
     df.at[index, "better_answer"] = lines[2].split(":")[1].strip().replace("**", "")
 
 # Save the updated file
-df.to_excel("graded_output1.xlsx", index=False)
+df.to_excel("graded_output.xlsx", index=False)

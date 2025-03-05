@@ -101,3 +101,27 @@ def add_gpt_answer(question, gpt_answer):
         print(f"Error updating gpt_answer: {e}")
     finally:
         session.close()
+
+
+def add_advanced_answer(question, advanced_answer):
+    try:
+        result = session.execute(
+            sqlalchemy.text("SELECT COUNT(*) FROM Evaluation WHERE question = :question"),
+            {"question": question}
+        ).scalar()
+        
+        if result == 0:
+            print("No matching question found.")
+            return
+
+        session.execute(
+            sqlalchemy.text("UPDATE Evaluation SET advanced_answer = :advanced_answer WHERE question = :question"),
+            {"advanced_answer": advanced_answer, "question": question}
+        )
+        session.commit()
+        print("Updated advanced_answer successfully.")
+    except Exception as e:
+        session.rollback()
+        print(f"Error updating advanced_answer: {e}")
+    finally:
+        session.close()
