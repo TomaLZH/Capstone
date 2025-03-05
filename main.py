@@ -127,7 +127,7 @@ if checklist and checklist != "None":
                 st.write(f"- [ ] {clause}")  # Display each clause
 
 # Add a Button to loop through a array and handle queruy all of them
-array_of_queries = ["B.19.2", "B.19.3", "B.19.4", "B.19.5", "B.19.6", "B.19.7", "B.19.8", "B.19.9", "B.19.10", "B.19.11", "B.19.12"]
+array_of_queries = ["B.22.2", "B.22.3", "B.22.4", "B.22.5", "B.22.6", "B.22.7", "B.22.8", "B.22.9", "B.22.10"]
 
 
 
