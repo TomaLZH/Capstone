@@ -70,7 +70,6 @@ def update_checklist(username, check_list):
 
 
 #Evaluation table functions
-
 def add_evaluation(question, my_answer):
     with session as s:
         s.execute(sqlalchemy.text("INSERT INTO Evaluation (question, my_answer) VALUES (:question, :my_answer)"),
