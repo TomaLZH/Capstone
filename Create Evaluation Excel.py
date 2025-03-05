@@ -16,5 +16,5 @@ with conn.session as session:
 # Create Excel file
 import pandas as pd
 
-df = pd.DataFrame(result, columns=["id", "question", "my_answer", "my_grade", "gpt_answer", "gpt_grade", "reason", "better_answer", "advanced_answer","better_advanced_answer"])
+df = pd.DataFrame(result, columns=["id", "question", "my_answer", "my_grade", "gpt_answer", "gpt_grade", "reason", "better_answer", "advanced_answer","advanced_gpt_grade","better_advanced_answer"])
 df.to_excel("evaluation.xlsx", index=False)
