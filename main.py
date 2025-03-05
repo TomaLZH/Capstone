@@ -127,16 +127,16 @@ if checklist and checklist != "None":
                 st.write(f"- [ ] {clause}")  # Display each clause
 
 # Add a Button to loop through a array and handle queruy all of them
-array_of_queries = ["B.22.2", "B.22.3", "B.22.4", "B.22.5", "B.22.6", "B.22.7", "B.22.8", "B.22.9", "B.22.10"]
+# array_of_queries = ["B.22.2", "B.22.3", "B.22.4", "B.22.5", "B.22.6", "B.22.7", "B.22.8", "B.22.9", "B.22.10"]
 
 
 
 
-if st.button("Evaluate all clauses"):
-    for query in array_of_queries:
-        current_query = "How do I implement clause " + query + "?"
-        response = handle_query(current_query, chat_instance)
-        st.write("Clause: ", query, "Done")
+# if st.button("Evaluate all clauses"):
+#     for query in array_of_queries:
+#         current_query = "How do I implement clause " + query + "?"
+#         response = handle_query(current_query, chat_instance)
+#         st.write("Clause: ", query, "Done")
 
 
 # Display chat history
