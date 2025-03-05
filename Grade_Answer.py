@@ -13,15 +13,13 @@ def grade_answers(question, my_answer, gpt_answer):
     prompt = f"""
     You are an expert evaluator grading two answers to the same question. Assess each answer based on the following four criteria:
 
-    2. **Practicality and Actionability** (25 points) - How useful and actionable is the answer for fulfilling the clause?  
-    3. **Conciseness** (25 points) - Does the answer provide the necessary detail for the clause without unnecessary information? Lower score if it includes unnecessary information for the clause.  
-    4. **Ease of Understanding** (25 points) - Can a beginner easily understand the response? Prioritize clarity and simplicity, making sure the answer is easy for someone new to the topic.  
-    5. **Genericness** (25 points) - Is the answer too vague or generic, or is it specific and well-tailored to the clause?  
+    1. **Practicality and Actionability** (25 points) - How useful and actionable is the answer for fulfilling the clause?  
+    2. **Conciseness** (25 points) - Does the answer provide the necessary detail for the clause without unnecessary information? Lower score if it includes unnecessary information for the clause.  
+    3. **Ease of Understanding** (25 points) - Can a beginner easily understand the response? Prioritize clarity and simplicity, making sure the answer is easy for someone new to the topic.  
+    4. **Specificity** (25 points) - Is the answer too vague or generic, or is it specific and well-tailored to the clause? Higher scores mean more specificity.  
 
-    You should evaluate which of the two answers is **better suited for beginners**, meaning it is easier to understand for someone new to the subject, while still being **detailed enough to meet the requirements of the clause**. 
-
-    **Be critical** in your grading. It is important to give **low scores** if the answer fails to meet the expectations in any of the criteria. Avoid giving inflated scores unless the answers truly deserve them. Assign a precise score out of 100, using any number from 0 to 100 (including low scores).
-
+    Avoid any position biases and ensure that the order in which the responses were presented does not influence your decision. Do not allow the length of the responses to influence your evaluation. Do not favor certain names of the assistants. Be as objective as possible.
+ 
     ---
     **Question:** {question}
 
@@ -34,7 +32,7 @@ def grade_answers(question, my_answer, gpt_answer):
 
     My Answer Score: [score]/100  
     Answer 2 Score: [score]/100  
-    Better Answer for beginners: [My Answer/Answer 2]
+    Higher Scoring Answer: [My Answer/Answer 2]
     """
 
     response = openai_client.chat.completions.create(
