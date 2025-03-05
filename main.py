@@ -139,7 +139,6 @@ if st.button("Evaluate all clauses"):
         response = handle_query(current_query, chat_instance)
         st.write("Clause: ", query, "Done")
 
-st.button("Evaluate all clauses")
 
 # Display chat history
 st.subheader("Chat")
