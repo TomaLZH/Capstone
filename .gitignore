@@ -9,3 +9,4 @@ upload_data_to_milvus.py
 /__pycache__/*
 Capstone Dataset without Answers.xlsx
 evaluation.xlsx
+output.xlsx
