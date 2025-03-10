@@ -71,7 +71,7 @@ embeddings = model.encode(text_chunks, normalize_embeddings=True)
 
 
 client = MilvusClient(uri="https://in03-6d0166da8e21ddd.serverless.gcp-us-west1.cloud.zilliz.com",
-                      token="ac9e06ae092afb90f90b61de112607cb2918fbba386dfc45edba79c7a39639ef9c3abdfd45b2522d7699c5b12e7e6c8638fcc794")
+                      token="")
 
 client.describe_collection(collection_name="Capstone")
 
