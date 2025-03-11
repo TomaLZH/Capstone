@@ -18,7 +18,7 @@ def extract_domain_clause_or_risk_ref(query):
             - B.(number).(optional clause number) (for domains or clauses)
             - Risk Ref: (number) (for Risk Ref references)
             
-        2. If the query does not contain any of the above information, stop and return "None".
+        2. If the query does not ask about clauses or risk ref, stop and return "None".
         
         3. Identify whether the query mentions a tier ("Supporter","Practitioner", "Performer", "Promoter", "Advocate"), If so, return the tier name.
             
