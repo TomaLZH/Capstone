@@ -375,9 +375,7 @@ def handle_query(query, chat: Chat):
         top_passages = search_and_retrieve_results(query_embedding)
         sorted_results = predict_relevance_and_filter_results(
             query, top_passages)
-
-    elif domain_clause.startswith("Editing Company Information"):
-        return handle_edit_company_info(query, chat)
+        return sorted_results
 
     else:
         # Perform lexicon search
