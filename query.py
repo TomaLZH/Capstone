@@ -17,12 +17,14 @@ def extract_domain_clause_or_risk_ref(query):
         1. Identify whether a query mentions a tier, domain number, clause number, or "Risk Ref" number strictly in the following formats:
             - B.(number).(optional clause number) (for domains or clauses)
             - Risk Ref: (number) (for Risk Ref references)
-        
-        2. Identify whether the query mentions a tier ("Supporter","Practitioner", "Performer", "Promoter", "Advocate"), If so, return the tier name.
             
-        3. If the query does not contain any of the above information, return "None".
+        2. If the query does not contain any of the above information, stop and return "None".
+        
+        3. Identify whether the query mentions a tier ("Supporter","Practitioner", "Performer", "Promoter", "Advocate"), If so, return the tier name.
+            
+        4. If the query does not contain any of the above information, return "None".
 
-        4. Make sure the output is in array format, even if it contains only one element.
+        5. Make sure the output is in array format, even if it contains only one element.
 
         **Examples:**
         Query: What is the Domain, Clause, or Risk Ref mentioned in the query: What is B.1.1?
