@@ -49,7 +49,7 @@ The chatbot is hosted online for easy access. Users can simply visit the provide
 I have used a method called [LLM-as-a-Judge](https://arxiv.org/abs/2306.05685) to use gpt4o-mini to grade my answers as compared to gpt4o-mini answers. These are the results
 
 ![Beginner Evaluation Result](https://raw.githubusercontent.com/TomaLZH/Capstone/main/beginner_evaluation_result.png)
-
+![Advanced Evaluation Result](https://raw.githubusercontent.com/TomaLZH/Capstone/main/advanced_evaluation_result.png)
 
 ### Future Enhancements
 - **Fine Tuning of Model**: Fine Tune model for better performance.
