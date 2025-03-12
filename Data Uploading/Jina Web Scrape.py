@@ -4,10 +4,16 @@ from sentence_transformers import SentenceTransformer
 from transformers import AutoTokenizer
 
 
-url = 'https://r.jina.ai/https://www.csa.gov.sg/our-programmes/support-for-enterprises/sg-cyber-safe-programme/cybersecurity-certification-for-organisations/cyber-trust/certification-for-the-cyber-trust-mark/'
+url = "https://r.jina.ai/https://aws.amazon.com/compliance/shared-responsibility-model/"
 headers = {
-    'Authorization': 'Bearer jina_76808bd9e69146e7ba02d21b0615c3eaXOhFQIHyWoUiK3mnAe4uhCQRRSIZ'
+    "Authorization": "Bearer jina_1bcd61d3dafa4beb9f292171d2d0e0d2bfu_5wlddPmgQOiX6ZRkVgmwidI0"
 }
+
+response = requests.get(url, headers=headers)
+
+print(response.text)
+
+
 
 # tokenizer = AutoTokenizer.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
 tokenizer = AutoTokenizer.from_pretrained(
