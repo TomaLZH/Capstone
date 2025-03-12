@@ -45,6 +45,12 @@ The chatbot is hosted online for easy access. Users can simply visit the provide
 
 [Access the Chatbot Here]()
 
+### Results
+I have used a method called [LLM-as-a-Judge](https://arxiv.org/abs/2306.05685) to use gpt4o-mini to grade my answers as compared to gpt4o-mini answers. These are the results
+
+!(Beginner result)[https://github.com/TomaLZH/Capstone/blob/main/beginner_evaluation_result.png]
+
+
 ### Future Enhancements
 - **Fine Tuning of Model**: Fine Tune model for better performance.
 - **More Datasets**: With more datasets to retrieve from Retrieval Augmented Generation (RAG), accuracy will be better.
