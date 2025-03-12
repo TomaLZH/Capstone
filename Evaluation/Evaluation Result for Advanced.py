@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Load the data from the Excel file
-file_path = 'advanced_graded_output.xlsx'
+file_path = 'Evaluation/advanced_graded_output.xlsx'
 data = pd.read_excel(file_path)
 
 # Extract the 'better_answer' column and grade columns
@@ -33,6 +33,8 @@ axes[1].boxplot([my_grade, gpt_grade], vert=False, labels=['My Grade', 'GPT Grad
 axes[1].set_title('Box and Whiskers Plot of My Grade vs GPT Grade',
                   fontsize=14, fontweight='bold')
 axes[1].set_xlabel('Grades', fontsize=12)
+
+plt.savefig('advanced_evaluation_result.png')
 
 # Display the plot
 plt.tight_layout()
