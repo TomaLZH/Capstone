@@ -47,10 +47,6 @@ def update_checklist_state(domain, tier, index, value, clause):
         "clause": clause
     }
     
-    # If logged in, update in database
-    if st.session_state.logged_in:
-        update_checklist(st.session_state.username, st.session_state.checklist_state)
-
 # Function to display checklist
 def display_checklist(checklist):
     if not checklist or checklist == "None":
