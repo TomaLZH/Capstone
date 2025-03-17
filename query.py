@@ -370,14 +370,28 @@ def handle_query(query, chat: Chat):
     domain_clause = extract_domain_clause_or_risk_ref(query)
 
     if domain_clause == "None":
+        # Reformulate query
         processed_query = reformulate_query(query, chat)
         st.write(f"Reformulated Query = {processed_query}")
-        query_embedding = bi_encoder.encode(processed_query).astype(np.float32)
-        query_embedding /= np.linalg.norm(query_embedding)
-        top_passages = search_and_retrieve_results(query_embedding)
-        sorted_results = predict_relevance_and_filter_results(
-            query, top_passages)
-        
+
+        # Encode original query
+        original_query_embedding = bi_encoder.encode(query).astype(np.float32)
+        original_query_embedding /= np.linalg.norm(original_query_embedding)
+
+        # Encode reformulated query
+        reformulated_query_embedding = bi_encoder.encode(processed_query).astype(np.float32)
+        reformulated_query_embedding /= np.linalg.norm(reformulated_query_embedding)
+
+        # Retrieve results for both queries
+        original_results = search_and_retrieve_results(original_query_embedding)
+        reformulated_results = search_and_retrieve_results(reformulated_query_embedding)
+
+        # Merge results, avoiding duplicates
+        combined_results = {result['id']: result for result in original_results + reformulated_results}.values()
+
+        # Predict relevance and filter results
+        sorted_results = predict_relevance_and_filter_results(query, list(combined_results))
+            
     else:
         # Perform lexicon search
         st.write(f"Lexicon Search Term = {domain_clause}")
