@@ -21,12 +21,11 @@ This project addresses these gaps by leveraging a chatbot to provide real-time, 
 1. **Interactive Cyber Trust Mark Checklist**: Accessible through chatbot queries for step-by-step progress.
 2. **Customizable Experience**: Able to get tailored responses based on user's environment type and IT skill level.
 3. **Resource Recommendations**: Centralized access to templates, guides, and policy documents.
-4. **Progress Tracking**: The chatbot keeps track of completed tasks and provides reminders for pending ones.
 
 ### Technology Stack
 - **Frontend**: Streamlit for user interface and deployment.
 - **Backend**: Python for chatbot logic and integrations.
-- **Database**: Milvus for storing of embeddings.
+- **Database**: Milvus for storing of embeddings, Google Cloud Platform PostgreSQL main database
 - **Models Used**: GPT4o-mini, all-mpnet-base-v2 (bi-encoder), ms-marco-MiniLM-L-6-v2 (re-ranking)
 
 ### Target Audience
