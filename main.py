@@ -26,19 +26,93 @@ if "skill_level" not in st.session_state:
     st.session_state.skill_level = "Beginner"
 if "check_list" not in st.session_state:
     st.session_state.check_list = None
+if "checklist_state" not in st.session_state:
+    st.session_state.checklist_state = {}
 
 # Function to toggle login pop-up
-
-
 def toggle_login():
     st.session_state.show_login = not st.session_state.show_login
 
+# Function to handle logout
+def logout():
+    for key in list(st.session_state.keys()):
+        del st.session_state[key]
+    st.rerun()
+
+# Function to update checklist state
+def update_checklist_state(domain, tier, index, value, clause):
+    key = f"{domain}_{tier}_{index}"
+    st.session_state.checklist_state[key] = {
+        "checked": value,
+        "clause": clause
+    }
+    
+    # If logged in, update in database
+    if st.session_state.logged_in:
+        update_checklist(st.session_state.username, st.session_state.checklist_state)
+
+# Function to display checklist
+def display_checklist(checklist):
+    if not checklist or checklist == "None":
+        st.info("No checklist available. Upload company details to generate a checklist.")
+        return
+        
+    checklist_dict = json.loads(checklist)
+    st.write(f"### {checklist_dict['checklist_title']}")
+
+    for domain, tiers in checklist_dict['Domains'].items():
+        st.write(f"#### {domain}")
+        for tier, clauses in tiers.items():
+            st.write(f"##### {tier}")
+            for i, clause in enumerate(clauses):
+                key = f"{domain}_{tier}_{i}"
+                checked = st.checkbox(
+                    clause, 
+                    key=key,
+                    value=st.session_state.checklist_state.get(key, {}).get("checked", False)
+                )
+                if checked != st.session_state.checklist_state.get(key, {}).get("checked", False):
+                    update_checklist_state(domain, tier, i, checked, clause)
+
+# Function to display chat history
+def display_chat_history(chat_instance):
+    st.subheader("Chat")
+    if not chat_instance.get_history():
+        st.info("No messages yet. Start a conversation!")
+    else:
+        for message in chat_instance.get_history():
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
+
+# Function to handle chat input
+def handle_chat_input(chat_instance):
+    prompt = st.chat_input("Ask about cybersecurity controls...")
+    if prompt:
+        if len(prompt.strip()) < 2:
+            st.warning("Please enter a valid question.")
+            return
+            
+        st.chat_message("user").markdown(prompt)
+        chat_instance.add_message({"role": "user", "content": prompt})
+        try:
+            with st.spinner("Thinking..."):
+                response = handle_query(prompt, chat_instance)
+            st.chat_message("assistant").markdown(response)
+            chat_instance.add_message({"role": "assistant", "content": response})
+        except Exception as e:
+            st.error(f"Error processing your request: {str(e)}")
+        finally:
+            st.rerun()
 
 # Top-right login button
 col1, col2 = st.columns([8, 1])
 with col2:
-    if st.button("🔑 Login"):
-        toggle_login()
+    if st.session_state.logged_in:
+        if st.button("🔓 Logout"):
+            logout()
+    else:
+        if st.button("🔑 Login"):
+            toggle_login()
 
 # Display login pop-up
 if st.session_state.show_login:
@@ -73,7 +147,6 @@ if st.session_state.logged_in:
     st.sidebar.write(f"👤 Logged in as **{st.session_state.username}**")
     st.sidebar.write(f"🏢 Company: **{st.session_state.infrastructure}**")
     st.sidebar.write(f"🎓 Skill Level: **{st.session_state.skill_level}**")
-    st.sidebar.write(f"📋 Checklist: **{st.session_state.check_list}**")
 
 # Initialize single chat instance
 if "chat_instance" not in st.session_state:
@@ -84,14 +157,12 @@ chat_instance = st.session_state.chat_instance
 if "it_skill_level" not in st.session_state:
     st.session_state.it_skill_level = "Beginner"
 
-
 def update_skill_level():
     chat_instance.set_skill_level(st.session_state.it_skill_level)
     # If logged in, update database
     if st.session_state.logged_in:
         update_skilllevel(st.session_state.username,
                           st.session_state.it_skill_level)
-
 
 # UI for IT skill level selection
 st.subheader("Company Configuration and IT Skill Level")
@@ -105,47 +176,25 @@ st.selectbox(
 # File uploader
 st.write("Upload Company Details:")
 uploaded_file = st.file_uploader("Choose a file", type=["csv", "xlsx", "docx"])
+
 if uploaded_file and ("uploaded_file_name" not in st.session_state or st.session_state.uploaded_file_name != uploaded_file.name):
-    st.session_state.analyzed_file_data = analyze_file(
-        chat_instance, uploaded_file)
-    st.session_state.uploaded_file_name = uploaded_file.name
-    # if logged in, update database
-    if st.session_state.logged_in:
-        update_company_infrastructure(
-            st.session_state.username, chat_instance.get_infrastructure())
-    st.rerun()
+    try:
+        with st.spinner("Analyzing file..."):
+            st.session_state.analyzed_file_data = analyze_file(
+                chat_instance, uploaded_file)
+            st.session_state.uploaded_file_name = uploaded_file.name
+            # if logged in, update database
+            if st.session_state.logged_in:
+                update_company_infrastructure(
+                    st.session_state.username, chat_instance.get_infrastructure())
+        st.success("File analyzed successfully!")
+        st.rerun()
+    except Exception as e:
+        st.error(f"Error analyzing file: {str(e)}")
 
+# Display interactive checklist
+display_checklist(chat_instance.get_checklist())
 
-# Display checklist
-checklist = chat_instance.get_checklist()
-
-if checklist and checklist != "None":
-    checklist_dict = json.loads(checklist)
-    st.write(f"### {checklist_dict['checklist_title']}")
-
-    for domain, tiers in checklist_dict['Domains'].items():
-        st.write(f"#### {domain}")
-        # Iterate over each tier (Supporter, Practitioner, etc.)
-        for tier, clauses in tiers.items():
-            # Display the tier (Supporter, Practitioner, etc.)
-            st.write(f"##### {tier}")
-            for clause in clauses:
-                st.write(f"- [ ] {clause}")  # Display each clause
-
-
-# Display chat history
-st.subheader("Chat")
-for message in chat_instance.get_history():
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
-
-
-# Handle user input
-if prompt := st.chat_input("What is Risk Ref 9"):
-    st.chat_message("user").markdown(prompt)
-    chat_instance.add_message({"role": "user", "content": prompt})
-    with st.spinner("Thinking..."):
-        response = handle_query(prompt, chat_instance)
-    st.chat_message("assistant").markdown(response)
-    chat_instance.add_message({"role": "assistant", "content": response})
-    st.rerun()
+# Display chat interface
+display_chat_history(chat_instance)
+handle_chat_input(chat_instance)
