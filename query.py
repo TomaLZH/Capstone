@@ -70,7 +70,7 @@ def reformulate_query(query, chat):
     """ Reformulate the query using the conversation history if necessary. """
     system_message = """
     You are an AI assistant tasked with reformulating user queries to improve retrieval in a RAG (Retrieval-Augmented Generation) system. Follow this two-step process:
-    1) Determine Clarity: First, analyze whether the user query makes sense on its own. If it is clear and self-contained, return it as is without modification and do not process to step 2.
+    1) Determine Clarity: First, analyze whether the user query makes sense on its own. If it is clear and self-contained, return it as is without modification.
     2) Enhance Using Context: If the query is ambiguous, incomplete, or dependent on prior chat history for clarity, rewrite it to incorporate necessary details from the chat history. Ensure the reformulated query maintains the user's intent while retrieving the most accurate and relevant information.
     """
 
@@ -387,7 +387,7 @@ def handle_query(query, chat: Chat):
         reformulated_results = search_and_retrieve_results(reformulated_query_embedding)
 
         # Merge results, avoiding duplicates
-        combined_results = {result['id']: result for result in original_results + reformulated_results}.values()
+        combined_results = list(set(original_results + reformulated_results))
 
         # Predict relevance and filter results
         sorted_results = predict_relevance_and_filter_results(query, list(combined_results))
