@@ -379,19 +379,24 @@ def handle_query(query, chat: Chat):
         original_query_embedding /= np.linalg.norm(original_query_embedding)
 
         # Encode reformulated query
-        reformulated_query_embedding = bi_encoder.encode(processed_query).astype(np.float32)
-        reformulated_query_embedding /= np.linalg.norm(reformulated_query_embedding)
+        reformulated_query_embedding = bi_encoder.encode(
+            processed_query).astype(np.float32)
+        reformulated_query_embedding /= np.linalg.norm(
+            reformulated_query_embedding)
 
         # Retrieve results for both queries
-        original_results = search_and_retrieve_results(original_query_embedding)
-        reformulated_results = search_and_retrieve_results(reformulated_query_embedding)
+        original_results = search_and_retrieve_results(
+            original_query_embedding)
+        reformulated_results = search_and_retrieve_results(
+            reformulated_query_embedding)
 
         # Merge results, avoiding duplicates
         combined_results = list(set(original_results + reformulated_results))
 
         # Predict relevance and filter results
-        sorted_results = predict_relevance_and_filter_results(query, list(combined_results))
-            
+        sorted_results = predict_relevance_and_filter_results(
+            query, list(combined_results))
+
     else:
         # Perform lexicon search
         st.write(f"Lexicon Search Term = {domain_clause}")
