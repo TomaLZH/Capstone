@@ -310,7 +310,6 @@ def generate_final_response(sorted_results, query, chat):
     context_str = "\n\n\n".join(
         [f"Passage: {r[0]}\nRelevance Score: {r[1]:.2f}" for r in sorted_results]) or "none found"
 
-    st.write(f"Context = {context_str}")
 
     openai_client.beta.threads.messages.create(
         thread_id=chat.get_thread_id(),  # Retrieve the thread ID from the chat instance
@@ -372,7 +371,6 @@ def handle_query(query, chat: Chat):
     if domain_clause == "None":
         # Reformulate query
         processed_query = reformulate_query(query, chat)
-        st.write(f"Reformulated Query = {processed_query}")
 
         # Encode original query
         original_query_embedding = bi_encoder.encode(query).astype(np.float32)
@@ -399,7 +397,6 @@ def handle_query(query, chat: Chat):
 
     else:
         # Perform lexicon search
-        st.write(f"Lexicon Search Term = {domain_clause}")
         top_passages = lexicon_search(domain_clause)
 
         if isinstance(top_passages, str):
